@@ -28,8 +28,10 @@ Projelerin konfiguresyonunu düzeltin
 
 Migration işlemini gerçekleştirin
   > cd src\Presentation\MonifiBackend.API
+  
   > dotnet ef migrations add InitialCreate -c MonifiBackendDbContext
-dotnet ef database update -c MonifiBackendDbContext
+  
+  > dotnet ef database update -c MonifiBackendDbContext
 
 Projeyi Çalıştırın
   > dotnet run
