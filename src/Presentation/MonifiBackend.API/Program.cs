@@ -1,0 +1,135 @@
+using AspNetCoreRateLimit;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
+using MonifiBackend.API.Authorization;
+using MonifiBackend.API.HealthCheck;
+using MonifiBackend.Core.Infrastructure;
+using MonifiBackend.Core.Infrastructure.Environments;
+using MonifiBackend.Core.Infrastructure.Middlewares;
+using MonifiBackend.UserModule.Application;
+using MonifiBackend.UserModule.Infrastructure;
+
+var builder = WebApplication.CreateBuilder(args);
+
+//---Services-Related Configurations---//
+var _applicationSettings = new ApplicationSettings();
+
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables();
+
+#region Settings
+builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection("ApplicationSettings"));
+builder.Configuration.GetSection("ApplicationSettings").Bind(_applicationSettings);
+#endregion
+
+#region Core Setup
+builder.Services.ConfigureCoreInfrastructure(_applicationSettings);
+#endregion
+
+#region User Setup
+builder.Services.AddUserServiceApplication();
+builder.Services.AddUserServiceInfrastructure();
+#endregion
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "Modular Monolith System Documentation",
+            Version = "v1",
+            Description = "This documantation Modular Monolith system.",
+            Contact = new OpenApiContact
+            {
+                Name = "Hakan GÜZEL",
+                Email = "hakan-guzel@outlook.com"
+            }
+        });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+      {
+        {
+          new OpenApiSecurityScheme
+          {
+            Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+              },
+              Scheme = "oauth2",
+              Name = "Bearer",
+              In = ParameterLocation.Header,
+
+            },
+            new List<string>()
+          }
+        });
+    //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    //options.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetSection("ApplicationSettings:MssqlSettings:ConnectionStrings").Value, tags: new[] { "database" })
+    .AddCheck<MyHealthCheck>("MyHealthCheck", tags: new[] { "custom" }); ;
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.MapHealthChecksUI();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+options.SwaggerEndpoint("/swagger/v1/swagger.json",
+"Swagger Demo Documentation v1"));
+app.UseReDoc(options =>
+{
+    options.DocumentTitle = "Swagger Demo Documentation";
+    options.SpecUrl = "/swagger/v1/swagger.json";
+});
+
+app.UseReDoc(options =>
+{
+    options.DocumentTitle = "Swagger Demo Documentation";
+    options.SpecUrl = "/swagger/v1/swagger.json";
+});
+app.UseMiddleware<ExceptionMiddleware>();
+// custom jwt auth middleware
+app.UseMiddleware<JwtMiddleware>();
+app.UseIpRateLimiting();
+
+// global cors policy
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
+
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
