@@ -41,13 +41,13 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1",
         new OpenApiInfo
         {
-            Title = "Modular Monolith System Documentation",
+            Title = "Monifi Backend System Documentation",
             Version = "v1",
             Description = "This documantation Modular Monolith system.",
             Contact = new OpenApiContact
             {
-                Name = "Hakan GÜZEL",
-                Email = "hakan-guzel@outlook.com"
+                Name = "Monifi Backend",
+                Email = "monifi@example.com"
             }
         });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
