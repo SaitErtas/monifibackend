@@ -31,15 +31,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.UserModule.In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BD70BBDD-75A1-4FD0-B7AD-548C0C9D1AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.Core.Application", "src\Modules\Core\MonifiBackend.Core.Application\MonifiBackend.Core.Application.csproj", "{737481CB-66A4-4479-A7AF-42E74706933D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.Core.Application", "src\Modules\Core\MonifiBackend.Core.Application\MonifiBackend.Core.Application.csproj", "{737481CB-66A4-4479-A7AF-42E74706933D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.Core.Domain", "src\Modules\Core\MonifiBackend.Core.Domain\MonifiBackend.Core.Domain.csproj", "{4576A20B-7310-451D-8F5E-4D0F49F73BA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.Core.Domain", "src\Modules\Core\MonifiBackend.Core.Domain\MonifiBackend.Core.Domain.csproj", "{4576A20B-7310-451D-8F5E-4D0F49F73BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.Core.Infrastructure", "src\Modules\Core\MonifiBackend.Core.Infrastructure\MonifiBackend.Core.Infrastructure.csproj", "{3778F2A5-4CCF-4EEA-8BBE-1CF3F93559C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.Core.Infrastructure", "src\Modules\Core\MonifiBackend.Core.Infrastructure\MonifiBackend.Core.Infrastructure.csproj", "{3778F2A5-4CCF-4EEA-8BBE-1CF3F93559C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{713681F0-2B8C-4AEF-92C6-09D4B9E7391C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.Core.UnitTests", "src\Modules\Core\Tests\MonifiBackend.Core.UnitTests\MonifiBackend.Core.UnitTests.csproj", "{729B1FD9-C71A-41A0-901A-97A2BD46269F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackageModule", "PackageModule", "{F2A0DB14-CC0A-459E-A83B-9268D345D144}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D193D60F-8927-443D-84F9-6704DD4540A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.PackageModule.Application", "src\Modules\PackageModule\MonifiBackend.PackageModule.Application\MonifiBackend.PackageModule.Application.csproj", "{6CE844DC-09EE-4684-BAAF-E48E619D2C3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.PackageModule.Domain", "src\Modules\PackageModule\MonifiBackend.PackageModule.Domain\MonifiBackend.PackageModule.Domain.csproj", "{8F788A61-EE65-4E37-AB43-AFCD9C194CB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.PackageModule.Infrastructure", "src\Modules\PackageModule\MonifiBackend.PackageModule.Infrastructure\MonifiBackend.PackageModule.Infrastructure.csproj", "{B2707CF9-315D-4F99-B91E-DDEBEAD880DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +101,18 @@ Global
 		{729B1FD9-C71A-41A0-901A-97A2BD46269F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{729B1FD9-C71A-41A0-901A-97A2BD46269F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{729B1FD9-C71A-41A0-901A-97A2BD46269F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE844DC-09EE-4684-BAAF-E48E619D2C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE844DC-09EE-4684-BAAF-E48E619D2C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE844DC-09EE-4684-BAAF-E48E619D2C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE844DC-09EE-4684-BAAF-E48E619D2C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F788A61-EE65-4E37-AB43-AFCD9C194CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F788A61-EE65-4E37-AB43-AFCD9C194CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F788A61-EE65-4E37-AB43-AFCD9C194CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F788A61-EE65-4E37-AB43-AFCD9C194CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2707CF9-315D-4F99-B91E-DDEBEAD880DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2707CF9-315D-4F99-B91E-DDEBEAD880DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2707CF9-315D-4F99-B91E-DDEBEAD880DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2707CF9-315D-4F99-B91E-DDEBEAD880DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +136,11 @@ Global
 		{3778F2A5-4CCF-4EEA-8BBE-1CF3F93559C4} = {BD70BBDD-75A1-4FD0-B7AD-548C0C9D1AB5}
 		{713681F0-2B8C-4AEF-92C6-09D4B9E7391C} = {BD70BBDD-75A1-4FD0-B7AD-548C0C9D1AB5}
 		{729B1FD9-C71A-41A0-901A-97A2BD46269F} = {713681F0-2B8C-4AEF-92C6-09D4B9E7391C}
+		{F2A0DB14-CC0A-459E-A83B-9268D345D144} = {8FD75B8B-C4F7-42AE-B090-409497FE572D}
+		{D193D60F-8927-443D-84F9-6704DD4540A2} = {F2A0DB14-CC0A-459E-A83B-9268D345D144}
+		{6CE844DC-09EE-4684-BAAF-E48E619D2C3F} = {F2A0DB14-CC0A-459E-A83B-9268D345D144}
+		{8F788A61-EE65-4E37-AB43-AFCD9C194CB9} = {F2A0DB14-CC0A-459E-A83B-9268D345D144}
+		{B2707CF9-315D-4F99-B91E-DDEBEAD880DD} = {F2A0DB14-CC0A-459E-A83B-9268D345D144}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD71C23C-049F-4E04-B5BA-70F4BE2918EF}

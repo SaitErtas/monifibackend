@@ -21,6 +21,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Modules\Core\MonifiBackend.Core.Infrastructure\MonifiBackend.Core.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Modules\PackageModule\MonifiBackend.PackageModule.Application\MonifiBackend.PackageModule.Application.csproj" />
+		<ProjectReference Include="..\..\Modules\PackageModule\MonifiBackend.PackageModule.Infrastructure\MonifiBackend.PackageModule.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Modules\UserModule\MonifiBackend.UserModule.Application\MonifiBackend.UserModule.Application.csproj" />
 		<ProjectReference Include="..\..\Modules\UserModule\MonifiBackend.UserModule.Infrastructure\MonifiBackend.UserModule.Infrastructure.csproj" />
 	</ItemGroup>

@@ -7,6 +7,8 @@ using MonifiBackend.API.HealthCheck;
 using MonifiBackend.Core.Infrastructure;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.Core.Infrastructure.Middlewares;
+using MonifiBackend.PackageModule.Application;
+using MonifiBackend.PackageModule.Infrastructure;
 using MonifiBackend.UserModule.Application;
 using MonifiBackend.UserModule.Infrastructure;
 
@@ -30,6 +32,11 @@ builder.Services.ConfigureCoreInfrastructure(_applicationSettings);
 #region User Setup
 builder.Services.AddUserServiceApplication();
 builder.Services.AddUserServiceInfrastructure();
+#endregion
+
+#region Package Setup
+builder.Services.AddPackageServiceApplication();
+builder.Services.AddPackageServiceInfrastructure();
 #endregion
 
 // Add services to the container.
