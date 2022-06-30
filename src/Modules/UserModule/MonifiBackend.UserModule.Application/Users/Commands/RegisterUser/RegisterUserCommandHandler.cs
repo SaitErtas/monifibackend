@@ -27,7 +27,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            var user = User.CreateNew(request.Email, passwordHash, request.Name, request.Surname, Role.User, BaseStatus.Active);
+            var user = User.CreateNew(request.Email, passwordHash, request.UserName,request.Terms, Role.User, BaseStatus.Active);
             var userId = await _userCommandDataPort.CreateAsync(user);
             AppRule.NotNegativeOrZero<BusinessValidationException>(userId);
 

@@ -9,8 +9,8 @@ namespace MonifiBackend.Data.Infrastructure.Entities
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string UserName { get; set; }
+        public bool Terms { get; set; }
         public string ResetPasswordCode { get; set; }
         public virtual int Role { get; set; }
         public virtual ICollection<UserPhoneEntity> Phones { get; set; }
@@ -22,8 +22,8 @@ namespace MonifiBackend.Data.Infrastructure.Entities
             builder.ToTable("Users");
             builder.Property(x => x.Email).IsRequired().HasMaxLength(128);
             builder.Property(x => x.Password).IsRequired().HasMaxLength(128);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(128);
-            builder.Property(x => x.Surname).IsRequired().HasMaxLength(128);
+            builder.Property(x => x.UserName).IsRequired().HasMaxLength(128);
+            builder.Property(x => x.Terms).IsRequired();
             builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.ResetPasswordCode).IsRequired();
 

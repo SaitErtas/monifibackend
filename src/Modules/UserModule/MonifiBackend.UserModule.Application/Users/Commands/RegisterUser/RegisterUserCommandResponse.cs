@@ -7,15 +7,13 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
         public RegisterUserCommandResponse(User user, string token)
         {
             Id = user.Id;
-            Name = user.Name;
-            Surname = user.Surname;
+            Name = user.UserName;
             Email = user.Email;
             Role = user.Role.ToRole();
             Token = token;
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Surname { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }

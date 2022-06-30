@@ -8,8 +8,8 @@ namespace MonifiBackend.UserModule.Domain.Users
 {
     public sealed class User : BaseActivityDomain<int>, IAggregateRoot
     {
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
+        public string UserName { get; private set; }
+        public bool Terms { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
         public string ResetPasswordCode { get; private set; }
@@ -18,25 +18,24 @@ namespace MonifiBackend.UserModule.Domain.Users
         private List<UserPhone> _phones = new();
         public IReadOnlyCollection<UserPhone> Phones => _phones.AsReadOnly();
 
-        public void SetName(string name)
+        public void SetUserName(string userName)
         {
-            AppRule.NotNullOrEmpty<DomainException>(name, "Name Cannot Be Null Or Empty");
-            Name = name;
+            AppRule.NotNullOrEmpty<DomainException>(userName, "Name Cannot Be Null Or Empty");
+            UserName = userName;
+        }
+        public void SetTerms(bool terms)
+        {
+            Terms = terms;
         }
         public void SetResetPasswordCode(string resetPasswordCode)
         {
             ResetPasswordCode = resetPasswordCode;
         }
 
-        public void SetSurname(string surname)
-        {
-            AppRule.NotNullOrEmpty<DomainException>(surname, "Surname Cannot Be Null Or Empty");
-            Surname = surname;
-        }
         public void SetEmail(string email)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty");
-            Name = email;
+            UserName = email;
         }
 
         public void SetPassword(string password)
@@ -69,21 +68,21 @@ namespace MonifiBackend.UserModule.Domain.Users
         public static User CreateNew(
             string email,
             string password,
-            string name,
-            string surname,
+            string userName,
+            bool terms,
             Role role,
             BaseStatus status)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty", $"Email Cannot Be Null Or Empty. Email: {email}");
             AppRule.NotNullOrEmpty<DomainException>(password, "Password Cannot Be Null Or Empty", $"Password Cannot Be Null Or Empty. Password: {password}");
-            AppRule.NotNullOrEmpty<DomainException>(name, "Name Cannot Be Null Or Empty", $"Name Cannot Be Null Or Empty. Name: {name}");
-            AppRule.NotNullOrEmpty<DomainException>(surname, "Surname Cannot Be Null Or Empty", $"Surname Cannot Be Null Or Empty. Surname: {surname}");
+            AppRule.NotNullOrEmpty<DomainException>(userName, "UserName Cannot Be Null Or Empty", $"UserName Cannot Be Null Or Empty. UserName: {userName}");
+
             return new User()
             {
                 Email = email,
                 Password = password,
-                Name = name,
-                Surname = surname,
+                UserName = userName,
+                Terms = terms,
                 Status = status,
                 Role = role,
                 ResetPasswordCode = string.Empty,
@@ -94,8 +93,8 @@ namespace MonifiBackend.UserModule.Domain.Users
             BaseStatus status,
             string email,
             string password,
-            string name,
-            string surname,
+            string userName,
+            bool terms,
             string resetPassword,
             DateTime createdAt,
             DateTime modifiedAt,
@@ -108,8 +107,8 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Status = status,
                 Email = email,
                 Password = password,
-                Name = name,
-                Surname = surname,
+                UserName = userName,
+                Terms = terms,
                 CreatedAt = createdAt,
                 ModifiedAt = modifiedAt,
                 Role = role,
