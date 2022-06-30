@@ -4,5 +4,6 @@
     {
         public static bool IsNegative(this int value) => value < 0;
         public static bool IsNegativeOrZero(this int value) => value <= 0;
+        public static bool IsNegativeOrZero(this decimal value) => value <= 0;
     }
 }
