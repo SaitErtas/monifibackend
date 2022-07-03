@@ -7,15 +7,13 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
         public AuthenticateUserQueryResponse(User user, string token)
         {
             Id = user.Id;
-            Name = user.Name;
-            Surname = user.Surname;
+            UserName = user.UserName;
             Email = user.Email;
             Role = user.Role.ToRole();
             Token = token;
         }
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string UserName { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }

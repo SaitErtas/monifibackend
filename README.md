@@ -20,8 +20,16 @@ Modular Monolith basit bir şablon uygulamasıdır.
 Proje dizinine gidin
   > cd monifibackend
 
+--ef commandları mevcut değilse 
+  > dotnet tool install --global dotnet-ef
+  
+
 Gerekli paketleri yükleyin
   > dotnet restore
+
+
+  --"No project was found. Change the current working directory or use the..."  bu hata alınıyor ise
+  >command promptan projenin tam yolu girilerek düzeltilebilir.
 
 Projelerin konfiguresyonunu düzeltin
   > src/Presentation/MonifiBackend.API/appsettings.Development.json

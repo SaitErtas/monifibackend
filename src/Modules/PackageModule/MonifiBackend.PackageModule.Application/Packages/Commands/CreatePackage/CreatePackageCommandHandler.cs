@@ -23,9 +23,9 @@ internal class CreatePackageCommandHandler : ICommandHandler<CreatePackageComman
         AppRule.False(isPackage, new BusinessValidationException(BusinessValidationMessageType.ALREADY_EXIST, nameof(request.Duration), request.Duration));
 
 
-        var package = Package.CreateNew(request.Name, request.Duration, request.Commission, BaseStatus.Active);
+        var package = Package.CreateNew(request.UserName, request.Duration, request.Commission, BaseStatus.Active);
         var packageId = await _packageCommandDataPort.CreateAsync(package);
-        AppRule.NotNegativeOrZero(packageId, new BusinessValidationException(BusinessValidationMessageType.NotCreated, nameof(request.Name), request.Name));
+        AppRule.NotNegativeOrZero(packageId, new BusinessValidationException(BusinessValidationMessageType.NotCreated, nameof(request.UserName), request.UserName));
 
         return new CreatePackageCommandResponse();
     }

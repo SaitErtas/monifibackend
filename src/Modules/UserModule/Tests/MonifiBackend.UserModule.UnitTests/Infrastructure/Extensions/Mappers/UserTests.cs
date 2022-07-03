@@ -35,8 +35,8 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             UserEntity entity = new UserEntity
             {
                 Id = 1,
-                Name = "Hakan",
-                Surname = "GÜZEL",
+                UserName = "Hakan",
+                Terms = true,
                 Phones = phones,
                 ModifiedAt = new DateTime(2022, 01, 03),
                 CreatedAt = new DateTime(2022, 01, 03),
@@ -45,8 +45,8 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             var domain = entity.Map();
 
             Assert.Equal(domain.Id, entity.Id);
-            Assert.Equal(domain.Name, entity.Name);
-            Assert.Equal(domain.Surname, entity.Surname);
+            Assert.Equal(domain.UserName, entity.UserName);
+            Assert.Equal(domain.Terms, entity.Terms);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
             Assert.Equal(domain.Status.ToInt(), entity.Status);
@@ -58,8 +58,8 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             UserEntity entity = new UserEntity
             {
                 Id = 1,
-                Name = "Hakan",
-                Surname = "GÜZEL",
+                UserName = "Hakan",
+                Terms = true,
                 Phones = null,
                 ModifiedAt = new DateTime(2022, 01, 03),
                 CreatedAt = new DateTime(2022, 01, 03),
@@ -68,8 +68,8 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             var domain = entity.Map();
 
             Assert.Equal(domain.Id, entity.Id);
-            Assert.Equal(domain.Name, entity.Name);
-            Assert.Equal(domain.Surname, entity.Surname);
+            Assert.Equal(domain.UserName, entity.UserName);
+            Assert.Equal(domain.Terms, entity.Terms);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
             Assert.Equal(domain.Status.ToInt(), entity.Status);
@@ -80,15 +80,15 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             var domain = User.CreateNew(
                 email: "hakan-guzel@outlook.com",
                 password: "123456",
-                name: "Hakan",
-                surname: "GÜZEL",
+                userName: "Hakan",
+                terms: true,
                 role: Role.Administrator,
                 status: BaseStatus.Active);
             domain.AddPhone("5555555555", PhoneType.Mobile);
             var entity = domain.Map();
 
-            Assert.Equal(domain.Name, entity.Name);
-            Assert.Equal(domain.Surname, entity.Surname);
+            Assert.Equal(domain.UserName, entity.UserName);
+            Assert.Equal(domain.Terms, entity.Terms);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
             Assert.Equal(domain.Status.ToInt(), entity.Status);
@@ -100,14 +100,14 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
             var domain = User.CreateNew(
                 email: "hakan-guzel@outlook.com",
                 password: "123456",
-                name: "Hakan",
-                surname: "GÜZEL",
+                userName: "Hakan",
+                terms: true,
                 role: Role.Administrator,
                 status: BaseStatus.Active);
             var entity = domain.Map();
 
-            Assert.Equal(domain.Name, entity.Name);
-            Assert.Equal(domain.Surname, entity.Surname);
+            Assert.Equal(domain.UserName, entity.UserName);
+            Assert.Equal(domain.Terms, entity.Terms);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
             Assert.Equal(domain.Status.ToInt(), entity.Status);

@@ -5,17 +5,17 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
 {
     public class RegisterUserCommand : ICommand<RegisterUserCommandResponse>
     {
-        public RegisterUserCommand(string email, string password, string name, string surname)
+        public RegisterUserCommand(string email, string password, string userName, bool terms)
         {
             Email = email;
             Password = password;
-            Name = name;
-            Surname = surname;
+            UserName = userName;
+            Terms = terms;
         }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string UserName { get; set; }
+        public bool Terms { get; set; }
     }
 
     internal class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
@@ -26,10 +26,11 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
                 .NotEmpty().WithMessage("Mail alanı boş bırakılamaz.");
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Şifre alanı boş bırakılamaz.");
-            RuleFor(x => x.Name)
+            RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("Ad alanı boş bırakılamaz.");
-            RuleFor(x => x.Surname)
-                .NotEmpty().WithMessage("Soyad alanı boş bırakılamaz.");
+            RuleFor(x => x.Terms)
+                .NotEmpty().WithMessage("Terms alanı boş bırakılamaz.");
+
         }
     }
 }

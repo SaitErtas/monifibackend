@@ -30,8 +30,8 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
                 status: BaseStatus.Active,
                 email: "hakan-guzel@outlook.com",
                 password: "123456",
-                name: "Hakan",
-                surname: "GÜZEL",
+                userName: "Hakan",
+                terms: true,
                 resetPassword: string.Empty,
                 createdAt: DateTime.Now,
                 modifiedAt: DateTime.Now,
@@ -45,52 +45,35 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void CreateNew_Should_ThrowException_When_NameIsNullOrEmpty(string name)
+        public void CreateNew_Should_ThrowException_When_UserNameIsNullOrEmpty(string userName)
         {
             var exception = Assert.Throws<DomainException>(() =>
                 User.CreateNew(
                     email: "hakan-guzel@outlook.com",
                     password: "123456",
-                    name: name,
-                    surname: "GÜZEL",
+                    userName: userName,
+                    terms: true,
                     role: Role.Administrator,
                     status: BaseStatus.Active));
 
             Assert.IsType<DomainException>(exception);
         }
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        public void CreateNew_Should_ThrowException_When_SurnameIsNullOrEmpty(string surname)
-        {
-            var exception = Assert.Throws<DomainException>(() =>
-                User.CreateNew(
-                    email: "hakan-guzel@outlook.com",
-                    password: "123456",
-                    name: "Hakan",
-                    surname: surname,
-                    role: Role.Administrator,
-                    status: BaseStatus.Active));
 
-            Assert.IsType<DomainException>(exception);
-        }
         [Fact]
         public void CreateNew_Should_Be_Successful()
         {
-            var name = "Hakan";
-            var surname = "GÜZEL";
+            var userName = "Hakan";
             var companyName = "Farmazon";
             var user = User.CreateNew(
                     email: "hakan-guzel@outlook.com",
                     password: "123456",
-                    name: name,
-                    surname: surname,
+                    userName: userName,
+                    terms: true,
                     role: Role.Administrator,
                     status: BaseStatus.Active);
 
             Assert.True(user.Status == BaseStatus.Active);
-            Assert.True(user.Name == name);
-            Assert.True(user.Surname == surname);
+            Assert.True(user.UserName == userName);
         }
         #endregion
 
@@ -102,8 +85,7 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
             var id = 1;
             var status = BaseStatus.Active;
             var dateTime = DateTime.Now;
-            var name = "Hakan";
-            var surname = "GÜZEL";
+            var userName = "Hakan";
             var companyName = "Farmazon";
             var phones = new List<UserPhone>();
 
@@ -112,8 +94,8 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
                 status: status,
                 email: "hakan-guzel@outlook.com",
                 password: "123456",
-                name: name,
-                surname: surname,
+                userName: userName,
+                terms: true,
                 resetPassword: string.Empty,
                 createdAt: dateTime,
                 modifiedAt: dateTime,
@@ -123,8 +105,7 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
 
             Assert.Equal(id, user.Id);
             Assert.Equal(status, user.Status);
-            Assert.Equal(name, user.Name);
-            Assert.Equal(surname, user.Surname);
+            Assert.Equal(userName, user.UserName);
             Assert.Equal(dateTime, user.CreatedAt);
             Assert.Equal(dateTime, user.ModifiedAt);
             Assert.Equal(phones.Count, user.Phones.Count);
