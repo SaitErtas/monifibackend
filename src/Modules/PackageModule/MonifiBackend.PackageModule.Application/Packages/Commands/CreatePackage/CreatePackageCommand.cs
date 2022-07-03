@@ -5,13 +5,13 @@ namespace MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackag
 
 public class CreatePackageCommand : ICommand<CreatePackageCommandResponse>
 {
-    public CreatePackageCommand(string name, int duration, decimal commission)
+    public CreatePackageCommand(string userName, int duration, decimal commission)
     {
-        Name = name;
+        UserName = userName;
         Duration = duration;
         Commission = commission;
     }
-    public string Name { get; set; }
+    public string UserName { get; set; }
     public int Duration { get; set; }
     public decimal Commission { get; set; }
 }
@@ -20,7 +20,7 @@ internal class CreatePackageCommandValidator : AbstractValidator<CreatePackageCo
 {
     public CreatePackageCommandValidator()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.UserName)
             .NotEmpty().WithMessage("Mail alanı boş bırakılamaz.");
         RuleFor(x => x.Duration)
             .NotEmpty().WithMessage("Şifre alanı boş bırakılamaz.");

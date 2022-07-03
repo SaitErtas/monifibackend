@@ -45,7 +45,7 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void CreateNew_Should_ThrowException_When_NameIsNullOrEmpty(string userName)
+        public void CreateNew_Should_ThrowException_When_UserNameIsNullOrEmpty(string userName)
         {
             var exception = Assert.Throws<DomainException>(() =>
                 User.CreateNew(
@@ -62,18 +62,18 @@ namespace MonifiBackend.UserModule.UnitTests.Domain.Users
         [Fact]
         public void CreateNew_Should_Be_Successful()
         {
-            var name = "Hakan";
+            var userName = "Hakan";
             var companyName = "Farmazon";
             var user = User.CreateNew(
                     email: "hakan-guzel@outlook.com",
                     password: "123456",
-                    userName: name,
+                    userName: userName,
                     terms: true,
                     role: Role.Administrator,
                     status: BaseStatus.Active);
 
             Assert.True(user.Status == BaseStatus.Active);
-            Assert.True(user.UserName == name);
+            Assert.True(user.UserName == userName);
         }
         #endregion
 

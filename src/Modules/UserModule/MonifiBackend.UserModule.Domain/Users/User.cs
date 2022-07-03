@@ -20,7 +20,7 @@ namespace MonifiBackend.UserModule.Domain.Users
 
         public void SetUserName(string userName)
         {
-            AppRule.NotNullOrEmpty<DomainException>(userName, "Name Cannot Be Null Or Empty");
+            AppRule.NotNullOrEmpty<DomainException>(userName, "UserName Cannot Be Null Or Empty");
             UserName = userName;
         }
         public void SetTerms(bool terms)
@@ -35,7 +35,7 @@ namespace MonifiBackend.UserModule.Domain.Users
         public void SetEmail(string email)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty");
-            UserName = email;
+            email = email;
         }
 
         public void SetPassword(string password)

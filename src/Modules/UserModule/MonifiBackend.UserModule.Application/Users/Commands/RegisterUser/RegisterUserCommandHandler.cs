@@ -26,7 +26,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             AppRule.False(isUser, new BusinessValidationException("User already exist.", "User already exist. Email: {request.Email}"));
             
             var isExistUserName = await _userQueryDataPort.GetAsync(request.UserName);
-            AppRule.False(isUser, new BusinessValidationException("UserName already exists.", "UserName already exists. UserName: {request.UserName}"));
+            AppRule.False(isExistUserName, new BusinessValidationException("UserName already exists.", "UserName already exists. UserName: {request.UserName}"));
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
