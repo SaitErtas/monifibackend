@@ -99,13 +99,13 @@ public class AuthController : BaseApiController
     Description = "Gets Details About User Info After Successful Login",
     OperationId = "Me",
     Tags = new[] { "User" })]
-    [SwaggerResponse(200, "User Data", typeof(ResponseWrapper<UserDataQueryResponse>), "application/json")]
+    [SwaggerResponse(200, "User Data", typeof(ResponseWrapper<UserQueryResponse>), "application/json")]
     [HttpGet("me")]
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    public async Task<IActionResult> MeAsync()
+    public async Task<IActionResult> MeAsync(int id,int orderId)
     {
         var currentUser = (User)HttpContext.Items["User"];
-        var request = new UserDataQuery(currentUser.Id);
+        var request = new UserQuery(currentUser.Id);
 
         var result = await _mediator.Send(request);
         

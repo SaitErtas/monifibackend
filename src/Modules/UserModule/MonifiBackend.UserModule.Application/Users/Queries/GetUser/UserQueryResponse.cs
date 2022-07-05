@@ -2,9 +2,9 @@
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.UserData
 {
-    public class UserDataQueryResponse
+    public class UserQueryResponse
     {
-        public UserDataQueryResponse(User user)
+        public UserQueryResponse(User user)
         {
             Id = user.Id;
             UserName = user.UserName;

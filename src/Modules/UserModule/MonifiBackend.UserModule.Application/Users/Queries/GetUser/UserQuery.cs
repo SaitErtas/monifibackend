@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.UserData
 {
-    public class UserDataQuery : IQuery<UserDataQueryResponse>
+    public class UserQuery : IQuery<UserQueryResponse>
     {
-        public UserDataQuery(int userId)
+        public UserQuery(int userId)
         {
             UserId = userId;
         }
@@ -16,9 +16,9 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.UserData
         public int UserId { get; }
 
     }
-    internal class UserDataQueryValidator : AbstractValidator<UserDataQuery>
+    internal class UserQueryValidator : AbstractValidator<UserQuery>
     {
-        public UserDataQueryValidator()
+        public UserQueryValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("UserId alanı boş bırakılamaz.");
