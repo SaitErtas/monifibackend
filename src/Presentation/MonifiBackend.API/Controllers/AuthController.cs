@@ -102,7 +102,7 @@ public class AuthController : BaseApiController
     [SwaggerResponse(200, "User Data", typeof(ResponseWrapper<UserQueryResponse>), "application/json")]
     [HttpGet("me")]
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    public async Task<IActionResult> MeAsync(int id,int orderId)
+    public async Task<IActionResult> MeAsync()
     {
         var currentUser = (User)HttpContext.Items["User"];
         var request = new UserQuery(currentUser.Id);

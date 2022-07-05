@@ -8,7 +8,7 @@
     }
     public class RoleStrings
     {
-        public const string ADMINISTRATOR = "administrator";
+        public const string ADMINISTRATOR = "admin";
         public const string OWNER = "owner";
         public const string USER = "user";
     }
