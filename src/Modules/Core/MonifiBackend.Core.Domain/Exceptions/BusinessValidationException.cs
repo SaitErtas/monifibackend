@@ -35,7 +35,7 @@ public static class BusinessValidationExceptionMessages
             case BusinessValidationMessageType.ALREADY_EXIST:
                 return string.Format(ALREADY_EXIST, message);
         }
-        return null;
+        throw new NotImplementedException();
     }
     public static string SetLogMessage(BusinessValidationMessageType messageType, string message, string value)
     {
@@ -44,6 +44,6 @@ public static class BusinessValidationExceptionMessages
             case BusinessValidationMessageType.ALREADY_EXIST:
                 return string.Format(LOG_NEGATIVE_OR_ZERO, message, value);
         }
-        return null;
+        throw new NotImplementedException();
     }
 }

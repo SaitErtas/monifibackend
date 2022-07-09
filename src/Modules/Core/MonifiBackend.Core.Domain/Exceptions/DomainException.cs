@@ -44,7 +44,7 @@ public static class DomainExceptionMessages
             case DomainExceptionMessageType.NULL_OR_EMPTY:
                 return string.Format(NEGATIVE_OR_ZERO, message);
         }
-        return null;
+        throw new NotImplementedException();
     }
     public static string SetLogMessage(DomainExceptionMessageType messageType, string message, string value)
     {
@@ -55,6 +55,6 @@ public static class DomainExceptionMessages
             case DomainExceptionMessageType.NULL_OR_EMPTY:
                 return string.Format(LOG_CANNOT_BE_NULL_OR_EMPTY, message, value);
         }
-        return null;
+        throw new NotImplementedException();
     }
 }

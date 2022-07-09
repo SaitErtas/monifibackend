@@ -13,9 +13,9 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
     {
         _dbContext = dbContext;
     }
-    public async Task<bool> GetAsync(int duration, decimal commission)
+    public async Task<bool> GetAsync(int duration)
     {
         return await _dbContext.Packages
-            .AnyAsync(x => x.Duration == duration && x.Commission == commission && x.Status != BaseStatus.Deleted.ToInt());
+            .AnyAsync(x => x.Duration == duration && x.Status != BaseStatus.Deleted.ToInt());
     }
 }

@@ -21,10 +21,10 @@ internal class CreatePackageCommandValidator : AbstractValidator<CreatePackageCo
     public CreatePackageCommandValidator()
     {
         RuleFor(x => x.UserName)
-            .NotEmpty().WithMessage("Mail alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage("UserName is not null.");
         RuleFor(x => x.Duration)
-            .NotEmpty().WithMessage("Şifre alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage("Duration is not null.");
         RuleFor(x => x.Commission)
-            .NotEmpty().WithMessage("Ad alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage("Commission is not null.");
     }
 }

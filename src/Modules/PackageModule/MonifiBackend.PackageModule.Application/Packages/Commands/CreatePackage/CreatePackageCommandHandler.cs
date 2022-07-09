@@ -19,9 +19,8 @@ internal class CreatePackageCommandHandler : ICommandHandler<CreatePackageComman
 
     public async Task<CreatePackageCommandResponse> Handle(CreatePackageCommand request, CancellationToken cancellationToken)
     {
-        var isPackage = await _packageQueryDataPort.GetAsync(request.Duration, request.Commission);
+        var isPackage = await _packageQueryDataPort.GetAsync(request.Duration);
         AppRule.False(isPackage, new BusinessValidationException(BusinessValidationMessageType.ALREADY_EXIST, nameof(request.Duration), request.Duration));
-
 
         var package = Package.CreateNew(request.UserName, request.Duration, request.Commission, BaseStatus.Active);
         var packageId = await _packageCommandDataPort.CreateAsync(package);
