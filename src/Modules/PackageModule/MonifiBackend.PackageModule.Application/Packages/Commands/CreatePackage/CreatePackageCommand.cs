@@ -5,7 +5,7 @@ namespace MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackag
 
 public class CreatePackageCommand : ICommand<CreatePackageCommandResponse>
 {
-    public CreatePackageCommand(string name, int duration, decimal commission)
+    public CreatePackageCommand(string name, int duration, int commission)
     {
         Name = name;
         Duration = duration;
@@ -13,7 +13,7 @@ public class CreatePackageCommand : ICommand<CreatePackageCommandResponse>
     }
     public string Name { get; set; }
     public int Duration { get; set; }
-    public decimal Commission { get; set; }
+    public int Commission { get; set; }
 }
 
 internal class CreatePackageCommandValidator : AbstractValidator<CreatePackageCommand>

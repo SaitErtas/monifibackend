@@ -14,6 +14,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
         public string ResetPasswordCode { get; set; }
         public virtual int Role { get; set; }
         public virtual ICollection<UserPhoneEntity> Phones { get; set; }
+        public virtual ICollection<AccountMovementEntity> AccountMovements { get; set; }
     }
     public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
     {
@@ -28,6 +29,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
             builder.Property(x => x.ResetPasswordCode).IsRequired();
 
             builder.HasMany(x => x.Phones).WithOne(x => x.User);
+            builder.HasMany(x => x.AccountMovements).WithOne(x => x.User);
 
             BaseActivityConfiguration.Configure(builder);
         }

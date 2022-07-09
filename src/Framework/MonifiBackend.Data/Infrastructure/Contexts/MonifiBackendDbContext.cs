@@ -17,9 +17,13 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         {
             modelBuilder.Entity<UserEntity>().ToTable("Users");
             modelBuilder.Entity<UserPhoneEntity>().ToTable("UserPhones");
+            modelBuilder.Entity<AccountMovementEntity>().ToTable("AccountMovements");
+            modelBuilder.Entity<PackageEntity>().ToTable("Packages");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountMovementEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PackageEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

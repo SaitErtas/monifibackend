@@ -9,7 +9,8 @@ public class PackageEntity : BaseActivityEntity
 {
     public string Name { get; set; }
     public int Duration { get; set; }
-    public decimal Commission { get; set; }
+    public int Commission { get; set; }
+    public virtual ICollection<AccountMovementEntity> AccountMovements { get; set; }
 }
 public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity>
 {
@@ -18,7 +19,9 @@ public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity
         builder.ToTable("Packages");
         builder.Property(x => x.Name).IsRequired().HasMaxLength(128);
         builder.Property(x => x.Duration).IsRequired();
-        builder.Property(x => x.Commission).HasPrecision(3, 2).IsRequired();
+        builder.Property(x => x.Commission).IsRequired();
+
+        builder.HasMany(x => x.AccountMovements).WithOne(x => x.Package);
 
         BaseActivityConfiguration.Configure(builder);
     }

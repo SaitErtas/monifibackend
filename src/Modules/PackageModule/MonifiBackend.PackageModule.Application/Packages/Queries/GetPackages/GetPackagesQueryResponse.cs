@@ -13,7 +13,7 @@ public class GetPackagesQueryResponse
 }
 public class GetPackageQueryResponse
 {
-    public GetPackageQueryResponse(int id, string name, int duration, decimal commission)
+    public GetPackageQueryResponse(int id, string name, int duration, int commission)
     {
         Id = id;
         Name = name;
@@ -23,5 +23,5 @@ public class GetPackageQueryResponse
     public int Id { get; private set; }
     public string Name { get; private set; }
     public int Duration { get; private set; }
-    public decimal Commission { get; private set; }
+    public int Commission { get; private set; }
 }

@@ -6,7 +6,7 @@ namespace MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackag
 
 public class UpdatePackageCommand : ICommand<UpdatePackageCommandResponse>
 {
-    public UpdatePackageCommand(int id, string name, int duration, decimal commission)
+    public UpdatePackageCommand(int id, string name, int duration, int commission)
     {
         Id = id;
         Name = name;
@@ -17,7 +17,7 @@ public class UpdatePackageCommand : ICommand<UpdatePackageCommandResponse>
     public int Id { get; set; }
     public string Name { get; private set; }
     public int Duration { get; private set; }
-    public decimal Commission { get; private set; }
+    public int Commission { get; private set; }
 }
 
 internal class UpdatePackageCommandValidator : AbstractValidator<UpdatePackageCommand>

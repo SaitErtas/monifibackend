@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonifiBackend.Data.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    partial class MonifiBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220709213354_WalletModule")]
+    partial class WalletModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,7 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -61,7 +62,7 @@ namespace MonifiBackend.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AccountMovements", (string)null);
+                    b.ToTable("AccountMovementEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
@@ -72,8 +73,8 @@ namespace MonifiBackend.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Commission")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Commission")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -85,16 +86,14 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Packages", (string)null);
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.UserEntity", b =>
@@ -184,13 +183,13 @@ namespace MonifiBackend.API.Migrations
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", "Package")
                         .WithMany("AccountMovements")
                         .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.UserEntity", "User")
                         .WithMany("AccountMovements")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Package");

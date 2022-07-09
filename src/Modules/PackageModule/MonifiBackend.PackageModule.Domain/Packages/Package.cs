@@ -9,7 +9,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
 {
     public string Name { get; private set; }
     public int Duration { get; private set; }
-    public decimal Commission { get; private set; }
+    public int Commission { get; private set; }
     public static Package Default() => new();
 
     public void SetName(string name)
@@ -20,14 +20,14 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
     {
         Duration = duration;
     }
-    public void SetCommission(decimal commission)
+    public void SetCommission(int commission)
     {
         Commission = commission;
     }
     public static Package CreateNew(
         string name,
         int duration,
-        decimal commission,
+        int commission,
         BaseStatus status)
     {
         AppRule.NotNullOrEmpty(name, new DomainException(DomainExceptionMessageType.NULL_OR_EMPTY, nameof(name), name));
@@ -49,7 +49,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
         DateTime modifiedAt,
         string name,
         int duration,
-        decimal commission)
+        int commission)
     {
         return new Package()
         {
