@@ -7,6 +7,8 @@ using MonifiBackend.UserModule.Application.Users.Commands.ChangedPassword;
 using MonifiBackend.UserModule.Application.Users.Commands.RegisterUser;
 using MonifiBackend.UserModule.Application.Users.Commands.ResetPassword;
 using MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser;
+using MonifiBackend.UserModule.Application.Users.Queries.UserData;
+using MonifiBackend.UserModule.Domain.Users;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace MonifiBackend.API.Controllers;
@@ -76,6 +78,37 @@ public class AuthController : BaseApiController
     public async Task<IActionResult> ResetPasswordConfirmAsync([FromBody, SwaggerRequestBody("ResetPasswordConfirm", Required = true)] ChangedPasswordCommand request)
     {
         var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+
+    //[SwaggerOperation(
+    //Summary = "Me",
+    //Description = "Gets Details About User Info After Successful Login",
+    //OperationId = "Me",
+    //Tags = new[] { "User" })]
+    //[SwaggerResponse(200, "User Data", typeof(ResponseWrapper<UserDataQueryResponse>), "application/json")]
+    //[HttpGet("me/{userId}")]
+    //public async Task<IActionResult> MeAsync([FromBody, SwaggerRequestBody("Me", Required = false)] UserDataQuery request)
+    //{
+    //    var result = await _mediator.Send(request);
+    //    return Ok(result);
+    //}
+
+    [SwaggerOperation(
+    Summary = "Me",
+    Description = "Gets Details About User Info After Successful Login",
+    OperationId = "Me",
+    Tags = new[] { "User" })]
+    [SwaggerResponse(200, "User Data", typeof(ResponseWrapper<UserQueryResponse>), "application/json")]
+    [HttpGet("me")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> MeAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+        var request = new UserQuery(currentUser.Id);
+
+        var result = await _mediator.Send(request);
+        
         return Ok(result);
     }
 }
