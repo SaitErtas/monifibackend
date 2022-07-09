@@ -3,6 +3,7 @@ using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.PackageModule.Domain.Packages;
+using MonifiBackend.PackageModule.Infrastructure.Extensions.Mappers;
 
 namespace MonifiBackend.PackageModule.Infrastructure.Packages;
 
@@ -17,5 +18,21 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
     {
         return await _dbContext.Packages
             .AnyAsync(x => x.Duration == duration && x.Status != BaseStatus.Deleted.ToInt());
+    }
+
+    public async Task<Package> GetPackageAsync(int id)
+    {
+        var packageEntity = await _dbContext.Packages
+            .FirstOrDefaultAsync(x => x.Id == id && x.Status != BaseStatus.Deleted.ToInt());
+        return packageEntity.Map();
+    }
+
+    public async Task<List<Package>> GetsAsync()
+    {
+        var packagesEntity = await _dbContext.Packages
+            .Where(x => x.Status != BaseStatus.Deleted.ToInt())
+            .ToListAsync();
+
+        return packagesEntity.Select(x => x.Map()).ToList();
     }
 }

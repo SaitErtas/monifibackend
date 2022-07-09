@@ -5,13 +5,13 @@ namespace MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackag
 
 public class CreatePackageCommand : ICommand<CreatePackageCommandResponse>
 {
-    public CreatePackageCommand(string userName, int duration, decimal commission)
+    public CreatePackageCommand(string name, int duration, decimal commission)
     {
-        UserName = userName;
+        Name = name;
         Duration = duration;
         Commission = commission;
     }
-    public string UserName { get; set; }
+    public string Name { get; set; }
     public int Duration { get; set; }
     public decimal Commission { get; set; }
 }
@@ -20,8 +20,8 @@ internal class CreatePackageCommandValidator : AbstractValidator<CreatePackageCo
 {
     public CreatePackageCommandValidator()
     {
-        RuleFor(x => x.UserName)
-            .NotEmpty().WithMessage("UserName is not null.");
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Name is not null.");
         RuleFor(x => x.Duration)
             .NotEmpty().WithMessage("Duration is not null.");
         RuleFor(x => x.Commission)

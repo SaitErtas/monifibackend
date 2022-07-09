@@ -12,6 +12,18 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
     public decimal Commission { get; private set; }
     public static Package Default() => new();
 
+    public void SetName(string name)
+    {
+        Name = name;
+    }
+    public void SetDuration(int duration)
+    {
+        Duration = duration;
+    }
+    public void SetCommission(decimal commission)
+    {
+        Commission = commission;
+    }
     public static Package CreateNew(
         string name,
         int duration,

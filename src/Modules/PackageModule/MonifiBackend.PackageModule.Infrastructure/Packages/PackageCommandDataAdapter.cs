@@ -18,4 +18,10 @@ public class PackageCommandDataAdapter : IPackageCommandDataPort
         var result = await _dbContext.SaveChangesAsync();
         return result > 0 ? packageEntity.Id : 0;
     }
+
+    public async Task<bool> SaveAsync(Package package)
+    {
+        _dbContext.Packages.Update(package.Map());
+        return (await _dbContext.SaveChangesAsync()) > 0;
+    }
 }
