@@ -11,8 +11,15 @@ using MonifiBackend.PackageModule.Application;
 using MonifiBackend.PackageModule.Infrastructure;
 using MonifiBackend.UserModule.Application;
 using MonifiBackend.UserModule.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+Log.Logger = new LoggerConfiguration().CreateBootstrapLogger();
+builder.Host.UseSerilog(((ctx, lc) => lc
+.ReadFrom.Configuration(ctx.Configuration)));
+
 
 //---Services-Related Configurations---//
 var _applicationSettings = new ApplicationSettings();
@@ -138,5 +145,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSerilogRequestLogging();
 
 app.Run();

@@ -29,17 +29,21 @@ namespace MonifiBackend.Core.Infrastructure.Middlewares
                 var appResponse = default(ResponseWrapper<object>);
                 var errors = default(IEnumerable<string>);
 
-                _logPort.LogError($"{exception.Message}", exception);
-
                 if (exception is BaseException baseException)
+                {
+                    _logPort.LogError($"{baseException.Message}", exception);
                     appResponse = new ResponseWrapper<object>(baseException.Status, baseException.ExceptionId, baseException.DisplayMessage);
+                }
                 else if (exception is FluentValidation.ValidationException validationException)
                 {
                     errors = validationException.Errors.Select(x => x.ErrorMessage).ToList();
                     appResponse = new ResponseWrapper<object>(400, "VAL-101", errors);
                 }
                 else
+                {
+                    _logPort.LogError($"{exception.Message}", exception);
                     appResponse = new ResponseWrapper<object>(500, "SYS-101", exception.Message);
+                }
 
                 response.StatusCode = appResponse.StatusCode;
                 var json = JsonSerializer.Serialize(appResponse);
