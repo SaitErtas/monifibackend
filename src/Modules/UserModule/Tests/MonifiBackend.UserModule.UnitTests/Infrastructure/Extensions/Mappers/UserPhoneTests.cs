@@ -16,7 +16,6 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
                 new UserPhoneEntity
                 {
                     Number = "5555555",
-                    PhoneType = 3,
                     Status = BaseStatus.Active.ToInt(),
                     UserId = 1,
                 };
@@ -26,7 +25,6 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
 
             Assert.Equal(domain.Id, entity.Id);
             Assert.Equal(domain.Number, entity.Number);
-            Assert.Equal(domain.PhoneType.ToInt(), entity.PhoneType);
             Assert.Equal(domain.Status.ToInt(), entity.Status);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
@@ -35,11 +33,10 @@ namespace MonifiBackend.UserModule.UnitTests.Infrastructure.Extensions.Mappers
         [Fact]
         public void Map_Should_Return_ValidDomainObject()
         {
-            var domain = UserPhone.CreateNew("5555555555", PhoneType.Mobile);
+            var domain = UserPhone.CreateNew("5555555555");
             var entity = domain.Map();
 
             Assert.Equal(domain.Number, entity.Number);
-            Assert.Equal(domain.PhoneType.ToInt(), entity.PhoneType);
             Assert.Equal(domain.CreatedAt, entity.CreatedAt);
             Assert.Equal(domain.ModifiedAt, entity.ModifiedAt);
             Assert.Equal(domain.Status.ToInt(), entity.Status);

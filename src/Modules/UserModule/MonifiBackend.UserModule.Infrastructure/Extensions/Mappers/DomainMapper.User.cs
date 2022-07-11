@@ -18,7 +18,6 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 Id = domain.Id,
                 Email = domain.Email,
                 Password = domain.Password,
-                UserName = domain.UserName,
                 Terms = domain.Terms,
                 Status = domain.Status.ToInt(),
                 CreatedAt = domain.CreatedAt,
@@ -26,6 +25,9 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 Phones = contacts,
                 Role = domain.Role.ToInt(),
                 ResetPasswordCode = domain.ResetPasswordCode,
+                ReferanceUser = domain.ReferanceUser,
+                ConfirmationCode = domain.ConfirmationCode,
+                ReferanceCode = domain.ReferanceCode,
             };
         }
         #endregion
@@ -41,9 +43,12 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.Status.ToEnum<BaseStatus>(),
                 entity.Email,
                 entity.Password,
-                entity.UserName,
+                entity.Username,
                 entity.Terms,
                 entity.ResetPasswordCode,
+                entity.ReferanceUser,
+                entity.ReferanceCode,
+                entity.ConfirmationCode,
                 entity.CreatedAt,
                 entity.ModifiedAt,
                 entity.Role.ToEnum<Role>(),

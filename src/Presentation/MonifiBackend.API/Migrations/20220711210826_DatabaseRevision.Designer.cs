@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonifiBackend.Data.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    partial class MonifiBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220711210826_DatabaseRevision")]
+    partial class DatabaseRevision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,34 +78,26 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Flag")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Iso2")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Iso3")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("CountryEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.LanguageEntity", b =>
@@ -121,26 +115,20 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NativeName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", (string)null);
+                    b.ToTable("LanguageEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.NetworkEntity", b =>
@@ -158,16 +146,14 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Networks", (string)null);
+                    b.ToTable("NetworkEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
@@ -215,7 +201,7 @@ namespace MonifiBackend.API.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -229,7 +215,7 @@ namespace MonifiBackend.API.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LanguageId")
+                    b.Property<int?>("LanguageId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -285,17 +271,13 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IpAddress")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RequestName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -307,7 +289,7 @@ namespace MonifiBackend.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserIPs", (string)null);
+                    b.ToTable("UserIPEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.UserPhoneEntity", b =>
@@ -366,9 +348,7 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("WalletAddress")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -377,7 +357,7 @@ namespace MonifiBackend.API.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("WalletEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.AccountMovementEntity", b =>
@@ -403,15 +383,11 @@ namespace MonifiBackend.API.Migrations
                 {
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.CountryEntity", "Country")
                         .WithMany("Users")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.LanguageEntity", "Language")
                         .WithMany("Users")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("LanguageId");
 
                     b.Navigation("Country");
 
@@ -423,7 +399,7 @@ namespace MonifiBackend.API.Migrations
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.UserEntity", "User")
                         .WithMany("UserIps")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -449,7 +425,7 @@ namespace MonifiBackend.API.Migrations
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.UserEntity", "User")
                         .WithOne("Wallet")
                         .HasForeignKey("MonifiBackend.Data.Infrastructure.Entities.WalletEntity", "UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CryptoNetwork");

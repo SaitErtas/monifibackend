@@ -63,5 +63,13 @@ namespace MonifiBackend.Core.Domain.Utility
         {
             if (value == null || !value.IsExist() || !value.IsActive()) throw exception;
         }
+        public static void Exists<TDomain, TException>(TDomain value, TException exception) where TException : BaseException where TDomain : IReadOnlyDomain
+        {
+            if (value == null || !value.IsExist()) throw exception;
+        }
+        public static void ExistsAndPassive<TDomain, TException>(TDomain value, TException exception) where TException : BaseException where TDomain : IReadOnlyDomain
+        {
+            if (value == null || !value.IsExist() || !value.IsPassive()) throw exception;
+        }
     }
 }

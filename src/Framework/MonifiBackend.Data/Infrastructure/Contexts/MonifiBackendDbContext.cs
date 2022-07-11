@@ -19,11 +19,21 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<UserPhoneEntity>().ToTable("UserPhones");
             modelBuilder.Entity<AccountMovementEntity>().ToTable("AccountMovements");
             modelBuilder.Entity<PackageEntity>().ToTable("Packages");
+            modelBuilder.Entity<CountryEntity>().ToTable("Countries");
+            modelBuilder.Entity<LanguageEntity>().ToTable("Languages");
+            modelBuilder.Entity<NetworkEntity>().ToTable("Networks");
+            modelBuilder.Entity<UserIPEntity>().ToTable("UserIPs");
+            modelBuilder.Entity<WalletEntity>().ToTable("Wallets");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
             modelBuilder.ApplyConfiguration(new AccountMovementEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PackageEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CountryEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new LanguageEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new NetworkEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserIPEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new WalletEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

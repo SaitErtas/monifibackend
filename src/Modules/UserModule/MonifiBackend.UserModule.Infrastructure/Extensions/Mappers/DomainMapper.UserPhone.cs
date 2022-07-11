@@ -14,7 +14,6 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
             {
                 Id = domain.Id,
                 Number = domain.Number,
-                PhoneType = domain.PhoneType.ToInt(),
                 Status = domain.Status.ToInt(),
                 CreatedAt = domain.CreatedAt,
                 ModifiedAt = domain.ModifiedAt
@@ -31,7 +30,6 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                         entity.Id,
                         entity.Status.ToEnum<BaseStatus>(),
                         entity.Number,
-                        entity.PhoneType.ToEnum<PhoneType>(),
                         entity.CreatedAt,
                         entity.ModifiedAt);
         }

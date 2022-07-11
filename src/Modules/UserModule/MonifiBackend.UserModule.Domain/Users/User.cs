@@ -2,27 +2,32 @@
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.UserModule.Domain.Localization;
 using MonifiBackend.UserModule.Domain.Users.Phones;
 
 namespace MonifiBackend.UserModule.Domain.Users
 {
     public sealed class User : BaseActivityDomain<int>, IAggregateRoot
     {
-        public string UserName { get; private set; }
-        public bool Terms { get; private set; }
+        public string Username { get; private set; }
+        public string FullName { get; private set; }
         public string Email { get; private set; }
+        public string ContractAddress { get; private set; }
+        public string Network { get; private set; }
+        public Country Country { get; private set; }
+        public Language Language { get; private set; }
+
         public string Password { get; private set; }
+        public string ConfirmationCode { get; private set; }
         public string ResetPasswordCode { get; private set; }
+        public string ReferanceCode { get; private set; }
+        public int ReferanceUser { get; private set; }
+        public bool Terms { get; private set; }
         public Role Role { get; private set; }
 
         private List<UserPhone> _phones = new();
         public IReadOnlyCollection<UserPhone> Phones => _phones.AsReadOnly();
 
-        public void SetUserName(string userName)
-        {
-            AppRule.NotNullOrEmpty<DomainException>(userName, "UserName Cannot Be Null Or Empty");
-            UserName = userName;
-        }
         public void SetTerms(bool terms)
         {
             Terms = terms;
@@ -46,19 +51,19 @@ namespace MonifiBackend.UserModule.Domain.Users
         public void SetRole(Role role) => Role = role;
 
         #region Phone
-        public bool IsPhoneExists(string number, PhoneType phoneType) => _phones.Any(x => x.Number == number && x.PhoneType == phoneType);
+        public bool IsPhoneExists(string number) => _phones.Any(x => x.Number == number);
 
-        public void AddPhone(string number, PhoneType phoneType)
+        public void AddPhone(string number)
         {
-            AppRule.False<DomainException>(IsPhoneExists(number, phoneType), "Phone Already Exists", $"Phone Already Exists. UserId: {Id}, Number: {number}");
-            var phone = UserPhone.CreateNew(number, phoneType);
+            AppRule.False<DomainException>(IsPhoneExists(number), "Phone Already Exists", $"Phone Already Exists. UserId: {Id}, Number: {number}");
+            var phone = UserPhone.CreateNew(number);
             _phones.Add(phone);
         }
 
-        public void DeletePhone(string number, PhoneType phoneType)
+        public void DeletePhone(string number)
         {
-            AppRule.True<DomainException>(IsPhoneExists(number, phoneType), "Phone Not Exists", $"Phone Not Exists.  UserId: {Id}, Number: {number}");
-            var phone = _phones.FirstOrDefault(x => x.Number == number && x.PhoneType == phoneType);
+            AppRule.True<DomainException>(IsPhoneExists(number), "Phone Not Exists", $"Phone Not Exists.  UserId: {Id}, Number: {number}");
+            var phone = _phones.FirstOrDefault(x => x.Number == number);
             phone.MarkAsDeleted();
         }
         #endregion
@@ -68,24 +73,29 @@ namespace MonifiBackend.UserModule.Domain.Users
         public static User CreateNew(
             string email,
             string password,
-            string userName,
             bool terms,
+            int referanceUser,
+            string referanceCode,
+            string confirmationCode,
             Role role,
             BaseStatus status)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty", $"Email Cannot Be Null Or Empty. Email: {email}");
             AppRule.NotNullOrEmpty<DomainException>(password, "Password Cannot Be Null Or Empty", $"Password Cannot Be Null Or Empty. Password: {password}");
-            AppRule.NotNullOrEmpty<DomainException>(userName, "UserName Cannot Be Null Or Empty", $"UserName Cannot Be Null Or Empty. UserName: {userName}");
-
+            AppRule.NotNegativeOrZero<DomainException>(referanceUser, "ReferanceUser Cannot Be Null Or Empty", $"ReferanceUser Cannot Be Null Or Empty. ReferanceUser: {referanceUser}");
             return new User()
             {
                 Email = email,
                 Password = password,
-                UserName = userName,
                 Terms = terms,
                 Status = status,
                 Role = role,
                 ResetPasswordCode = string.Empty,
+                ReferanceCode = referanceCode,
+                ReferanceUser = referanceUser,
+                ConfirmationCode = confirmationCode,
+                Username = string.Empty,
+                FullName = string.Empty
             };
         }
         public static User Map(
@@ -96,6 +106,9 @@ namespace MonifiBackend.UserModule.Domain.Users
             string userName,
             bool terms,
             string resetPassword,
+            int referanceUser,
+            string referanceCode,
+            string confirmationCode,
             DateTime createdAt,
             DateTime modifiedAt,
             Role role,
@@ -107,13 +120,16 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Status = status,
                 Email = email,
                 Password = password,
-                UserName = userName,
                 Terms = terms,
                 CreatedAt = createdAt,
                 ModifiedAt = modifiedAt,
                 Role = role,
                 ResetPasswordCode = resetPassword,
+                ReferanceUser = referanceUser,
+                ReferanceCode = referanceCode,
+                ConfirmationCode = confirmationCode,
                 _phones = phones,
+                Username = userName
             };
         }
 

@@ -24,7 +24,6 @@ namespace MonifiBackend.UserModule.Infrastructure.Users
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Id.ToString()),
                 new Claim("id", user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim("roles", user.Role.ToRole())
