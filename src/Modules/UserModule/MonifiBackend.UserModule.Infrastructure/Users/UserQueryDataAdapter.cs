@@ -40,6 +40,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<User> GetAsync(int id)
     {
         var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .FirstOrDefaultAsync(x => x.Id == id && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
@@ -47,6 +51,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<User> GetAsync(string email, string password)
     {
         var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .FirstOrDefaultAsync(x => x.Email == email && x.Password == password && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
@@ -54,7 +62,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<bool> CheckUserEmailAsync(string email)
     {
         return await _dbContext.Users
-            .AnyAsync(x => x.Email == email && x.Status == BaseStatus.Active.ToInt());
+            .AnyAsync(x => x.Email == email);
     }
     public async Task<User> GetReferanceCodeUserAsync(string referanceCode)
     {
@@ -83,6 +91,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<User> GetUserConfirmationCodeAsync(string confirmationCode)
     {
         var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .FirstOrDefaultAsync(x => x.ConfirmationCode == confirmationCode);
         return userEntity.Map();

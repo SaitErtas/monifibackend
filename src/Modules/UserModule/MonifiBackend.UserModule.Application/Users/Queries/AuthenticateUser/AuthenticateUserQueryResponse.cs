@@ -12,7 +12,6 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             AccessToken = accessToken;
         }
         public int Id { get; set; }
-        public int UserId { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
         public string AccessToken { get; set; }

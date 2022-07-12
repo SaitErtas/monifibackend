@@ -11,6 +11,7 @@
 		<PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.4" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.4" />
+		<PackageReference Include="EntityFramework" Version="6.4.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>

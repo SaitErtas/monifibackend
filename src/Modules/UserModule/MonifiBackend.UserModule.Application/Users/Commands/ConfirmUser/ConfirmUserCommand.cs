@@ -18,6 +18,5 @@ internal class ConfirmUserCommandValidator : AbstractValidator<ConfirmUserComman
     {
         RuleFor(x => x.ConfirmationCode)
             .NotEmpty().WithMessage("Confirmation Code alanı boş bırakılamaz.");
-
     }
 }

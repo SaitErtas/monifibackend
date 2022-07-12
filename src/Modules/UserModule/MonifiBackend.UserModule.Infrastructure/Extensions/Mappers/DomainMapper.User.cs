@@ -28,6 +28,11 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 ReferanceUser = domain.ReferanceUser,
                 ConfirmationCode = domain.ConfirmationCode,
                 ReferanceCode = domain.ReferanceCode,
+                FullName = domain.FullName,
+                Username = domain.Username,
+                CountryId = domain.Country.Id,
+                LanguageId = domain.Language.Id,
+                Wallet = domain.Wallet.Map()
             };
         }
         #endregion
@@ -49,6 +54,9 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.ReferanceUser,
                 entity.ReferanceCode,
                 entity.ConfirmationCode,
+                entity.Language.Map(),
+                entity.Country.Map(),
+                entity.Wallet.Map(),
                 entity.CreatedAt,
                 entity.ModifiedAt,
                 entity.Role.ToEnum<Role>(),

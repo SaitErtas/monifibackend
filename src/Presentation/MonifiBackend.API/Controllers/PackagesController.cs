@@ -6,13 +6,11 @@ using MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.DeletePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Queries.GetPackages;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace MonifiBackend.API.Controllers;
 
 //TODO: [Authorize]
 [Route("api/[controller]")]
-[SwaggerTag("Integration information with Auth transactions.")]
 [ApiController]
 public class PackagesController : BaseApiController
 {
@@ -24,7 +22,7 @@ public class PackagesController : BaseApiController
 
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> GetPackageAsync()
+    public async Task<IActionResult> GetPackagesAsync()
     {
         var request = new GetPackagesQuery();
         var result = await _mediator.Send(request);

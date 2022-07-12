@@ -2,8 +2,9 @@
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
-using MonifiBackend.UserModule.Domain.Localization;
+using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users.Phones;
+using MonifiBackend.UserModule.Domain.Wallets;
 
 namespace MonifiBackend.UserModule.Domain.Users
 {
@@ -14,8 +15,9 @@ namespace MonifiBackend.UserModule.Domain.Users
         public string Email { get; private set; }
         public string ContractAddress { get; private set; }
         public string Network { get; private set; }
-        public Country Country { get; private set; }
-        public Language Language { get; private set; }
+
+        public Country Country { get; private set; } = new();
+        public Language Language { get; private set; } = new();
 
         public string Password { get; private set; }
         public string ConfirmationCode { get; private set; }
@@ -25,6 +27,8 @@ namespace MonifiBackend.UserModule.Domain.Users
         public bool Terms { get; private set; }
         public Role Role { get; private set; }
 
+        public Wallet Wallet { get; private set; }
+
         private List<UserPhone> _phones = new();
         public IReadOnlyCollection<UserPhone> Phones => _phones.AsReadOnly();
 
@@ -32,15 +36,38 @@ namespace MonifiBackend.UserModule.Domain.Users
         {
             Terms = terms;
         }
-        public void SetResetPasswordCode(string resetPasswordCode)
+        public void SetUsername(string username)
         {
-            ResetPasswordCode = resetPasswordCode;
+            Username = username;
         }
-
+        public void SetFullName(string fullName)
+        {
+            FullName = fullName;
+        }
+        public void SetContractAddress(string contractAddress)
+        {
+            ContractAddress = contractAddress;
+        }
+        public void SetCountry(Country country)
+        {
+            Country = country;
+        }
+        public void SetLanguage(Language language)
+        {
+            Language = language;
+        }
+        public void SetWallet(Wallet wallet)
+        {
+            Wallet = wallet;
+        }
         public void SetEmail(string email)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty");
-            email = email;
+            Email = email;
+        }
+        public void SetResetPasswordCode(string resetPasswordCode)
+        {
+            ResetPasswordCode = resetPasswordCode;
         }
 
         public void SetPassword(string password)
@@ -77,12 +104,16 @@ namespace MonifiBackend.UserModule.Domain.Users
             int referanceUser,
             string referanceCode,
             string confirmationCode,
+            Language language,
+            Country country,
+            Wallet wallet,
             Role role,
             BaseStatus status)
         {
             AppRule.NotNullOrEmpty<DomainException>(email, "Email Cannot Be Null Or Empty", $"Email Cannot Be Null Or Empty. Email: {email}");
             AppRule.NotNullOrEmpty<DomainException>(password, "Password Cannot Be Null Or Empty", $"Password Cannot Be Null Or Empty. Password: {password}");
             AppRule.NotNegativeOrZero<DomainException>(referanceUser, "ReferanceUser Cannot Be Null Or Empty", $"ReferanceUser Cannot Be Null Or Empty. ReferanceUser: {referanceUser}");
+
             return new User()
             {
                 Email = email,
@@ -95,7 +126,10 @@ namespace MonifiBackend.UserModule.Domain.Users
                 ReferanceUser = referanceUser,
                 ConfirmationCode = confirmationCode,
                 Username = string.Empty,
-                FullName = string.Empty
+                FullName = string.Empty,
+                Wallet = wallet,
+                Language = language,
+                Country = country
             };
         }
         public static User Map(
@@ -109,6 +143,9 @@ namespace MonifiBackend.UserModule.Domain.Users
             int referanceUser,
             string referanceCode,
             string confirmationCode,
+            Language language,
+            Country country,
+            Wallet wallet,
             DateTime createdAt,
             DateTime modifiedAt,
             Role role,
@@ -129,7 +166,10 @@ namespace MonifiBackend.UserModule.Domain.Users
                 ReferanceCode = referanceCode,
                 ConfirmationCode = confirmationCode,
                 _phones = phones,
-                Username = userName
+                Username = userName,
+                Country = country,
+                Language = language,
+                Wallet = wallet
             };
         }
 

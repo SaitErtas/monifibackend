@@ -1,6 +1,6 @@
 ﻿using MonifiBackend.Core.Domain.Base;
 
-namespace MonifiBackend.UserModule.Domain.Localization;
+namespace MonifiBackend.UserModule.Domain.Localizations;
 
 public class Country : BaseDomain<int>
 {
@@ -9,6 +9,14 @@ public class Country : BaseDomain<int>
     public string Iso2 { get; private set; }
     public string Iso3 { get; private set; }
     public static Country Default() => new();
+
+    public static Country CreateNew(int id)
+    {
+        return new Country()
+        {
+            Id = id,
+        };
+    }
     public static Country Map(
             int id,
             BaseStatus status,

@@ -4,22 +4,27 @@ using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Application.Users.Events.UserRegisterComplited;
+using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users;
-using System.IdentityModel.Tokens.Jwt;
+using MonifiBackend.UserModule.Domain.Wallets;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
 {
     internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserCommandResponse>
     {
+        private readonly IWalletQueryDataPort _walletQueryDataPort;
+        private readonly ILocalizationQueryDataPort _localizationQueryDataPort;
         private readonly IUserQueryDataPort _userQueryDataPort;
         private readonly IUserCommandDataPort _userCommandDataPort;
         private readonly IJwtUtils _jwtUtils;
         private readonly IMediator _mediator;
 
-        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IJwtUtils jwtUtils, IMediator mediator)
+        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IJwtUtils jwtUtils, IMediator mediator, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort)
         {
             _userQueryDataPort = userQueryDataPort;
+            _localizationQueryDataPort = localizationQueryDataPort;
             _userCommandDataPort = userCommandDataPort;
+            _walletQueryDataPort = walletQueryDataPort;
             _jwtUtils = jwtUtils;
             _mediator = mediator;
         }
@@ -37,7 +42,12 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             var referanceCode = await GenerateReferanceCode();
             var confirmationCode = await GenerateConfirmationCode();
 
-            var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, Role.User, BaseStatus.Passive);
+            var language = await _localizationQueryDataPort.GetLanguageAsync(1);
+            var country = await _localizationQueryDataPort.GetCountryAsync(11);
+            var network = await _walletQueryDataPort.GetNetworkAsync(1);
+
+            var wallet = Wallet.CreateNew(string.Empty, network);
+            var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, language, country, wallet, Role.User, BaseStatus.Passive);
             var userId = await _userCommandDataPort.CreateAsync(user);
             AppRule.NotNegativeOrZero<BusinessValidationException>(userId);
 
@@ -45,14 +55,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             var registerComplitedEvent = new UserRegisterComplitedEvent(user.Email);
             await _mediator.Publish(registerComplitedEvent);
 
-            user = await _userQueryDataPort.GetAsync(request.Email, passwordHash);
-            AppRule.ExistsAndActive(user, new BusinessValidationException("User not found exception.", $"User not found exception. Email: {request.Email}"));
-
-            // authentication successful so generate jwt token
-            JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);
-            var jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-
-            return new RegisterUserCommandResponse(user, jwtToken);
+            return new RegisterUserCommandResponse();
         }
         private async Task<string> GenerateReferanceCode()
         {
