@@ -16,6 +16,8 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             Language = user.Language.Name;
             ReferanceCode = user.ReferanceCode;
             Phone = user.Phones?.FirstOrDefault()?.Number;
+            Avatar = "/images/avatars/1.png";
+            Company = "TestCompany";
         }
         public int Id { get; set; }
         public string Username { get; set; }
@@ -27,5 +29,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public string ReferanceCode { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
+        public string Avatar { get; set; }
+        public string Company { get; set; }
     }
 }
