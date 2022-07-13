@@ -27,7 +27,7 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
     {
         var user = await _userQueryDataPort.GetAsync(request.UserId);
         AppRule.ExistsAndActive(user, new BusinessValidationException("User not found.", $"User not found. UserId: {request.UserId}"));
-        AppRule.False(string.IsNullOrEmpty(user.Wallet.WalletAddress), new BusinessValidationException("Already subscribed user.", $"Already subscribed user UserId: {request.UserId}"));
+        AppRule.True(string.IsNullOrEmpty(user.Wallet.WalletAddress), new BusinessValidationException("Already subscribed user.", $"Already subscribed user UserId: {request.UserId}"));
 
         var language = await _localizationQueryDataPort.GetLanguageAsync(request.LanguageId);
         var country = await _localizationQueryDataPort.GetCountryAsync(request.CountryId);

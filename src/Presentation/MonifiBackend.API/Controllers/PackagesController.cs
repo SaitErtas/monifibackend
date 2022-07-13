@@ -9,7 +9,7 @@ using MonifiBackend.PackageModule.Application.Packages.Queries.GetPackages;
 
 namespace MonifiBackend.API.Controllers;
 
-//TODO: [Authorize]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PackagesController : BaseApiController

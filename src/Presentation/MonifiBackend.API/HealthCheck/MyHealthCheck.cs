@@ -1,24 +1,27 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net;
 
 namespace MonifiBackend.API.HealthCheck
 {
     public class MyHealthCheck : IHealthCheck
     {
-        private Random _random = new Random();
-        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,
-            CancellationToken cancellationToken = default)
+        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            var responseTime = _random.Next(1, 300);
-            if (responseTime < 100)
-            {
-                return Task.FromResult(HealthCheckResult.Healthy("Healthy result from MyHealthCheck"));
-            }
-            else if (responseTime < 200)
-            {
-                return Task.FromResult(HealthCheckResult.Degraded("Degraded result from MyHealthCheck"));
-            }
+            var catUrl = "https://localhost:7161/api/Health";
 
-            return Task.FromResult(HealthCheckResult.Unhealthy("Unhealthy result from MyHealthCheck"));
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri(catUrl);
+
+            HttpResponseMessage response = await client.GetAsync("");
+
+            return response.StatusCode == HttpStatusCode.OK ?
+                await Task.FromResult(new HealthCheckResult(
+                      status: HealthStatus.Healthy,
+                      description: "The API is healthy")) :
+                await Task.FromResult(new HealthCheckResult(
+                      status: HealthStatus.Unhealthy,
+                      description: "The API is sick"));
         }
     }
 }

@@ -7,6 +7,7 @@ using MonifiBackend.UserModule.Application.Localizations.Queries.GetLanguages;
 
 namespace MonifiBackend.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class LocalizationsController : BaseApiController
@@ -17,7 +18,6 @@ public class LocalizationsController : BaseApiController
         _mediator = mediator;
     }
 
-    [AllowAnonymous]
     [HttpGet("languages")]
     public async Task<IActionResult> GetLanguagesAsync()
     {
@@ -25,7 +25,6 @@ public class LocalizationsController : BaseApiController
         var result = await _mediator.Send(request);
         return Ok(result);
     }
-    [AllowAnonymous]
     [HttpGet("countries")]
     public async Task<IActionResult> GetCountriesAsync()
     {

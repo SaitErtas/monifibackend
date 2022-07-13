@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
+using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
-using MonifiBackend.UserModule.Application.Users.Queries.UserData;
+using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
 using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.API.Controllers
@@ -11,7 +12,7 @@ namespace MonifiBackend.API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly IMediator _mediator;
         public UsersController(IMediator mediator)
@@ -25,7 +26,7 @@ namespace MonifiBackend.API.Controllers
         {
             var currentUser = (User)HttpContext.Items["User"];
 
-            var request = new UserQuery(currentUser.Id);
+            var request = new GetUserQuery(currentUser.Id);
             var result = await _mediator.Send(request);
             return Ok(result);
         }

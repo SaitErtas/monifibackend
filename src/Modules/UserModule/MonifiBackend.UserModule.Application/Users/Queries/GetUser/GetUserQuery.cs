@@ -3,11 +3,11 @@ using MonifiBackend.Core.Application.Abstractions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 
-namespace MonifiBackend.UserModule.Application.Users.Queries.UserData
+namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
 {
-    public class UserQuery : IQuery<UserQueryResponse>
+    public class GetUserQuery : IQuery<GetUserQueryResponse>
     {
-        public UserQuery(int userId)
+        public GetUserQuery(int userId)
         {
             UserId = userId;
         }
@@ -16,9 +16,9 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.UserData
         public int UserId { get; }
 
     }
-    internal class UserQueryValidator : AbstractValidator<UserQuery>
+    internal class GetUserQueryValidator : AbstractValidator<GetUserQuery>
     {
-        public UserQueryValidator()
+        public GetUserQueryValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty().WithMessage("UserId alanı boş bırakılamaz.");

@@ -14,7 +14,6 @@ namespace MonifiBackend.UserModule.Domain.Users
         public string FullName { get; private set; }
         public string Email { get; private set; }
         public string ContractAddress { get; private set; }
-        public string Network { get; private set; }
 
         public Country Country { get; private set; } = new();
         public Language Language { get; private set; } = new();

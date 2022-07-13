@@ -67,6 +67,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<User> GetReferanceCodeUserAsync(string referanceCode)
     {
         var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
             .FirstOrDefaultAsync(x => x.ReferanceCode == referanceCode && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
@@ -83,6 +87,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<User> GetEmailAsync(string email)
     {
         var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .FirstOrDefaultAsync(x => x.Email == email && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();

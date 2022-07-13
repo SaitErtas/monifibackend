@@ -16,16 +16,15 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
         private readonly ILocalizationQueryDataPort _localizationQueryDataPort;
         private readonly IUserQueryDataPort _userQueryDataPort;
         private readonly IUserCommandDataPort _userCommandDataPort;
-        private readonly IJwtUtils _jwtUtils;
         private readonly IMediator _mediator;
+        private const int DEFAULT_VALUE = 1;
 
-        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IJwtUtils jwtUtils, IMediator mediator, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort)
+        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IMediator mediator, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort)
         {
             _userQueryDataPort = userQueryDataPort;
             _localizationQueryDataPort = localizationQueryDataPort;
             _userCommandDataPort = userCommandDataPort;
             _walletQueryDataPort = walletQueryDataPort;
-            _jwtUtils = jwtUtils;
             _mediator = mediator;
         }
 
@@ -42,9 +41,9 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             var referanceCode = await GenerateReferanceCode();
             var confirmationCode = await GenerateConfirmationCode();
 
-            var language = await _localizationQueryDataPort.GetLanguageAsync(1);
-            var country = await _localizationQueryDataPort.GetCountryAsync(11);
-            var network = await _walletQueryDataPort.GetNetworkAsync(1);
+            var language = await _localizationQueryDataPort.GetLanguageAsync(DEFAULT_VALUE);
+            var country = await _localizationQueryDataPort.GetCountryAsync(DEFAULT_VALUE);
+            var network = await _walletQueryDataPort.GetNetworkAsync(DEFAULT_VALUE);
 
             var wallet = Wallet.CreateNew(string.Empty, network);
             var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, language, country, wallet, Role.User, BaseStatus.Passive);

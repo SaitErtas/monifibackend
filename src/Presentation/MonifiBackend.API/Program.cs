@@ -108,9 +108,10 @@ var app = builder.Build();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
+    Predicate = p => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-app.MapHealthChecksUI();
+app.UseHealthChecksUI(options => { options.UIPath = "/health-dashboard"; });
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>
