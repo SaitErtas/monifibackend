@@ -14,7 +14,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             Country = user.Country.Name;
             ContractAddress = user.Wallet.WalletAddress;
             Language = user.Language.Name;
-            ReferanceCode = user.ReferanceCode;
+            ReferenceCode = user.ReferanceCode;
             Phone = user.Phones?.FirstOrDefault()?.Number;
             Avatar = "/images/avatars/1.png";
             Company = "TestCompany";
@@ -26,7 +26,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public string ContractAddress { get; set; }
         public string Country { get; set; }
         public string Language { get; set; }
-        public string ReferanceCode { get; set; }
+        public string ReferenceCode { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
         public string Avatar { get; set; }
