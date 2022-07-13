@@ -33,8 +33,8 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             var isUserEmail = await _userQueryDataPort.CheckUserEmailAsync(request.Email);
             AppRule.False(isUserEmail, new BusinessValidationException("User already exist.", $"User already exist. Email: {request.Email}"));
 
-            var referanceCodeUser = await _userQueryDataPort.GetReferanceCodeUserAsync(request.ReferanceCode);
-            AppRule.ExistsAndActive(referanceCodeUser, new BusinessValidationException("Referance Code not found.", $"Referance Code not found. ReferanceCode: {request.ReferanceCode}"));
+            var referanceCodeUser = await _userQueryDataPort.GetReferanceCodeUserAsync(request.ReferenceCode);
+            AppRule.ExistsAndActive(referanceCodeUser, new BusinessValidationException("Referance Code not found.", $"Referance Code not found. ReferanceCode: {request.ReferenceCode}"));
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
