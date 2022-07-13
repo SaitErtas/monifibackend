@@ -14,5 +14,7 @@ namespace MonifiBackend.UserModule.Domain.Users
         Task<bool> CheckUserReferanceCodeAsync(string referanceCode);
         Task<bool> CheckUserConfirmationCodeAsync(string confirmationCode);
         Task<User> GetEmailAsync(string email);
+        Task<List<User>> GetMeFirstNetworkAsync(int id);
+        Task<List<User>> GetAllNetworkAsync(List<int> ids);
     }
 }

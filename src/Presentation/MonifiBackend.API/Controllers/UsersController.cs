@@ -4,6 +4,7 @@ using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
+using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
 using MonifiBackend.UserModule.Domain.Users;
 
@@ -27,6 +28,16 @@ namespace MonifiBackend.API.Controllers
             var currentUser = (User)HttpContext.Items["User"];
 
             var request = new GetUserQuery(currentUser.Id);
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpGet("network")]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
+        public async Task<IActionResult> NetworkAsync()
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+
+            var request = new GetNetworkUsersQuery(currentUser.Id);
             var result = await _mediator.Send(request);
             return Ok(result);
         }

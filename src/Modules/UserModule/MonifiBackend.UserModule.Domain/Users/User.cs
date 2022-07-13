@@ -13,7 +13,6 @@ namespace MonifiBackend.UserModule.Domain.Users
         public string Username { get; private set; }
         public string FullName { get; private set; }
         public string Email { get; private set; }
-        public string ContractAddress { get; private set; }
 
         public Country Country { get; private set; } = new();
         public Language Language { get; private set; } = new();
@@ -42,10 +41,6 @@ namespace MonifiBackend.UserModule.Domain.Users
         public void SetFullName(string fullName)
         {
             FullName = fullName;
-        }
-        public void SetContractAddress(string contractAddress)
-        {
-            ContractAddress = contractAddress;
         }
         public void SetCountry(Country country)
         {
@@ -142,6 +137,7 @@ namespace MonifiBackend.UserModule.Domain.Users
             int referanceUser,
             string referanceCode,
             string confirmationCode,
+            string fullName,
             Language language,
             Country country,
             Wallet wallet,
@@ -168,7 +164,8 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Username = userName,
                 Country = country,
                 Language = language,
-                Wallet = wallet
+                Wallet = wallet,
+                FullName = fullName
             };
         }
 

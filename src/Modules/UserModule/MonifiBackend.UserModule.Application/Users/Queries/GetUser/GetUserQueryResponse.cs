@@ -11,8 +11,8 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             Username = user.Username;
             FullName = user.FullName;
             Email = user.Email;
-            ContractAddress = user.ContractAddress;
             Country = user.Country.Name;
+            ContractAddress = user.Wallet.WalletAddress;
             Language = user.Language.Name;
             ReferanceCode = user.ReferanceCode;
             Phone = user.Phones?.FirstOrDefault()?.Number;

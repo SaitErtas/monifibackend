@@ -107,4 +107,19 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .FirstOrDefaultAsync(x => x.ConfirmationCode == confirmationCode);
         return userEntity.Map();
     }
+
+    public async Task<List<User>> GetMeFirstNetworkAsync(int id)
+    {
+        return await _dbContext.Users
+            .Where(x => x.ReferanceUser == id)
+            .Select(x => x.Map())
+            .ToListAsync();
+    }
+    public async Task<List<User>> GetAllNetworkAsync(List<int> ids)
+    {
+        return await _dbContext.Users
+            .Where(x => !ids.Any(p2 => x.Id == p2))
+            .Select(x => x.Map())
+            .ToListAsync();
+    }
 }

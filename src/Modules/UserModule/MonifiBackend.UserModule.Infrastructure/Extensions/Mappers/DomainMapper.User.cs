@@ -54,6 +54,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.ReferanceUser,
                 entity.ReferanceCode,
                 entity.ConfirmationCode,
+                entity.FullName,
                 entity.Language.Map(),
                 entity.Country.Map(),
                 entity.Wallet.Map(),
