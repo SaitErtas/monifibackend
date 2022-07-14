@@ -41,8 +41,8 @@ namespace MonifiBackend.Core.Infrastructure.Middlewares
                 }
                 else
                 {
-                    _logPort.LogError($"{exception.Message}", exception);
-                    appResponse = new ResponseWrapper<object>(500, "SYS-101", exception.Message);
+                    _logPort.LogError($"{exception.Message + Environment.NewLine + exception.InnerException}", exception);
+                    appResponse = new ResponseWrapper<object>(500, "SYS-101", exception.Message + Environment.NewLine +exception.InnerException);
                 }
 
                 response.StatusCode = appResponse.StatusCode;
