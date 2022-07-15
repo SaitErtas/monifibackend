@@ -40,7 +40,7 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         user.SetFullName(request.FullName);
         user.SetCountry(country);
         user.SetLanguage(language);
-        user.AddPhone(request.Contract);
+        user.AddPhone(request.Contact);
 
         var status = await _userCommandDataPort.SaveAsync(user);
         AppRule.True<BusinessValidationException>(status);

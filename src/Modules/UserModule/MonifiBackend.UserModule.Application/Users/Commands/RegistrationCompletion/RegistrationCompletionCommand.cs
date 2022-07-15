@@ -6,13 +6,13 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationComple
 
 public class RegistrationCompletionCommand : ICommand<RegistrationCompletionCommandResponse>
 {
-    public RegistrationCompletionCommand(int userId, string username, string fullName, string walletAddress, int cryptoNetworkId, string contract, int countryId, int languageId)
+    public RegistrationCompletionCommand(int userId, string username, string fullName, string walletAddress, int cryptoNetworkId, string contact, int countryId, int languageId)
     {
         Username = username;
         FullName = fullName;
         WalletAddress = walletAddress;
         CryptoNetworkId = cryptoNetworkId;
-        Contract = contract;
+        Contact = contact;
         CountryId = countryId;
         LanguageId = languageId;
     }
@@ -22,7 +22,7 @@ public class RegistrationCompletionCommand : ICommand<RegistrationCompletionComm
     public string FullName { get; set; }
     public string WalletAddress { get; set; }
     public int CryptoNetworkId { get; set; }
-    public string Contract { get; set; }
+    public string Contact { get; set; }
     public int CountryId { get; set; }
     public int LanguageId { get; set; }
 }
@@ -39,7 +39,7 @@ internal class RegistrationCompletionCommandValidator : AbstractValidator<Regist
             .NotEmpty().WithMessage("ContractAddress alanı boş bırakılamaz.");
         RuleFor(x => x.CryptoNetworkId)
             .NotEmpty().WithMessage("CryptoNetwork alanı boş bırakılamaz.");
-        RuleFor(x => x.Contract)
+        RuleFor(x => x.Contact)
             .NotEmpty().WithMessage("Contract alanı boş bırakılamaz.");
         RuleFor(x => x.CountryId)
             .NotEmpty().WithMessage("Language alanı boş bırakılamaz.");
