@@ -9,7 +9,7 @@ public class GetNetworkUsersQuery : IQuery<GetNetworkUsersQueryResponse>
     {
         UserId = userId;
     }
-    public int UserId { get; private set; }
+    public int UserId { get; }
 
 }
 internal class GetNetworkUsersQueryValidator : AbstractValidator<GetNetworkUsersQuery>
