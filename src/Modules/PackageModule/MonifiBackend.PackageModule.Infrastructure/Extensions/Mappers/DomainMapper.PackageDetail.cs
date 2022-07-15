@@ -1,40 +1,41 @@
 ﻿using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Data.Infrastructure.Entities;
-using MonifiBackend.PackageModule.Domain.Packages;
+using MonifiBackend.PackageDetailModule.Domain.PackageDetails;
 
 namespace MonifiBackend.PackageModule.Infrastructure.Extensions.Mappers;
 
 public static partial class DomainMapper
 {
     #region Package to PackageEntity 
-    public static PackageEntity Map(this Package domain)
+    public static PackageDetailEntity Map(this PackageDetail domain)
     {
-        var details = domain.Details != null ? domain.Details.Select(x => x.Map()).ToList() : null;
-
-        return new PackageEntity()
+        return new PackageDetailEntity()
         {
             Id = domain.Id,
             Name = domain.Name,
             Status = domain.Status.ToInt(),
             CreatedAt = domain.CreatedAt,
             ModifiedAt = domain.ModifiedAt,
-            PackageDetails = details
+            Commission = domain.Commission,
+            Duration = domain.Duration,
+            PackageId = domain.Package.Id,
         };
     }
     #endregion
     #region PackageEntity to Package 
-    public static Package Map(this PackageEntity entity)
+    public static PackageDetail Map(this PackageDetailEntity entity)
     {
         if (entity == null)
-            return Package.Default();
+            return PackageDetail.Default();
 
-        return Package.Map(entity.Id,
+        return PackageDetail.Map(entity.Id,
             entity.Status.ToEnum<BaseStatus>(),
             entity.CreatedAt,
             entity.ModifiedAt,
             entity.Name,
-            entity.PackageDetails.Select(x => x.Map()).ToList());
+            entity.Duration,
+            entity.Commission);
     }
     #endregion
 }

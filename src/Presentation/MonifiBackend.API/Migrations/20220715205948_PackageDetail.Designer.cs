@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonifiBackend.Data.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    partial class MonifiBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220715205948_PackageDetail")]
+    partial class PackageDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,9 +180,6 @@ namespace MonifiBackend.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ChangePeriodDay")
-                        .HasColumnType("int");
-
                     b.Property<int>("Commission")
                         .HasColumnType("int");
 
@@ -190,19 +189,11 @@ namespace MonifiBackend.API.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinValue")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
@@ -214,7 +205,7 @@ namespace MonifiBackend.API.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("PackageDetails", (string)null);
+                    b.ToTable("PackageDetailEntity");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
@@ -445,7 +436,7 @@ namespace MonifiBackend.API.Migrations
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", "Package")
                         .WithMany("PackageDetails")
                         .HasForeignKey("PackageId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Package");

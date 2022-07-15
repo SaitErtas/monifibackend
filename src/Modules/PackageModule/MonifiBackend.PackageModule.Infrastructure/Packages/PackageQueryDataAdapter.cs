@@ -17,7 +17,7 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
     public async Task<bool> GetAsync(int duration)
     {
         return await _dbContext.Packages
-            .AnyAsync(x => x.Duration == duration && x.Status != BaseStatus.Deleted.ToInt());
+            .AnyAsync(x => x.PackageDetails.Any(x => x.Duration == duration) && x.Status != BaseStatus.Deleted.ToInt());
     }
 
     public async Task<Package> GetPackageAsync(int id)
@@ -30,6 +30,7 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
     public async Task<List<Package>> GetsAsync()
     {
         var packagesEntity = await _dbContext.Packages
+            .Include(i => i.PackageDetails)
             .Where(x => x.Status != BaseStatus.Deleted.ToInt())
             .ToListAsync();
 

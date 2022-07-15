@@ -19,6 +19,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<UserPhoneEntity>().ToTable("UserPhones");
             modelBuilder.Entity<AccountMovementEntity>().ToTable("AccountMovements");
             modelBuilder.Entity<PackageEntity>().ToTable("Packages");
+            modelBuilder.Entity<PackageDetailEntity>().ToTable("PackageDetails");
             modelBuilder.Entity<CountryEntity>().ToTable("Countries");
             modelBuilder.Entity<LanguageEntity>().ToTable("Languages");
             modelBuilder.Entity<NetworkEntity>().ToTable("Networks");
@@ -29,6 +30,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
             modelBuilder.ApplyConfiguration(new AccountMovementEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PackageEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PackageDetailEntityConfiguration());
             modelBuilder.ApplyConfiguration(new CountryEntityConfiguration());
             modelBuilder.ApplyConfiguration(new LanguageEntityConfiguration());
             modelBuilder.ApplyConfiguration(new NetworkEntityConfiguration());

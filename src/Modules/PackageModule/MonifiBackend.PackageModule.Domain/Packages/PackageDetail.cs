@@ -2,23 +2,31 @@
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
-using MonifiBackend.PackageDetailModule.Domain.PackageDetails;
+using MonifiBackend.PackageModule.Domain.Packages;
 
-namespace MonifiBackend.PackageModule.Domain.Packages;
+namespace MonifiBackend.PackageDetailModule.Domain.PackageDetails;
 
-public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
+public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
 {
     public string Name { get; private set; }
-    private List<PackageDetail> _details = new();
-    public IReadOnlyCollection<PackageDetail> Details => _details.AsReadOnly();
-
-    public static Package Default() => new();
+    public int Duration { get; private set; }
+    public int Commission { get; private set; }
+    public Package Package { get; private set; }
+    public static PackageDetail Default() => new();
 
     public void SetName(string name)
     {
         Name = name;
     }
-    public static Package CreateNew(
+    public void SetDuration(int duration)
+    {
+        Duration = duration;
+    }
+    public void SetCommission(int commission)
+    {
+        Commission = commission;
+    }
+    public static PackageDetail CreateNew(
         string name,
         int duration,
         int commission,
@@ -28,28 +36,32 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
         AppRule.NotNegativeOrZero(duration, new DomainException(DomainExceptionMessageType.NEGATIVE_OR_ZERO, nameof(duration), duration));
         AppRule.NotNegativeOrZero(commission, new DomainException(DomainExceptionMessageType.NEGATIVE_OR_ZERO, nameof(commission), commission));
 
-        return new Package()
+        return new PackageDetail()
         {
             Name = name,
-            Status = status
+            Status = status,
+            Duration = duration,
+            Commission = commission,
         };
     }
-    public static Package Map(
+    public static PackageDetail Map(
         int id,
         BaseStatus status,
         DateTime createdAt,
         DateTime modifiedAt,
         string name,
-        List<PackageDetail> details)
+        int duration,
+        int commission)
     {
-        return new Package()
+        return new PackageDetail()
         {
             Id = id,
             Status = status,
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
             Name = name,
-            _details = details
+            Duration = duration,
+            Commission = commission
         };
     }
 }

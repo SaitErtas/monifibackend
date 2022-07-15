@@ -22,8 +22,6 @@ internal class UpdatePackageCommandHandler : ICommandHandler<UpdatePackageComman
         AppRule.ExistsAndActive(package, new BusinessValidationException(BusinessValidationMessageType.NOT_FOUND, nameof(request.Id), request.Id));
 
         package.SetName(request.Name);
-        package.SetDuration(request.Duration);
-        package.SetCommission(request.Commission);
 
         var status = await _packageCommandDataPort.SaveAsync(package);
         AppRule.True(status, new BusinessValidationException(BusinessValidationMessageType.NOT_UPDATED, nameof(request.Id), request.Id));
