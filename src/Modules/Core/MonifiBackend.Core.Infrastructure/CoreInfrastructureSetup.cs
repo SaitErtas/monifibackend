@@ -6,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MonifiBackend.Core.Domain.Caching;
 using MonifiBackend.Core.Domain.Logging;
+using MonifiBackend.Core.Domain.Notifications;
 using MonifiBackend.Core.Infrastructure.Caching;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.Core.Infrastructure.Logging;
 using MonifiBackend.Core.Infrastructure.Middlewares;
+using MonifiBackend.Core.Infrastructure.Notifications;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using System.Text;
 
@@ -20,6 +22,7 @@ namespace MonifiBackend.Core.Infrastructure
         public static IServiceCollection ConfigureCoreInfrastructure(this IServiceCollection services, ApplicationSettings applicationSettings)
         {
             services.AddSingleton<ILogPort, LogAdapter>();
+            services.AddSingleton<IEmailPort, YandexEmailAdapter>();
             services.AddEfDatabaseClient(applicationSettings);
             services.AddHttpContextAccessor();
             services.AddRateLimiting();

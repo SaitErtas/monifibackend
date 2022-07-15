@@ -51,7 +51,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             AppRule.NotNegativeOrZero<BusinessValidationException>(userId);
 
             //TODO: Send E-Mail Event
-            var registerComplitedEvent = new UserRegisterComplitedEvent(user.Email);
+            var registerComplitedEvent = new UserRegisterComplitedEvent(userId);
             await _mediator.Publish(registerComplitedEvent);
 
             return new RegisterUserCommandResponse();

@@ -2,11 +2,11 @@
 
 namespace MonifiBackend.UserModule.Application.Users.Events.UserRegisterComplited;
 
-internal class UserRegisterComplitedEvent : IEvent
+public class UserRegisterComplitedEvent : IEvent
 {
-    public UserRegisterComplitedEvent(string email)
+    public UserRegisterComplitedEvent(int userId)
     {
-        Email = email;
+        UserId = userId;
     }
-    public string Email { get; set; }
+    public int UserId { get; set; }
 }
