@@ -18,8 +18,10 @@ public class GetNetwork
     {
         Id = network.Id;
         Name = network.Name;
+        value = network.Name;
     }
 
     public int Id { get; private set; }
-    public string Name { get; private set; }
+    public string Name { get; private set; }    
+    public string value { get; private set; }
 }
