@@ -11,6 +11,8 @@ using MonifiBackend.PackageModule.Application;
 using MonifiBackend.PackageModule.Infrastructure;
 using MonifiBackend.UserModule.Application;
 using MonifiBackend.UserModule.Infrastructure;
+using MonifiBackend.WalletModule.Application;
+using MonifiBackend.WalletModule.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +46,11 @@ builder.Services.AddUserServiceInfrastructure();
 #region Package Setup
 builder.Services.AddPackageServiceApplication();
 builder.Services.AddPackageServiceInfrastructure();
+#endregion
+
+#region Wallet Setup
+builder.Services.AddWalletServiceApplication();
+builder.Services.AddWalletServiceInfrastructure();
 #endregion
 
 // Add services to the container.

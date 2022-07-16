@@ -29,6 +29,8 @@
 		<ProjectReference Include="..\..\Modules\PackageModule\MonifiBackend.PackageModule.Infrastructure\MonifiBackend.PackageModule.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Modules\UserModule\MonifiBackend.UserModule.Application\MonifiBackend.UserModule.Application.csproj" />
 		<ProjectReference Include="..\..\Modules\UserModule\MonifiBackend.UserModule.Infrastructure\MonifiBackend.UserModule.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Modules\WalletModule\MonifiBackend.WalletModule.Application\MonifiBackend.WalletModule.Application.csproj" />
+		<ProjectReference Include="..\..\Modules\WalletModule\MonifiBackend.WalletModule.Infrastructure\MonifiBackend.WalletModule.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

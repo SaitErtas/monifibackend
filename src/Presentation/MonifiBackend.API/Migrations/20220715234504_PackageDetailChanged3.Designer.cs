@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonifiBackend.Data.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    partial class MonifiBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220715234504_PackageDetailChanged3")]
+    partial class PackageDetailChanged3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,8 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(9, 2)
-                        .HasColumnType("decimal(9,2)");
+                        .HasPrecision(20, 2)
+                        .HasColumnType("decimal(20,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

@@ -79,5 +79,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         public DbSet<NetworkEntity> Networks { get; set; }
         public DbSet<UserIPEntity> UserIPs { get; set; }
         public DbSet<WalletEntity> Wallets { get; set; }
+        public DbSet<AccountMovementEntity> AccountMovements { get; set; }
     }
 }

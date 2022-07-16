@@ -1,5 +1,8 @@
-﻿using MonifiBackend.Data.Infrastructure.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
+using MonifiBackend.WalletModule.Infrastructure.Extensions.Mappers;
 
 namespace MonifiBackend.WalletModule.Infrastructure.AccountMovements;
 
@@ -10,4 +13,30 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     {
         _dbContext = dbContext;
     }
+
+    public async Task<List<AccountMovement>> GetAccountMovementAsync(int userId)
+    {
+        var entity = await _dbContext.AccountMovements
+            .Where(w => w.Wallet.UserId == userId)
+            .Include(i => i.PackageDetail)
+            .ThenInclude(i => i.Package)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .ToListAsync();
+        return entity.Select(s => s.Map()).ToList();
+    }
+
+    public async Task<List<AccountMovement>> GetPurchasedMovementAsync(int userId)
+    {
+        var entity = await _dbContext.AccountMovements
+            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt())
+            .Include(i => i.PackageDetail)
+            .ThenInclude(i => i.Package)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .ToListAsync();
+
+        return entity.Select(s => s.Map()).ToList();
+    }
+
 }

@@ -16,6 +16,7 @@ public class PackageDetailEntity : BaseActivityEntity
     public int ChangePeriodDay { get; set; }
 
     public virtual PackageEntity Package { get; set; }
+    public virtual ICollection<AccountMovementEntity> AccountMovements { get; set; }
 }
 public class PackageDetailEntityConfiguration : IEntityTypeConfiguration<PackageDetailEntity>
 {
@@ -30,6 +31,7 @@ public class PackageDetailEntityConfiguration : IEntityTypeConfiguration<Package
         builder.Property(x => x.ChangePeriodDay).IsRequired();
 
         builder.HasOne(x => x.Package).WithMany(x => x.PackageDetails).HasForeignKey(x => x.PackageId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(x => x.AccountMovements).WithOne(x => x.PackageDetail);
 
         BaseActivityConfiguration.Configure(builder);
     }

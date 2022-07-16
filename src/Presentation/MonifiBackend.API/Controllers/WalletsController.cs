@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
+using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 
 namespace MonifiBackend.API.Controllers;
 
@@ -14,6 +17,27 @@ public class WalletsController : BaseApiController
     public WalletsController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet("account-movements")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> GetAccountMovementsAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new GetAccountMovementsQuery(currentUser.Id);
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    [HttpGet("purchased-movements")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> GetPurchasedMovementsAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new GetPurchasedMovementsQuery(currentUser.Id);
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 
     [AllowAnonymous]

@@ -13,5 +13,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         DbSet<NetworkEntity> Networks { get; set; }
         DbSet<UserIPEntity> UserIPs { get; set; }
         DbSet<WalletEntity> Wallets { get; set; }
+        DbSet<AccountMovementEntity> AccountMovements { get; set; }
     }
 }
