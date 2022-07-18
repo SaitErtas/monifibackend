@@ -10,7 +10,7 @@ namespace MonifiBackend.UserModule.Domain.Users.Phones
         public string Number { get; private set; }
         public static UserPhone CreateNew(string number)
         {
-            AppRule.NotNullOrEmpty<DomainException>(number, "Number not null or empty", $"Number not null or empty. Number: {number}");
+            AppRule.NotNullOrEmpty<DomainException>(number, "Phone number not null or empty", $"Phone number not null or empty. Number: {number}");
 
             return new UserPhone()
             {
