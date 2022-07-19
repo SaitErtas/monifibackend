@@ -41,8 +41,8 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         user.SetCountry(country);
         user.SetLanguage(language);
 
-        user.AddPhone(request.Phone);
-        
+        if (request.PhoneId == null) user.AddPhone(request.Phone);
+
 
         var status = await _userCommandDataPort.SaveAsync(user);
         AppRule.True<BusinessValidationException>(status);

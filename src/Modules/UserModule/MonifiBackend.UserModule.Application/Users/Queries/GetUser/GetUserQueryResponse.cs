@@ -23,6 +23,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             CryptoNetwork = user.Wallet.CryptoNetwork.Name;
             CountryId = user.Country.Id;
             LanguageId = user.Language.Id;
+            PhoneId = user.Phones?.FirstOrDefault()?.Id;
             Status = user.Status.ToString().ToLower();
         }
         public int Id { get; set; }
