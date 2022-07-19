@@ -7,9 +7,9 @@ public class GetNetworkUsersQueryResponse
 {
     public GetNetworkUsersQueryResponse(User user, List<User> meFirstNetworkUsers, List<User> networkUsers)
     {
-        var clearMeFirstNetworkUsers = meFirstNetworkUsers.Select(x => new GetUser(x.Email, x.ReferanceCode, x.FullName, "Member")).ToList();
-        var clearNetworkUsers = networkUsers.Select(x => new GetUser(x.Email.CapitalizeFirstAndHideText(), x.ReferanceCode, x.FullName.CapitalizeFirstAndHideText(), "Sub")).ToList();
-        var clearUser = new GetUser(user.Email, user.ReferanceCode, user.FullName, "Leader");
+        var clearMeFirstNetworkUsers = meFirstNetworkUsers.Select(x => new GetUser(x.Email, x.ReferanceCode, x.FullName, "Member",x.Id)).ToList();
+        var clearNetworkUsers = networkUsers.Select(x => new GetUser(x.Email.CapitalizeFirstAndHideText(), x.ReferanceCode, x.FullName.CapitalizeFirstAndHideText(), "Sub",x.Id)).ToList();
+        var clearUser = new GetUser(user.Email, user.ReferanceCode, user.FullName, "Leader",user.Id);
         NetworkUsers.Add(clearUser);
         NetworkUsers.AddRange(clearMeFirstNetworkUsers);
         NetworkUsers.AddRange(clearNetworkUsers);
@@ -20,16 +20,20 @@ public class GetNetworkUsersQueryResponse
 }
 public class GetUser
 {
-    public GetUser(string email, string referanceCode, string fullName, string status)
+    public GetUser(string email, string referenceCode, string fullName, string status,int userId)
     {
         Email = email;
-        ReferanceCode = referanceCode;
+        ReferenceCode = referenceCode;
         FullName = fullName;
         Status = status;
+        UserId = userId;
+        Id = userId;
     }
 
     public string Email { get; set; }
-    public string ReferanceCode { get; set; }
+    public string ReferenceCode { get; set; }
     public string FullName { get; set; }
     public string Status { get; set; }
+    public int UserId { get; set; }
+    public int Id { get; set; }
 }

@@ -8,7 +8,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         {
             Id = user.Id;
             Role = user.Role.ToRole();
-            Username = user.Username;
+            UserName = user.Username;
             FullName = user.FullName;
             Email = user.Email;
             Country = user.Country.Name;
@@ -16,18 +16,18 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             WalletAddressId = user.Wallet.Id;
             Language = user.Language.Name;
             ReferenceCode = user.ReferanceCode;
-            Phone = user.Phones?.FirstOrDefault()?.Number;
+            Phone = "" + user.Phones?.FirstOrDefault()?.Number;
             Avatar = "/images/avatars/1.png";
             Company = "TestCompany";
             CryptoNetworkId = user.Wallet.CryptoNetwork.Id;
             CryptoNetwork = user.Wallet.CryptoNetwork.Name;
             CountryId = user.Country.Id;
             LanguageId = user.Language.Id;
-
-
+            PhoneId = user.Phones?.FirstOrDefault()?.Id;
+            Status = user.Status.ToString().ToLower();
         }
         public int Id { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public int? WalletAddressId { get; set; }
@@ -44,5 +44,6 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public int? CountryId { get; set; }
         public string Language { get; set; }
         public int? LanguageId { get; set; }
+        public string Status { get; set; }
     }
 }
