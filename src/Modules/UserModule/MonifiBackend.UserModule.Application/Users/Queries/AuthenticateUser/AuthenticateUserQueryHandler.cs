@@ -20,7 +20,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             var user = await _userQueryDataPort.GetEmailAsync(request.Email);
             AppRule.ExistsAndActive(user, new BusinessValidationException("User not found exception.", $"User not found exception. Email: {request.Email}"));
 
-            var userPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            //var userPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
             AppRule.True(verified, new BusinessValidationException("User Not Verified Exception.", $"User Not Verified Exception. Email: {request.Email}"));
 
