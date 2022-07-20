@@ -4,6 +4,10 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>2fb1dea0-0333-4df9-acc0-dc15dfaf7778</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,6 +20,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
 		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.7.1" />

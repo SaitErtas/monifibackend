@@ -53,17 +53,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.PackageModule
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WalletModule", "WalletModule", "{F0E8CDEF-DD5E-4779-9097-05E5EABF6966}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.WalletModule.Application", "src\Modules\WalletModule\MonifiBackend.WalletModule.Application\MonifiBackend.WalletModule.Application.csproj", "{E104A699-803A-4930-A635-2CB3D6BCC216}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.WalletModule.Application", "src\Modules\WalletModule\MonifiBackend.WalletModule.Application\MonifiBackend.WalletModule.Application.csproj", "{E104A699-803A-4930-A635-2CB3D6BCC216}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.WalletModule.Domain", "src\Modules\WalletModule\MonifiBackend.WalletModule.Domain\MonifiBackend.WalletModule.Domain.csproj", "{541CF663-A4B2-4DCB-A51F-0FB4C8368360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.WalletModule.Domain", "src\Modules\WalletModule\MonifiBackend.WalletModule.Domain\MonifiBackend.WalletModule.Domain.csproj", "{541CF663-A4B2-4DCB-A51F-0FB4C8368360}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.WalletModule.Infrastructure", "src\Modules\WalletModule\MonifiBackend.WalletModule.Infrastructure\MonifiBackend.WalletModule.Infrastructure.csproj", "{40162041-D5FC-42CD-92CA-8731A9B5EF74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.WalletModule.Infrastructure", "src\Modules\WalletModule\MonifiBackend.WalletModule.Infrastructure\MonifiBackend.WalletModule.Infrastructure.csproj", "{40162041-D5FC-42CD-92CA-8731A9B5EF74}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0AFC1B6A-D8CE-4121-BA90-66E064FD8C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.WalletModule.ArchTests", "src\Modules\WalletModule\Tests\MonifiBackend.WalletModule.ArchTests\MonifiBackend.WalletModule.ArchTests.csproj", "{882E3746-AD80-4149-81D7-AA46D929DCE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.WalletModule.ArchTests", "src\Modules\WalletModule\Tests\MonifiBackend.WalletModule.ArchTests\MonifiBackend.WalletModule.ArchTests.csproj", "{882E3746-AD80-4149-81D7-AA46D929DCE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonifiBackend.WalletModule.UnitTests", "src\Modules\WalletModule\Tests\MonifiBackend.WalletModule.UnitTests\MonifiBackend.WalletModule.UnitTests.csproj", "{1BA42951-1010-4D05-8B08-F39B16898269}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonifiBackend.WalletModule.UnitTests", "src\Modules\WalletModule\Tests\MonifiBackend.WalletModule.UnitTests\MonifiBackend.WalletModule.UnitTests.csproj", "{1BA42951-1010-4D05-8B08-F39B16898269}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1B306763-3025-4200-A49A-64E9B385C21A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{1BA42951-1010-4D05-8B08-F39B16898269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BA42951-1010-4D05-8B08-F39B16898269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BA42951-1010-4D05-8B08-F39B16898269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B306763-3025-4200-A49A-64E9B385C21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B306763-3025-4200-A49A-64E9B385C21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B306763-3025-4200-A49A-64E9B385C21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B306763-3025-4200-A49A-64E9B385C21A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
