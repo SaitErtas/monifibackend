@@ -6,7 +6,6 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
 COPY ["./src/Presentation/MonifiBackend.API/MonifiBackend.API.csproj", "src/Presentation/MonifiBackend.API/"]
 COPY ["./src/Modules/WalletModule/MonifiBackend.WalletModule.Application/MonifiBackend.WalletModule.Application.csproj", "src/Modules/WalletModule/MonifiBackend.WalletModule.Application/"]
 COPY ["./src/Modules/WalletModule/MonifiBackend.WalletModule.Domain/MonifiBackend.WalletModule.Domain.csproj", "src/Modules/WalletModule/MonifiBackend.WalletModule.Domain/"]

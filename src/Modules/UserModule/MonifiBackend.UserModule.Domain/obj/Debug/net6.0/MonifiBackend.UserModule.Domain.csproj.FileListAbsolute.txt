@@ -1,0 +1,17 @@
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.UserModule.Domain.deps.json
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.UserModule.Domain.dll
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.UserModule.Domain.pdb
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.Core.Application.dll
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.Core.Domain.dll
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.Core.Application.pdb
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\bin\Debug\net6.0\MonifiBackend.Core.Domain.pdb
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.csproj.AssemblyReference.cache
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.AssemblyInfoInputs.cache
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.AssemblyInfo.cs
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.csproj.CopyComplete
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.dll
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\refint\MonifiBackend.UserModule.Domain.dll
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\MonifiBackend.UserModule.Domain.pdb
+C:\Users\Hakan\Documents\GitHub\monifibackend\src\Modules\UserModule\MonifiBackend.UserModule.Domain\obj\Debug\net6.0\ref\MonifiBackend.UserModule.Domain.dll
