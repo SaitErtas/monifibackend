@@ -1,0 +1,636 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\Tests\\MonifiBackend.UserModule.UnitTests\\MonifiBackend.UserModule.UnitTests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\MonifiBackend.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\MonifiBackend.Data.csproj",
+        "projectName": "MonifiBackend.Data",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\MonifiBackend.Data.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj",
+        "projectName": "MonifiBackend.Core.Application",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj",
+        "projectName": "MonifiBackend.Core.Domain",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.16, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.3.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\MonifiBackend.Core.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\MonifiBackend.Core.Infrastructure.csproj",
+        "projectName": "MonifiBackend.Core.Infrastructure",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\MonifiBackend.Core.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\MonifiBackend.Data.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Framework\\MonifiBackend.Data\\MonifiBackend.Data.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AspNetCoreRateLimit": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "AspNetCoreRateLimit.Redis": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.5.61, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\MonifiBackend.UserModule.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\MonifiBackend.UserModule.Application.csproj",
+        "projectName": "MonifiBackend.UserModule.Application",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\MonifiBackend.UserModule.Application.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj",
+        "projectName": "MonifiBackend.UserModule.Domain",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Application\\MonifiBackend.Core.Application.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Domain\\MonifiBackend.Core.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\MonifiBackend.UserModule.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\MonifiBackend.UserModule.Infrastructure.csproj",
+        "projectName": "MonifiBackend.UserModule.Infrastructure",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\MonifiBackend.UserModule.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\MonifiBackend.Core.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\Core\\MonifiBackend.Core.Infrastructure\\MonifiBackend.Core.Infrastructure.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\Tests\\MonifiBackend.UserModule.UnitTests\\MonifiBackend.UserModule.UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\Tests\\MonifiBackend.UserModule.UnitTests\\MonifiBackend.UserModule.UnitTests.csproj",
+        "projectName": "MonifiBackend.UserModule.UnitTests",
+        "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\Tests\\MonifiBackend.UserModule.UnitTests\\MonifiBackend.UserModule.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\Hakan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\Tests\\MonifiBackend.UserModule.UnitTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Hakan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\MonifiBackend.UserModule.Application.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Application\\MonifiBackend.UserModule.Application.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Domain\\MonifiBackend.UserModule.Domain.csproj"
+              },
+              "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\MonifiBackend.UserModule.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Hakan\\Documents\\GitHub\\monifibackend\\src\\Modules\\UserModule\\MonifiBackend.UserModule.Infrastructure\\MonifiBackend.UserModule.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.1.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.18.1, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

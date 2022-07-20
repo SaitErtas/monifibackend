@@ -1,0 +1,77 @@
+{
+  "ContentRoots": [
+    "/src/src/Presentation/MonifiBackend.API/wwwroot/"
+  ],
+  "Root": {
+    "Children": {
+      "images": {
+        "Children": {
+          "facebook2x.png": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "images/facebook2x.png"
+            },
+            "Patterns": null
+          },
+          "image-host.png": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "images/image-host.png"
+            },
+            "Patterns": null
+          },
+          "instagram2x.png": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "images/instagram2x.png"
+            },
+            "Patterns": null
+          },
+          "linkedin2x.png": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "images/linkedin2x.png"
+            },
+            "Patterns": null
+          },
+          "twitter2x.png": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "images/twitter2x.png"
+            },
+            "Patterns": null
+          }
+        },
+        "Asset": null,
+        "Patterns": null
+      },
+      "Templates": {
+        "Children": {
+          "VerificationMail.html": {
+            "Children": null,
+            "Asset": {
+              "ContentRootIndex": 0,
+              "SubPath": "Templates/VerificationMail.html"
+            },
+            "Patterns": null
+          }
+        },
+        "Asset": null,
+        "Patterns": null
+      }
+    },
+    "Asset": null,
+    "Patterns": [
+      {
+        "ContentRootIndex": 0,
+        "Pattern": "**",
+        "Depth": 0
+      }
+    ]
+  }
+}
