@@ -11,8 +11,4 @@
 		<ProjectReference Include="..\MonifiBackend.WalletModule.Domain\MonifiBackend.WalletModule.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="AccountMovements\Commands\" />
-	</ItemGroup>
-
 </Project>
