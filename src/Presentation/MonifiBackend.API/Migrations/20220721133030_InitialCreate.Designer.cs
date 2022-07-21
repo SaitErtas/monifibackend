@@ -12,8 +12,8 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    [Migration("20220711211733_DatabaseRevision3")]
-    partial class DatabaseRevision3
+    [Migration("20220721133030_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,8 +36,8 @@ namespace MonifiBackend.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -45,7 +45,7 @@ namespace MonifiBackend.API.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PackageId")
+                    b.Property<int>("PackageDetailId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -59,7 +59,7 @@ namespace MonifiBackend.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PackageId");
+                    b.HasIndex("PackageDetailId");
 
                     b.HasIndex("WalletId");
 
@@ -172,13 +172,16 @@ namespace MonifiBackend.API.Migrations
                     b.ToTable("Networks", (string)null);
                 });
 
-            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageDetailEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ChangePeriodDay")
+                        .HasColumnType("int");
 
                     b.Property<int>("Commission")
                         .HasColumnType("int");
@@ -188,6 +191,44 @@ namespace MonifiBackend.API.Migrations
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("PackageDetails", (string)null);
+                });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -355,7 +396,7 @@ namespace MonifiBackend.API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CryptoNetworkId")
+                    b.Property<int>("CryptoNetworkId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -384,9 +425,9 @@ namespace MonifiBackend.API.Migrations
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.AccountMovementEntity", b =>
                 {
-                    b.HasOne("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", "Package")
+                    b.HasOne("MonifiBackend.Data.Infrastructure.Entities.PackageDetailEntity", "PackageDetail")
                         .WithMany("AccountMovements")
-                        .HasForeignKey("PackageId")
+                        .HasForeignKey("PackageDetailId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -396,9 +437,20 @@ namespace MonifiBackend.API.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Package");
+                    b.Navigation("PackageDetail");
 
                     b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageDetailEntity", b =>
+                {
+                    b.HasOne("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", "Package")
+                        .WithMany("PackageDetails")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Package");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.UserEntity", b =>
@@ -446,7 +498,9 @@ namespace MonifiBackend.API.Migrations
                 {
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.NetworkEntity", "CryptoNetwork")
                         .WithMany("Wallets")
-                        .HasForeignKey("CryptoNetworkId");
+                        .HasForeignKey("CryptoNetworkId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("MonifiBackend.Data.Infrastructure.Entities.UserEntity", "User")
                         .WithOne("Wallet")
@@ -474,9 +528,14 @@ namespace MonifiBackend.API.Migrations
                     b.Navigation("Wallets");
                 });
 
-            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageDetailEntity", b =>
                 {
                     b.Navigation("AccountMovements");
+                });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.PackageEntity", b =>
+                {
+                    b.Navigation("PackageDetails");
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.UserEntity", b =>
