@@ -141,22 +141,12 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseIpRateLimiting();
 
 // global cors policy
-#if DEBUG
-
 app.UseCors(x => x
-.WithOrigins("http://localhost:3000")
     .AllowAnyMethod()
     .AllowAnyHeader()
-
+    .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials()); // allow credentials
-#else
-app.UseCors(x => x
-.WithOrigins("https://monifi.vercel.app/")
-    .AllowAnyMethod()
-    .AllowAnyHeader()
 
-    .AllowCredentials()); // allow credentials
-#endif
 
 app.UseHttpsRedirection();
 
