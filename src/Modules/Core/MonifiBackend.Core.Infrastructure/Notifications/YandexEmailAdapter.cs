@@ -5,7 +5,6 @@ using MimeKit;
 using MimeKit.Text;
 using MonifiBackend.Core.Domain.Notifications;
 using MonifiBackend.Core.Infrastructure.Environments;
-using System.Security.Authentication;
 
 namespace MonifiBackend.Core.Infrastructure.Notifications;
 
@@ -33,9 +32,7 @@ public class YandexEmailAdapter : IEmailPort
 
         // send email
         using var smtp = new SmtpClient();
-        smtp.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
-
-        smtp.Connect(_appSettings.EmailConfigurations.SmtpServer, _appSettings.EmailConfigurations.Port, true);
+        smtp.Connect(_appSettings.EmailConfigurations.SmtpServer, _appSettings.EmailConfigurations.Port, false);
         smtp.Authenticate(_appSettings.EmailConfigurations.UserName, _appSettings.EmailConfigurations.Password);
         smtp.CheckCertificateRevocation = false;
         smtp.Send(email);
