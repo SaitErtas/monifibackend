@@ -151,7 +151,7 @@ app.UseCors(x => x
     .AllowCredentials()); // allow credentials
 #else
 app.UseCors(x => x
-.WithOrigins("https://monifi.vercel.app/")
+.WithOrigins("https://monifi.vercel.app")
     .AllowAnyMethod()
     .AllowAnyHeader()
 
