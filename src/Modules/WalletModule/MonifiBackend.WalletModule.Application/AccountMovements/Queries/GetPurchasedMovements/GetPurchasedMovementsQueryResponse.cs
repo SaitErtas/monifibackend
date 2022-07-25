@@ -60,7 +60,8 @@ public class GetPurchasedPackageDetailResponse
     {
         Id = id;
         Name = name;
-        Package = new GetPurchasedPackageResponse(package.Id, package.Name);
+        Package = package == null ? new GetPurchasedPackageResponse() : new GetPurchasedPackageResponse(package.Id, package.Name);
+
     }
     public int Id { get; set; }
     public string Name { get; set; }
@@ -68,6 +69,10 @@ public class GetPurchasedPackageDetailResponse
 }
 public class GetPurchasedPackageResponse
 {
+    public GetPurchasedPackageResponse()
+    {
+
+    }
     public GetPurchasedPackageResponse(int id, string name)
     {
         Id = id;
