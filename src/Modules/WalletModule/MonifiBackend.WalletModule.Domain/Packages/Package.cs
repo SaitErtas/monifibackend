@@ -10,11 +10,12 @@ public sealed class Package : ReadOnlyBaseDomain<int>
     public static Package Default() => new();
 
     public static Package Map(
-    int id,
-    BaseStatus status,
-    DateTime createdAt,
-    DateTime modifiedAt,
-    string name)
+        int id,
+        BaseStatus status,
+        DateTime createdAt,
+        DateTime modifiedAt,
+        string name,
+        List<PackageDetail> packageDetail)
     {
         return new Package()
         {
@@ -23,6 +24,7 @@ public sealed class Package : ReadOnlyBaseDomain<int>
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
             Name = name,
+            _details = packageDetail
         };
     }
 }

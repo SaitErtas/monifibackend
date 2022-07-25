@@ -36,7 +36,9 @@ public static partial class DomainMapper
             entity.Name,
             entity.Duration,
             entity.Commission,
-            entity.Package.Map());
+            entity.MinValue,
+            entity.MaxValue,
+            entity.ChangePeriodDay);
     }
     #endregion
 }

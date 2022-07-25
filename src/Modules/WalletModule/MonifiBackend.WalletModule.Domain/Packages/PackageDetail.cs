@@ -10,7 +10,10 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
     public string Name { get; private set; }
     public int Duration { get; private set; }
     public int Commission { get; private set; }
-    public Package Package { get; private set; }
+    public int MinValue { get; private set; }
+    public int MaxValue { get; private set; }
+    public int ChangePeriodDay { get; private set; }
+    public Package Package { get; protected set; }
     public static PackageDetail Default() => new();
 
     public void SetName(string name)
@@ -51,7 +54,9 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
         string name,
         int duration,
         int commission,
-        Package package)
+        int minValue,
+        int maxValue,
+        int changePeriodDay)
     {
         return new PackageDetail()
         {
@@ -62,7 +67,9 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
             Name = name,
             Duration = duration,
             Commission = commission,
-            Package = package
+            ChangePeriodDay = changePeriodDay,
+            MaxValue = maxValue,
+            MinValue = minValue,
         };
     }
 }

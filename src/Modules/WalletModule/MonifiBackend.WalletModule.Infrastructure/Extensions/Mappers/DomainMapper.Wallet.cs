@@ -10,6 +10,8 @@ public static partial class DomainMapper
     #region Wallet to WalletEntity 
     public static WalletEntity Map(this Wallet domain)
     {
+        var movements = domain.Movements != null ? domain.Movements.Select(x => x.Map()).ToList() : null;
+
         var wallet = new WalletEntity()
         {
             Id = domain.Id,
@@ -17,7 +19,9 @@ public static partial class DomainMapper
             CreatedAt = domain.CreatedAt,
             ModifiedAt = domain.ModifiedAt,
             Status = domain.Status.ToInt(),
-            CryptoNetworkId = domain.CryptoNetwork.Id
+            CryptoNetworkId = domain.CryptoNetwork.Id,
+            AccountMovements = movements,
+            UserId = domain.UserId
         };
         return wallet;
     }
@@ -33,7 +37,8 @@ public static partial class DomainMapper
             entity.WalletAddress,
             entity.CryptoNetwork.Map(),
             entity.CreatedAt,
-            entity.ModifiedAt);
+            entity.ModifiedAt,
+            entity.UserId);
     }
     #endregion
 }

@@ -16,12 +16,20 @@ public sealed class AccountMovement : BaseActivityDomain<int>, IAggregateRoot
 
     public static AccountMovement CreateNew(
         decimal amount,
-        BaseStatus status)
+        BaseStatus status,
+        TransactionStatus transactionStatus,
+        ActionType actionType,
+        PackageDetail packageDetail,
+        Wallet wallet)
     {
         return new AccountMovement()
         {
             Amount = amount,
-            Status = status
+            Status = status,
+            ActionType = actionType,
+            TransactionStatus = transactionStatus,
+            PackageDetail = packageDetail,
+            Wallet = wallet
         };
     }
     public static AccountMovement Map(

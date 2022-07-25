@@ -29,11 +29,13 @@ public static partial class DomainMapper
         if (entity == null)
             return Package.Default();
 
+
         return Package.Map(entity.Id,
             entity.Status.ToEnum<BaseStatus>(),
             entity.CreatedAt,
             entity.ModifiedAt,
-            entity.Name);
+            entity.Name,
+            entity.PackageDetails.Select(x => x.Map()).ToList());
     }
     #endregion
 }

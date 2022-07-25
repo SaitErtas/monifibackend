@@ -4,6 +4,7 @@ using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
 using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 
@@ -17,6 +18,15 @@ public class WalletsController : BaseApiController
     public WalletsController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+    [HttpPost("BuyMonifi")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> ButMonifiAsync([FromBody] BuyMonofiCommand request)
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+        request.UserId = currentUser.Id;
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 
     [HttpGet("account-movements")]

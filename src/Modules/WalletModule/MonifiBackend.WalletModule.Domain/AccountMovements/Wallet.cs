@@ -5,9 +5,17 @@ namespace MonifiBackend.WalletModule.Domain.AccountMovements;
 public sealed class Wallet : BaseActivityDomain<int>
 {
     private Wallet() { }
+    public int UserId { get; private set; }
     public string WalletAddress { get; private set; }
     public Network CryptoNetwork { get; private set; }
 
+    private List<AccountMovement> _movements = new();
+    public IReadOnlyCollection<AccountMovement> Movements => _movements.AsReadOnly();
+
+    public void AddMovement(AccountMovement movement)
+    {
+        _movements.Add(movement);
+    }
     public void SetWalletAddress(string walletAddress)
     {
         WalletAddress = walletAddress;
@@ -33,7 +41,8 @@ public sealed class Wallet : BaseActivityDomain<int>
         string walletAddress,
         Network cryptoNetwork,
         DateTime createdAt,
-        DateTime modifiedAt)
+        DateTime modifiedAt,
+        int userId)
     {
         return new Wallet()
         {
@@ -42,7 +51,8 @@ public sealed class Wallet : BaseActivityDomain<int>
             WalletAddress = walletAddress,
             CryptoNetwork = cryptoNetwork,
             CreatedAt = createdAt,
-            ModifiedAt = modifiedAt
+            ModifiedAt = modifiedAt,
+            UserId = userId
         };
     }
 }
