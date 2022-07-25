@@ -45,7 +45,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
-            .FirstOrDefaultAsync(x => x.Id == id && x.Status == BaseStatus.Active.ToInt());
+            .FirstOrDefaultAsync(x => x.Id == id);
         return userEntity.Map();
     }
     public async Task<User> GetAsync(string email, string password)

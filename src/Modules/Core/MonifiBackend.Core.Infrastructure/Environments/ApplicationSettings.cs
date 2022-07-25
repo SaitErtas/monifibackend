@@ -5,5 +5,6 @@
         public Secret Secret { get; set; }
         public MssqlSettings MssqlSettings { get; set; }
         public EmailConfiguration EmailConfigurations { get; set; }
+        public ServiceAddress ServiceAddress { get; set; }
     }
 }
