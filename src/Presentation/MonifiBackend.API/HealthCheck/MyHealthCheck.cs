@@ -1,13 +1,22 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using MonifiBackend.Core.Infrastructure.Environments;
 using System.Net;
 
 namespace MonifiBackend.API.HealthCheck
 {
     public class MyHealthCheck : IHealthCheck
     {
+        private readonly ApplicationSettings _appSettings;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+        public MyHealthCheck(IOptions<ApplicationSettings> appSettings, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+            _appSettings = appSettings.Value;
+        }
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            var catUrl = "https://localhost:7161/api/Health";
+            var catUrl = $"{_appSettings.ServiceAddress.BackendAddress}/api/Health";
 
             var client = new HttpClient();
 

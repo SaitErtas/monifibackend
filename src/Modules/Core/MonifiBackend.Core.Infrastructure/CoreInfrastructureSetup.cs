@@ -104,7 +104,7 @@ namespace MonifiBackend.Core.Infrastructure
                     {
                         Endpoint = "*",
                         Period = "1s",
-                        Limit = 1,
+                        Limit = 5,
                     }
                 };
             });
