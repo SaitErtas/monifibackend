@@ -8,12 +8,12 @@ using MonifiBackend.Core.Infrastructure.Environments;
 
 namespace MonifiBackend.Core.Infrastructure.Notifications;
 
-public class YandexEmailAdapter : IEmailPort
+public class GoogleEmailAdapter : IEmailPort
 {
     private readonly ApplicationSettings _appSettings;
     private readonly IHostingEnvironment _hostingEnvironment;
 
-    public YandexEmailAdapter(IOptions<ApplicationSettings> appSettings, IHostingEnvironment hostingEnvironment)
+    public GoogleEmailAdapter(IOptions<ApplicationSettings> appSettings, IHostingEnvironment hostingEnvironment)
     {
         _hostingEnvironment = hostingEnvironment;
         _appSettings = appSettings.Value;
