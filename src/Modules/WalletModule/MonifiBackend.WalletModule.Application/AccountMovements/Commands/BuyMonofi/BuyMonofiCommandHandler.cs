@@ -22,10 +22,10 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
     {
         //Seçilen Paket Var Mı Kontrol et?
-        var package = await _packageQueryDataPort.GetPackageAsync(request.PaketId);
-        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PaketId}"));
+        var package = await _packageQueryDataPort.GetPackageAsync(request.PackageId);
+        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PackageId}"));
         var packageDetail = package.Details.FirstOrDefault(x => x.MinValue <= request.Amount && x.MaxValue >= request.Amount);
-        AppRule.ExistsAndActive(packageDetail, new BusinessValidationException("PackageDetail not found.", $"PackageDetail not found exception. PackageDetail: {request.PaketId}"));
+        AppRule.ExistsAndActive(packageDetail, new BusinessValidationException("PackageDetail not found.", $"PackageDetail not found exception. PackageDetail: {request.PackageId}"));
 
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);

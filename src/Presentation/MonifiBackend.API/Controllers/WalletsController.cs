@@ -21,7 +21,7 @@ public class WalletsController : BaseApiController
     }
     [HttpPost("BuyMonifi")]
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    public async Task<IActionResult> ButMonifiAsync([FromBody] BuyMonofiCommand request)
+    public async Task<IActionResult> BuyMonifiAsync([FromBody] BuyMonofiCommand request)
     {
         var currentUser = (User)HttpContext.Items["User"];
         request.UserId = currentUser.Id;
