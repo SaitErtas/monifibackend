@@ -6,35 +6,35 @@ using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.UserModule.Domain.Users;
 
-namespace MonifiBackend.UserModule.Application.Users.Events.UserRegisterComplited;
+namespace MonifiBackend.UserModule.Application.Users.Events.ResetPasswordMail;
 
-internal class UserRegisterComplitedEventHandler : IEventHandler<UserRegisterComplitedEvent>
+internal class ResetPasswordMailEventHandler : IEventHandler<ResetPasswordMailEvent>
 {
     private readonly IUserQueryDataPort _userQueryDataPort;
     private readonly IEmailPort _emailPort;
     private readonly ApplicationSettings _appSettings;
     private readonly IHostingEnvironment _hostingEnvironment;
-    public UserRegisterComplitedEventHandler(IUserQueryDataPort userQueryDataPort, IEmailPort emailPort, IOptions<ApplicationSettings> appSettings, IHostingEnvironment hostingEnvironment)
+    public ResetPasswordMailEventHandler(IUserQueryDataPort userQueryDataPort, IEmailPort emailPort, IOptions<ApplicationSettings> appSettings, IHostingEnvironment hostingEnvironment)
     {
         _userQueryDataPort = userQueryDataPort;
         _emailPort = emailPort;
         _hostingEnvironment = hostingEnvironment;
         _appSettings = appSettings.Value;
     }
-    public async Task Handle(UserRegisterComplitedEvent request, CancellationToken cancellationToken)
+    public async Task Handle(ResetPasswordMailEvent request, CancellationToken cancellationToken)
     {
-        //GetUser
         var user = await _userQueryDataPort.GetAsync(request.UserId);
-        SendVerificationMail(user);
+        SendResetPasswordMail(user);
     }
-    private void SendVerificationMail(User user)
+    private void SendResetPasswordMail(User user)
     {
         var randomKey = RandomKeyGenerator.RandomKey(6);
-        string filePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Templates\\VerificationMail.html";
+        string filePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Templates\\ResetPassword.html";
         StreamReader str = new StreamReader(filePath);
         string mailText = str.ReadToEnd();
         str.Close();
-        mailText = mailText.Replace("[VerificationAddress]", $"{_appSettings.ServiceAddress.FrontendAddress}/account-confirmation/{user.ConfirmationCode}");
-        _emailPort.Send(user.Email, $"Monofi.io Verification Email #{randomKey}", mailText);
+        mailText = mailText.Replace("[PasswordAddress]", $"{_appSettings.ServiceAddress.FrontendAddress}/password-reset/{user.ResetPasswordCode}")
+            .Replace("[PasswordCode]", $"{user.ResetPasswordCode}");
+        _emailPort.Send(user.Email, $"Monofi.io Reset Password Email #{randomKey}", mailText);
     }
 }

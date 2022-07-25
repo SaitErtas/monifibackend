@@ -45,7 +45,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
-            .FirstOrDefaultAsync(x => x.Id == id && x.Status == BaseStatus.Active.ToInt());
+            .FirstOrDefaultAsync(x => x.Id == id);
         return userEntity.Map();
     }
     public async Task<User> GetAsync(string email, string password)
@@ -78,6 +78,11 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     {
         return await _dbContext.Users
             .AnyAsync(x => x.ReferanceCode == referanceCode && x.Status == BaseStatus.Active.ToInt());
+    }
+    public async Task<bool> CheckUserResetPasswordCodeAsync(string resetPasswordCode)
+    {
+        return await _dbContext.Users
+            .AnyAsync(x => x.ResetPasswordCode == resetPasswordCode && x.Status == BaseStatus.Active.ToInt());
     }
     public async Task<bool> CheckUserConfirmationCodeAsync(string confirmationCode)
     {
