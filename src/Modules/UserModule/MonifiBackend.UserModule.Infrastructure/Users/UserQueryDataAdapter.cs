@@ -79,6 +79,11 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Users
             .AnyAsync(x => x.ReferanceCode == referanceCode && x.Status == BaseStatus.Active.ToInt());
     }
+    public async Task<bool> CheckUserResetPasswordCodeAsync(string resetPasswordCode)
+    {
+        return await _dbContext.Users
+            .AnyAsync(x => x.ResetPasswordCode == resetPasswordCode && x.Status == BaseStatus.Active.ToInt());
+    }
     public async Task<bool> CheckUserConfirmationCodeAsync(string confirmationCode)
     {
         return await _dbContext.Users
