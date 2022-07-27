@@ -11,9 +11,6 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
     public string Name { get; private set; }
     public int Duration { get; private set; }
     public int Commission { get; private set; }
-    public int MinValue { get; private set; }
-    public int MaxValue { get; private set; }
-    public int ChangePeriodDay { get; private set; }
 
     public Package Package { get; private set; }
     public static PackageDetail Default() => new();

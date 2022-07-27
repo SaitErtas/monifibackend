@@ -35,6 +35,9 @@ public static partial class DomainMapper
             entity.CreatedAt,
             entity.ModifiedAt,
             entity.Name,
+            entity.MinValue,
+            entity.MaxValue,
+            entity.ChangePeriodDay,
             entity.PackageDetails.Select(x => x.Map()).ToList());
     }
     #endregion

@@ -20,11 +20,19 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
             .AnyAsync(x => x.PackageDetails.Any(x => x.Duration == duration) && x.Status != BaseStatus.Deleted.ToInt());
     }
 
-    public async Task<Package> GetPackageAsync(int id)
+    public async Task<PackageDetail> GetPackageDetailAsync(int id)
+    {
+        var packageEntity = await _dbContext.PackageDetails
+            .Include(i => i.Package)
+            .FirstOrDefaultAsync(x => x.Id == id && x.Status != BaseStatus.Deleted.ToInt());
+        return packageEntity.Map();
+    }
+
+    public async Task<Package> GetPackageDetailIdAsync(int detailId)
     {
         var packageEntity = await _dbContext.Packages
             .Include(i => i.PackageDetails)
-            .FirstOrDefaultAsync(x => x.Id == id && x.Status != BaseStatus.Deleted.ToInt());
+            .FirstOrDefaultAsync(x => x.PackageDetails.Any(a => a.Id == detailId) && x.Status != BaseStatus.Deleted.ToInt());
         return packageEntity.Map();
     }
 

@@ -8,6 +8,9 @@ namespace MonifiBackend.Data.Infrastructure.Entities;
 public class PackageEntity : BaseActivityEntity
 {
     public string Name { get; set; }
+    public int MinValue { get; set; }
+    public int MaxValue { get; set; }
+    public int ChangePeriodDay { get; set; }
     public virtual ICollection<PackageDetailEntity> PackageDetails { get; set; }
 }
 public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity>
@@ -16,6 +19,9 @@ public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity
     {
         builder.ToTable("Packages");
         builder.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        builder.Property(x => x.MinValue).IsRequired();
+        builder.Property(x => x.MaxValue).IsRequired();
+        builder.Property(x => x.ChangePeriodDay).IsRequired();
 
         builder.HasMany(x => x.PackageDetails).WithOne(x => x.Package);
 

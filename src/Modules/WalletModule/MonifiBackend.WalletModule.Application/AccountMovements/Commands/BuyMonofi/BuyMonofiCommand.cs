@@ -8,5 +8,5 @@ public class BuyMonofiCommand : ICommand<BuyMonofiCommandResponse>
     [JsonIgnore]
     public int UserId { get; set; }
     public decimal Amount { get; set; }
-    public int PaketId { get; set; }
+    public int PaketDetailId { get; set; }
 }
