@@ -22,12 +22,12 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
     {
         //Seçilen Paket Var Mı Kontrol et?
-        var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PaketDetailId);
-        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PaketDetailId}"));
+        var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PackageDetailId);
+        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PackageDetailId}"));
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);
         //Seçilen Paket ve Miktarı Hesap Haraketlerine ActionType Sale TransactionStatus Pending olarak kaydet
-        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PaketDetailId), wallet);
+        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PackageDetailId), wallet);
         wallet.AddMovement(movement);
         //Referans Olan Kişiye ActionType Bonus olarak paket ayı kadar hesap hareketi ekle
 
