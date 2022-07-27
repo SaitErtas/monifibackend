@@ -22,7 +22,7 @@ namespace MonifiBackend.Core.Infrastructure
         public static IServiceCollection ConfigureCoreInfrastructure(this IServiceCollection services, ApplicationSettings applicationSettings)
         {
             services.AddSingleton<ILogPort, LogAdapter>();
-            services.AddSingleton<IEmailPort, YandexEmailAdapter>();
+            services.AddSingleton<IEmailPort, GoogleEmailAdapter>();
             services.AddEfDatabaseClient(applicationSettings);
             services.AddHttpContextAccessor();
             services.AddRateLimiting();
@@ -104,7 +104,7 @@ namespace MonifiBackend.Core.Infrastructure
                     {
                         Endpoint = "*",
                         Period = "1s",
-                        Limit = 1,
+                        Limit = 5,
                     }
                 };
             });
