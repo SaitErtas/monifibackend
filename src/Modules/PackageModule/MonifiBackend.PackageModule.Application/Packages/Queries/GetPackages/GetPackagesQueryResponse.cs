@@ -18,12 +18,30 @@ public class GetPackageQueryResponse
     {
         Id = id;
         Name = name;
+        Title = name;
+        Subtitle = name;
+        CurrentPlan = false;
+        ImgHeight = 100;
+        ImgSrc = "/images/pages/pricing-illustration-1.png";
+        PlanBenefits = new List<string> { "Unlimited responses", "CustomerService" };
+        PopularPlan = false;
+        YearlyPlan = new List<int> { 1, 2, 3 };
+        MonthlyPrice = 100;
         Details = details.Select(s => new GetPackageDetailQueryResponse(s.Id, s.Name, s.Duration, s.Commission)).ToList();
     }
     public int Id { get; private set; }
     public string Name { get; private set; }
+    public string Title { get; private set; }
+    public string Subtitle { get; private set; }
     public int Duration { get; private set; }
     public int Commission { get; private set; }
+    public bool CurrentPlan { get; private set; }
+    public bool PopularPlan { get; private set; }
+    public int ImgHeight { get; private set; }
+    public string ImgSrc { get; private set; }
+    public List<string> PlanBenefits { get; private set; }
+    public List<int> YearlyPlan { get; private set; }
+    public int MonthlyPrice { get; private set; }
     public List<GetPackageDetailQueryResponse> Details { get; private set; }
 }
 public class GetPackageDetailQueryResponse
