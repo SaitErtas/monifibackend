@@ -17,6 +17,8 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     {
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
+        CreatedAt = accountMovement.CreatedAt;
+        BlockEndDate = accountMovement.CreatedAt.AddMonths(accountMovement.PackageDetail.Duration);
         TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetPurchasedWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
@@ -27,6 +29,8 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     public decimal Amount { get; set; }
     public string TransactionStatus { get; set; }
     public string ActionType { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime BlockEndDate { get; set; }
     public GetPurchasedWalletResponse Wallet { get; set; }
     public GetPurchasedPackageDetailResponse PackageDetail { get; set; }
 }
