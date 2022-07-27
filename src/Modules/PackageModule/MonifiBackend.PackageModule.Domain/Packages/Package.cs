@@ -9,6 +9,9 @@ namespace MonifiBackend.PackageModule.Domain.Packages;
 public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
 {
     public string Name { get; private set; }
+    public int MinValue { get; private set; }
+    public int MaxValue { get; private set; }
+    public int ChangePeriodDay { get; private set; }
     private List<PackageDetail> _details = new();
     public IReadOnlyCollection<PackageDetail> Details => _details.AsReadOnly();
 
@@ -40,6 +43,9 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
         DateTime createdAt,
         DateTime modifiedAt,
         string name,
+        int minValue,
+        int maxValue,
+        int changePeriodDay,
         List<PackageDetail> details)
     {
         return new Package()
@@ -49,6 +55,9 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
             Name = name,
+            MinValue = minValue,
+            MaxValue = maxValue,
+            ChangePeriodDay = changePeriodDay,
             _details = details
         };
     }

@@ -6,5 +6,6 @@ public interface IPackageQueryDataPort : IQueryDataPort
 {
     Task<List<Package>> GetsAsync();
     Task<bool> GetAsync(int duration);
-    Task<Package> GetPackageAsync(int id);
+    Task<PackageDetail> GetPackageDetailAsync(int id);
+    Task<Package> GetPackageDetailIdAsync(int detailId);
 }

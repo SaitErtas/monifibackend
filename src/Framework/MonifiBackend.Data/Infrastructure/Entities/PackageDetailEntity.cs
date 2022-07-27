@@ -11,9 +11,6 @@ public class PackageDetailEntity : BaseActivityEntity
     public string Name { get; set; }
     public int Duration { get; set; }
     public int Commission { get; set; }
-    public int MinValue { get; set; }
-    public int MaxValue { get; set; }
-    public int ChangePeriodDay { get; set; }
 
     public virtual PackageEntity Package { get; set; }
     public virtual ICollection<AccountMovementEntity> AccountMovements { get; set; }
@@ -26,9 +23,6 @@ public class PackageDetailEntityConfiguration : IEntityTypeConfiguration<Package
         builder.Property(x => x.Name).IsRequired().HasMaxLength(128);
         builder.Property(x => x.Duration).IsRequired();
         builder.Property(x => x.Commission).IsRequired();
-        builder.Property(x => x.MinValue).IsRequired();
-        builder.Property(x => x.MaxValue).IsRequired();
-        builder.Property(x => x.ChangePeriodDay).IsRequired();
 
         builder.HasOne(x => x.Package).WithMany(x => x.PackageDetails).HasForeignKey(x => x.PackageId).OnDelete(DeleteBehavior.NoAction);
         builder.HasMany(x => x.AccountMovements).WithOne(x => x.PackageDetail);

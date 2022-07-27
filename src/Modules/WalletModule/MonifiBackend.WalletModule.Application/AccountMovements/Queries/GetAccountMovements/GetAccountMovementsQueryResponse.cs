@@ -20,7 +20,7 @@ public class GetAccountMovementsSingleQueryResponse
         TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetMovementsWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
-        PackageDetail = new GetMovementsPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Duration, accountMovement.PackageDetail.Commission, accountMovement.PackageDetail.MinValue, accountMovement.PackageDetail.MaxValue, accountMovement.PackageDetail.ChangePeriodDay, accountMovement.PackageDetail.Package);
+        PackageDetail = new GetMovementsPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Duration, accountMovement.PackageDetail.Commission, accountMovement.PackageDetail.Package);
     }
 
     public int Id { get; set; }
@@ -56,24 +56,18 @@ public class GetMovementsNetworkResponse
 }
 public class GetMovementsPackageDetailResponse
 {
-    public GetMovementsPackageDetailResponse(int id, string name, int duration, int commission, int minValue, int maxValue, int changePeriodDay, Package package)
+    public GetMovementsPackageDetailResponse(int id, string name, int duration, int commission, Package package)
     {
         Id = id;
         Name = name;
         Duration = duration;
         Commission = commission;
-        MinValue = minValue;
-        MaxValue = maxValue;
-        ChangePeriodDay = changePeriodDay;
-        Package = package == null ? new GetMovementsPackageResponse() : new GetMovementsPackageResponse(package.Id, package.Name);
+        Package = package == null ? new GetMovementsPackageResponse() : new GetMovementsPackageResponse(package.Id, package.Name, package.MinValue, package.MaxValue, package.ChangePeriodDay);
     }
     public int Id { get; set; }
     public string Name { get; set; }
     public int Duration { get; set; }
     public int Commission { get; set; }
-    public int MinValue { get; set; }
-    public int ChangePeriodDay { get; set; }
-    public int MaxValue { get; set; }
     public GetMovementsPackageResponse Package { get; set; }
 }
 public class GetMovementsPackageResponse
@@ -82,11 +76,17 @@ public class GetMovementsPackageResponse
     {
 
     }
-    public GetMovementsPackageResponse(int id, string name)
+    public GetMovementsPackageResponse(int id, string name, int minValue, int maxValue, int changePeriodDay)
     {
         Id = id;
         Name = name;
+        MinValue = minValue;
+        MaxValue = maxValue;
+        ChangePeriodDay = changePeriodDay;
     }
     public int Id { get; set; }
     public string Name { get; set; }
+    public int MinValue { get; set; }
+    public int ChangePeriodDay { get; set; }
+    public int MaxValue { get; set; }
 }

@@ -5,6 +5,9 @@ namespace MonifiBackend.WalletModule.Domain.Packages;
 public sealed class Package : ReadOnlyBaseDomain<int>
 {
     public string Name { get; private set; }
+    public int MinValue { get; private set; }
+    public int MaxValue { get; private set; }
+    public int ChangePeriodDay { get; private set; }
     private List<PackageDetail> _details = new();
     public IReadOnlyCollection<PackageDetail> Details => _details.AsReadOnly();
     public static Package Default() => new();
@@ -15,6 +18,9 @@ public sealed class Package : ReadOnlyBaseDomain<int>
         DateTime createdAt,
         DateTime modifiedAt,
         string name,
+        int minValue,
+        int maxValue,
+        int changePeriodDay,
         List<PackageDetail> packageDetail)
     {
         return new Package()
@@ -24,6 +30,9 @@ public sealed class Package : ReadOnlyBaseDomain<int>
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
             Name = name,
+            ChangePeriodDay = changePeriodDay,
+            MaxValue = maxValue,
+            MinValue = minValue,
             _details = packageDetail
         };
     }

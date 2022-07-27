@@ -8,6 +8,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         DbSet<UserEntity> Users { get; set; }
         DbSet<UserPhoneEntity> UserPhones { get; set; }
         DbSet<PackageEntity> Packages { get; set; }
+        DbSet<PackageDetailEntity> PackageDetails { get; set; }
         DbSet<CountryEntity> Countries { get; set; }
         DbSet<LanguageEntity> Languages { get; set; }
         DbSet<NetworkEntity> Networks { get; set; }

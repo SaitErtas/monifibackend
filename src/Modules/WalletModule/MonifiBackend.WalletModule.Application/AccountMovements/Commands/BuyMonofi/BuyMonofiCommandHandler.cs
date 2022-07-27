@@ -22,15 +22,12 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
     {
         //Seçilen Paket Var Mı Kontrol et?
-        var package = await _packageQueryDataPort.GetPackageAsync(request.PackageId);
-        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PackageId}"));
-        var packageDetail = package.Details.FirstOrDefault(x => x.MinValue <= request.Amount && x.MaxValue >= request.Amount);
-        AppRule.ExistsAndActive(packageDetail, new BusinessValidationException("PackageDetail not found.", $"PackageDetail not found exception. PackageDetail: {request.PackageId}"));
-
+        var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PaketDetailId);
+        AppRule.ExistsAndActive(package, new BusinessValidationException("Package not found.", $"Package not found exception. Package: {request.PaketDetailId}"));
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);
         //Seçilen Paket ve Miktarı Hesap Haraketlerine ActionType Sale TransactionStatus Pending olarak kaydet
-        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, packageDetail, wallet);
+        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PaketDetailId), wallet);
         wallet.AddMovement(movement);
         //Referans Olan Kişiye ActionType Bonus olarak paket ayı kadar hesap hareketi ekle
 
