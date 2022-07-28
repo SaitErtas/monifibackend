@@ -25,6 +25,10 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
     {
         Commission = commission;
     }
+    public void SetPackage(Package package)
+    {
+        Package = package;
+    }
     public static PackageDetail CreateNew(
         string name,
         int duration,
