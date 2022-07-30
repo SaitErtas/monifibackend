@@ -17,21 +17,19 @@ public class BscScanAccountsDataAdapter : IBscScanAccountsDataPort
     /// <inheritdoc />
     public BscScanAccountsDataAdapter(HttpClient bscScanHttpClient, IConfiguration configuration)
     {
-        var configureClient = new Action<HttpClient>(client =>
-        {
-            client.BaseAddress = new Uri(_configuration["BscScanOptions:Uri"]);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MimeTypes.ApplicationJson));
-        });
-
         _configuration = configuration;
         _bscScanHttpClient = bscScanHttpClient;
-        _bscScanModule = BscScanModule.ACCOUNT.AppendApiKey(_configuration["BscScanOptions:Token"]);
+
+        _bscScanHttpClient.BaseAddress = new Uri(_configuration["ApplicationSettings:BscScanOptions:Uri"]);
+        _bscScanHttpClient.DefaultRequestHeaders.Accept.Clear();
+        _bscScanHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MimeTypes.ApplicationJson));
+
+        _bscScanModule = BscScanModule.ACCOUNT.AppendApiKey(_configuration["ApplicationSettings:BscScanOptions:Token"]);
     }
 
     public async Task<BnbBalance?> GetBnbBalanceAsync(BnbBalanceRequest request)
     {
-        var queryParameters = $"{_configuration["ApplicationSettings:BscScanOptions:Uri"]}{_bscScanModule}{request.ToRequestParameters(AccountsModuleAction.BALANCE)}";
+        var queryParameters = $"{_bscScanModule}{request.ToRequestParameters(AccountsModuleAction.BALANCE)}";
         using var response = await _bscScanHttpClient.GetAsync($"{queryParameters}")
             .ConfigureAwait(false);
 

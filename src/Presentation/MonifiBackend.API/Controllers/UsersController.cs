@@ -8,6 +8,7 @@ using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.BscScanAddress;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.BscScanNormalTransaction;
 
 namespace MonifiBackend.API.Controllers
 {
@@ -62,6 +63,13 @@ namespace MonifiBackend.API.Controllers
         [HttpPost("BscScanAddress")]
         [AllowAnonymous]
         public async Task<IActionResult> BscScanAddressAsync([FromBody] BscScanAddressQuery request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpPost("BscScanNormalTransaction")]
+        [AllowAnonymous]
+        public async Task<IActionResult> BscScanNormalTransactionAsync([FromBody] BscScanNormalTransactionQuery request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
