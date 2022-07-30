@@ -13,8 +13,8 @@ public static class WalletInfrastructureSetup
         #region Ports-Adapters
         services.AddScoped<IAccountMovementCommandDataPort, AccountMovementCommandDataAdapter>();
         services.AddScoped<IAccountMovementQueryDataPort, AccountMovementQueryDataAdapter>();
-
         services.AddScoped<IPackageQueryDataPort, PackageQueryDataAdapter>();
+
 
         #endregion
         return services;

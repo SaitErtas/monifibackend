@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Caching;
 using MonifiBackend.Core.Domain.Logging;
 using MonifiBackend.Core.Domain.Notifications;
+using MonifiBackend.Core.Infrastructure.BscScans;
 using MonifiBackend.Core.Infrastructure.Caching;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.Core.Infrastructure.Logging;
@@ -28,6 +30,7 @@ namespace MonifiBackend.Core.Infrastructure
             services.AddRateLimiting();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+            services.AddHttpClient<IBscScanAccountsDataPort, BscScanAccountsDataAdapter>();
 
             return services;
         }

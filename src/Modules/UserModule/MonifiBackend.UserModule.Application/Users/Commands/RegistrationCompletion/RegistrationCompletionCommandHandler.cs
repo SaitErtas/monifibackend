@@ -1,4 +1,6 @@
 ﻿using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Accounts;
+using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Domain.Localizations;
@@ -9,18 +11,20 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationComple
 
 internal class RegistrationCompletionCommandHandler : ICommandHandler<RegistrationCompletionCommand, RegistrationCompletionCommandResponse>
 {
-
+    private const int BSCSCAN_VALUE = 1;
     private readonly IWalletQueryDataPort _walletQueryDataPort;
     private readonly ILocalizationQueryDataPort _localizationQueryDataPort;
     private readonly IUserQueryDataPort _userQueryDataPort;
     private readonly IUserCommandDataPort _userCommandDataPort;
+    private readonly IBscScanAccountsDataPort _bscScanAccountsService;
 
-    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort)
+    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsService)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
         _localizationQueryDataPort = localizationQueryDataPort;
         _walletQueryDataPort = walletQueryDataPort;
+        _bscScanAccountsService = bscScanAccountsService;
     }
 
     public async Task<RegistrationCompletionCommandResponse> Handle(RegistrationCompletionCommand request, CancellationToken cancellationToken)
@@ -32,6 +36,17 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         var language = await _localizationQueryDataPort.GetLanguageAsync(request.LanguageId);
         var country = await _localizationQueryDataPort.GetCountryAsync(request.CountryId);
         var network = await _walletQueryDataPort.GetNetworkAsync(request.CryptoNetworkId);
+
+        if (network.Id == BSCSCAN_VALUE)
+        {
+            var bnbBalanceRequest = new BnbBalanceRequest
+            {
+                Address = request.WalletAddress,
+            };
+            var bnbBalance = await _bscScanAccountsService.GetBnbBalanceAsync(bnbBalanceRequest);
+            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException("Network not found.", $"Network not found. WalletAddress: {request.WalletAddress}"));
+        }
+
 
         user.Wallet.SetWalletAddress(request.WalletAddress);
         user.Wallet.SetNetwork(network);
