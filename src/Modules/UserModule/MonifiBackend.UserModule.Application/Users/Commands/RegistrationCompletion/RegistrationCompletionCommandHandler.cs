@@ -2,6 +2,7 @@
 using MonifiBackend.Core.Domain.Accounts;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Exceptions;
+using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users;
@@ -12,19 +13,22 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationComple
 internal class RegistrationCompletionCommandHandler : ICommandHandler<RegistrationCompletionCommand, RegistrationCompletionCommandResponse>
 {
     private const int BSCSCAN_VALUE = 1;
+    private const int TRONNETWORK_VALUE = 2;
     private readonly IWalletQueryDataPort _walletQueryDataPort;
     private readonly ILocalizationQueryDataPort _localizationQueryDataPort;
     private readonly IUserQueryDataPort _userQueryDataPort;
     private readonly IUserCommandDataPort _userCommandDataPort;
-    private readonly IBscScanAccountsDataPort _bscScanAccountsService;
+    private readonly IBscScanAccountsDataPort _bscScanAccountsDataPort;
+    private readonly ITronNetworkAccountsDataPort _tronNetworkAccountsDataPort;
 
-    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsService)
+    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
         _localizationQueryDataPort = localizationQueryDataPort;
         _walletQueryDataPort = walletQueryDataPort;
-        _bscScanAccountsService = bscScanAccountsService;
+        _bscScanAccountsDataPort = bscScanAccountsDataPort;
+        _tronNetworkAccountsDataPort = tronNetworkAccountsDataPort;
     }
 
     public async Task<RegistrationCompletionCommandResponse> Handle(RegistrationCompletionCommand request, CancellationToken cancellationToken)
@@ -43,8 +47,13 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
             {
                 Address = request.WalletAddress,
             };
-            var bnbBalance = await _bscScanAccountsService.GetBnbBalanceAsync(bnbBalanceRequest);
-            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException("Network not found.", $"Network not found. WalletAddress: {request.WalletAddress}"));
+            var bnbBalance = await _bscScanAccountsDataPort.GetBnbBalanceAsync(bnbBalanceRequest);
+            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException("Wallet not found.", $"Wallet not found. WalletAddress: {request.WalletAddress}"));
+        }
+        else if (network.Id == TRONNETWORK_VALUE)
+        {
+            var account = await _tronNetworkAccountsDataPort.GetAccountsAsync(request.WalletAddress);
+            AppRule.True(account.Success, new BusinessValidationException("Wallet not found.", $"Wallet not found. WalletAddress: {request.WalletAddress}"));
         }
 
 

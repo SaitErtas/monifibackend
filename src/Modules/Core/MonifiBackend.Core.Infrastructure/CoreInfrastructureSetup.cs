@@ -8,12 +8,14 @@ using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Caching;
 using MonifiBackend.Core.Domain.Logging;
 using MonifiBackend.Core.Domain.Notifications;
+using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Infrastructure.BscScans;
 using MonifiBackend.Core.Infrastructure.Caching;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.Core.Infrastructure.Logging;
 using MonifiBackend.Core.Infrastructure.Middlewares;
 using MonifiBackend.Core.Infrastructure.Notifications;
+using MonifiBackend.Core.Infrastructure.TronNetworks;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using System.Text;
 
@@ -31,6 +33,7 @@ namespace MonifiBackend.Core.Infrastructure
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
             services.AddHttpClient<IBscScanAccountsDataPort, BscScanAccountsDataAdapter>();
+            services.AddHttpClient<ITronNetworkAccountsDataPort, TronNetworkAccountsDataAdapter>();
 
             return services;
         }
