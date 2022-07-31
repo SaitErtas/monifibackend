@@ -16,5 +16,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         DbSet<NotificationEntity> Notifications { get; set; }
         DbSet<WalletEntity> Wallets { get; set; }
         DbSet<AccountMovementEntity> AccountMovements { get; set; }
+        DbSet<SettingEntity> Settings { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<UserIPEntity>().ToTable("UserIPs");
             modelBuilder.Entity<NotificationEntity>().ToTable("Notifications");
             modelBuilder.Entity<WalletEntity>().ToTable("Wallets");
+            modelBuilder.Entity<SettingEntity>().ToTable("Settings");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
@@ -38,6 +39,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new UserIPEntityConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new WalletEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SettingEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -85,5 +87,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
 
         public DbSet<WalletEntity> Wallets { get; set; }
         public DbSet<AccountMovementEntity> AccountMovements { get; set; }
+        public DbSet<SettingEntity> Settings { get; set; }
     }
 }
