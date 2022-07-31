@@ -23,6 +23,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             CryptoNetwork = user.Wallet.CryptoNetwork.Name;
             CountryId = user.Country.Id;
             LanguageId = user.Language.Id;
+            LanguageCode = user.Language.ShortName;
             PhoneId = user.Phones?.FirstOrDefault()?.Id;
             Status = user.Status.ToString().ToLower();
         }
@@ -44,6 +45,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public int? CountryId { get; set; }
         public string Language { get; set; }
         public int? LanguageId { get; set; }
+        public string? LanguageCode { get; set; }
         public string Status { get; set; }
     }
 }
