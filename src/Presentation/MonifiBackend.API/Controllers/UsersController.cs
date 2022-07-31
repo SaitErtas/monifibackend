@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Notifications.Commands.CreateNotification;
+using MonifiBackend.UserModule.Application.Notifications.Commands.MarkAsRead;
 using MonifiBackend.UserModule.Application.Notifications.Queries.GetNotifications;
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
@@ -55,6 +56,17 @@ namespace MonifiBackend.API.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
+        [HttpPut("notifications/markasread")]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
+        public async Task<IActionResult> CreateNotificationsAsync()
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+
+            var request = new MarkAsReadCommand(currentUser.Id);
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
         [HttpGet("network")]
         [Authorize(Role.Administrator, Role.Owner, Role.User)]
         public async Task<IActionResult> NetworkAsync()

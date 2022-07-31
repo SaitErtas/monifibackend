@@ -6,5 +6,6 @@ namespace MonifiBackend.UserModule.Domain.Users
     {
         Task<int> CreateAsync(User user);
         Task<bool> SaveAsync(User user);
+        Task<bool> MarkAsReadAllNotificationAsync(int userId);
     }
 }
