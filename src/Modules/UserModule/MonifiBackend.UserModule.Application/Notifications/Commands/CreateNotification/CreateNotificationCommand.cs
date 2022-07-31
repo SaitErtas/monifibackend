@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using System.Text.Json.Serialization;
 
 namespace MonifiBackend.UserModule.Application.Notifications.Commands.CreateNotification;
@@ -18,11 +20,11 @@ public class CreateNotificationCommand : ICommand<CreateNotificationCommandRespo
 
 internal class CreateNotificationCommandValidator : AbstractValidator<CreateNotificationCommand>
 {
-    public CreateNotificationCommandValidator()
+    public CreateNotificationCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("UserId alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.UserId))}");
         RuleFor(x => x.Message)
-            .NotEmpty().WithMessage("Message alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Message))}");
     }
 }

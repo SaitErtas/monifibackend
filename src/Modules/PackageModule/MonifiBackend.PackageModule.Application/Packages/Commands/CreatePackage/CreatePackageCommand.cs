@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackage;
 
@@ -18,13 +20,13 @@ public class CreatePackageCommand : ICommand<CreatePackageCommandResponse>
 
 internal class CreatePackageCommandValidator : AbstractValidator<CreatePackageCommand>
 {
-    public CreatePackageCommandValidator()
+    public CreatePackageCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Name))}");
         RuleFor(x => x.Duration)
-            .NotEmpty().WithMessage("Duration is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Duration))}");
         RuleFor(x => x.Commission)
-            .NotEmpty().WithMessage("Commission is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Commission))}");
     }
 }

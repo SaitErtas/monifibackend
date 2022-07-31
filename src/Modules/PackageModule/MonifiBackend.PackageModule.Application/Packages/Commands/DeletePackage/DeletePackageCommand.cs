@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using System.Text.Json.Serialization;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.DeletePackage;
@@ -16,9 +18,9 @@ public class DeletePackageCommand : ICommand<DeletePackageCommandResponse>
 
 internal class DeletePackageCommandValidator : AbstractValidator<DeletePackageCommand>
 {
-    public DeletePackageCommandValidator()
+    public DeletePackageCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("Id is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Id))}");
     }
 }

@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Application.Users.Events.UserRegisterComplited;
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users;
@@ -17,24 +19,26 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
         private readonly IUserQueryDataPort _userQueryDataPort;
         private readonly IUserCommandDataPort _userCommandDataPort;
         private readonly IMediator _mediator;
+        private readonly IStringLocalizer<Resource> _stringLocalizer;
         private const int DEFAULT_VALUE = 1;
 
-        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IMediator mediator, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort)
+        public RegisterUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IMediator mediator, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IStringLocalizer<Resource> stringLocalizer)
         {
             _userQueryDataPort = userQueryDataPort;
             _localizationQueryDataPort = localizationQueryDataPort;
             _userCommandDataPort = userCommandDataPort;
             _walletQueryDataPort = walletQueryDataPort;
             _mediator = mediator;
+            _stringLocalizer = stringLocalizer;
         }
 
         public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var isUserEmail = await _userQueryDataPort.CheckUserEmailAsync(request.Email);
-            AppRule.False(isUserEmail, new BusinessValidationException("User already exist.", $"User already exist. Email: {request.Email}"));
+            AppRule.False(isUserEmail, new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])}", $"User{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])} Email: {request.Email}"));
 
             var referanceCodeUser = await _userQueryDataPort.GetReferanceCodeUserAsync(request.ReferenceCode);
-            AppRule.ExistsAndActive(referanceCodeUser, new BusinessValidationException("Referance Code not found.", $"Referance Code not found. ReferanceCode: {request.ReferenceCode}"));
+            AppRule.ExistsAndActive(referanceCodeUser, new BusinessValidationException($"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ReferanceCode"])}", $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ReferanceCode"])} ReferanceCode: {request.ReferenceCode}"));
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 

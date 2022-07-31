@@ -1,6 +1,8 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.PackageModule.Domain.Packages;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;
@@ -9,11 +11,13 @@ internal class UpdatePackageCommandHandler : ICommandHandler<UpdatePackageComman
 {
     private readonly IPackageQueryDataPort _packageQueryDataPort;
     private readonly IPackageCommandDataPort _packageCommandDataPort;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public UpdatePackageCommandHandler(IPackageQueryDataPort packageQueryDataPort, IPackageCommandDataPort packageCommandDataPort)
+    public UpdatePackageCommandHandler(IPackageQueryDataPort packageQueryDataPort, IPackageCommandDataPort packageCommandDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _packageQueryDataPort = packageQueryDataPort;
         _packageCommandDataPort = packageCommandDataPort;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<UpdatePackageCommandResponse> Handle(UpdatePackageCommand request, CancellationToken cancellationToken)

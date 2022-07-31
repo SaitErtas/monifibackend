@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using System.Text.Json.Serialization;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;
@@ -22,15 +24,15 @@ public class UpdatePackageCommand : ICommand<UpdatePackageCommandResponse>
 
 internal class UpdatePackageCommandValidator : AbstractValidator<UpdatePackageCommand>
 {
-    public UpdatePackageCommandValidator()
+    public UpdatePackageCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("Id is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Id))}");
         RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Name))}");
         RuleFor(x => x.Duration)
-            .NotEmpty().WithMessage("Duration is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Duration))}");
         RuleFor(x => x.Commission)
-            .NotEmpty().WithMessage("Commission is not null.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Commission))}");
     }
 }

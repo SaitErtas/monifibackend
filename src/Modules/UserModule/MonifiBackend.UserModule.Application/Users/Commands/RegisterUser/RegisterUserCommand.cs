@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser;
 
@@ -20,16 +22,16 @@ public class RegisterUserCommand : ICommand<RegisterUserCommandResponse>
 
 internal class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {
-    public RegisterUserCommandValidator()
+    public RegisterUserCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Mail alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Email))}");
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("Şifre alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Password))}");
         RuleFor(x => x.Terms)
-            .NotEmpty().WithMessage("Terms alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Terms))}");
         RuleFor(x => x.ReferenceCode)
-            .NotEmpty().WithMessage("Referans Kodu alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.ReferenceCode))}");
 
     }
 }

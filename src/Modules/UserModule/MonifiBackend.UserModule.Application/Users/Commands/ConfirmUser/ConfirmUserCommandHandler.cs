@@ -1,6 +1,8 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -11,18 +13,20 @@ internal class ConfirmUserCommandHandler : ICommandHandler<ConfirmUserCommand, C
     private readonly IUserQueryDataPort _userQueryDataPort;
     private readonly IUserCommandDataPort _userCommandDataPort;
     private readonly IJwtUtils _jwtUtils;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public ConfirmUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IJwtUtils jwtUtils)
+    public ConfirmUserCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IJwtUtils jwtUtils, IStringLocalizer<Resource> stringLocalizer)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
         _jwtUtils = jwtUtils;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<ConfirmUserCommandResponse> Handle(ConfirmUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetUserConfirmationCodeAsync(request.ConfirmationCode);
-        AppRule.ExistsAndPassive(user, new BusinessValidationException("ConfirmationCode invalid.", $"ConfirmationCode invalid. ConfirmationCode: {request.ConfirmationCode}"));
+        AppRule.ExistsAndPassive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])}", $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])} ConfirmationCode: {request.ConfirmationCode}"));
 
         user.MarkAsActive();
 

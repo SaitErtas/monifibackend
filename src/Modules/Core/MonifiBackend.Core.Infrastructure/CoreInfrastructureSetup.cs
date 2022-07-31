@@ -1,6 +1,8 @@
 ﻿using AspNetCoreRateLimit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +19,7 @@ using MonifiBackend.Core.Infrastructure.Middlewares;
 using MonifiBackend.Core.Infrastructure.Notifications;
 using MonifiBackend.Core.Infrastructure.TronNetworks;
 using MonifiBackend.Data.Infrastructure.Contexts;
+using System.Globalization;
 using System.Text;
 
 namespace MonifiBackend.Core.Infrastructure
@@ -34,6 +37,7 @@ namespace MonifiBackend.Core.Infrastructure
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
             services.AddHttpClient<IBscScanAccountsDataPort, BscScanAccountsDataAdapter>();
             services.AddHttpClient<ITronNetworkAccountsDataPort, TronNetworkAccountsDataAdapter>();
+            services.AddLocalization();
 
             return services;
         }
@@ -79,6 +83,28 @@ namespace MonifiBackend.Core.Infrastructure
         {
             services.AddSingleton<RedisServer>();
             services.AddSingleton<ICachePort, RedisCacheAdapter>();
+
+            return services;
+        }
+        public static IServiceCollection AddLocalization(this IServiceCollection services)
+        {
+            services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("tr-TR"),
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             return services;
         }

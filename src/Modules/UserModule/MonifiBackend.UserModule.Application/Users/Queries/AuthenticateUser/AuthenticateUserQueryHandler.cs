@@ -1,6 +1,8 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -8,21 +10,23 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
 {
     internal class AuthenticateUserQueryHandler : IQueryHandler<AuthenticateUserQuery, AuthenticateUserQueryResponse>
     {
+        private readonly IStringLocalizer<Resource> _stringLocalizer;
         private readonly IUserQueryDataPort _userQueryDataPort;
         private readonly IJwtUtils _jwtUtils;
-        public AuthenticateUserQueryHandler(IUserQueryDataPort userQueryDataPort, IJwtUtils jwtUtils)
+        public AuthenticateUserQueryHandler(IUserQueryDataPort userQueryDataPort, IJwtUtils jwtUtils, IStringLocalizer<Resource> stringLocalizer)
         {
             _userQueryDataPort = userQueryDataPort;
             _jwtUtils = jwtUtils;
+            _stringLocalizer = stringLocalizer;
         }
         public async Task<AuthenticateUserQueryResponse> Handle(AuthenticateUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userQueryDataPort.GetEmailAsync(request.Email);
-            AppRule.ExistsAndActive(user, new BusinessValidationException("User not found exception.", $"User not found exception. Email: {request.Email}"));
+            AppRule.ExistsAndActive(user, new BusinessValidationException(string.Format(_stringLocalizer["NotFound"], request.Email), $"{string.Format(_stringLocalizer["NotFound"], request.Email)} Email: {request.Email}"));
 
             //var userPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
-            AppRule.True(verified, new BusinessValidationException("User Not Verified Exception.", $"User Not Verified Exception. Email: {request.Email}"));
+            AppRule.True(verified, new BusinessValidationException($"{_stringLocalizer["UserNotVerified"]}", $"{_stringLocalizer["UserNotVerified"]}. Email: {request.Email}"));
 
             // authentication successful so generate jwt token
             JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);

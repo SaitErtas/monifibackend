@@ -1,7 +1,9 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.PackageModule.Domain.Packages;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackage;
@@ -10,11 +12,13 @@ internal class CreatePackageCommandHandler : ICommandHandler<CreatePackageComman
 {
     private readonly IPackageQueryDataPort _packageQueryDataPort;
     private readonly IPackageCommandDataPort _packageCommandDataPort;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public CreatePackageCommandHandler(IPackageQueryDataPort packageQueryDataPort, IPackageCommandDataPort packageCommandDataPort)
+    public CreatePackageCommandHandler(IPackageQueryDataPort packageQueryDataPort, IPackageCommandDataPort packageCommandDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _packageQueryDataPort = packageQueryDataPort;
         _packageCommandDataPort = packageCommandDataPort;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<CreatePackageCommandResponse> Handle(CreatePackageCommand request, CancellationToken cancellationToken)

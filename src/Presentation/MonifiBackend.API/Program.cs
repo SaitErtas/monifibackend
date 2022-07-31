@@ -1,6 +1,7 @@
 using AspNetCoreRateLimit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.HealthCheck;
@@ -104,6 +105,7 @@ builder.Services.AddSwaggerGen(options =>
     //options.IncludeXmlComments(xmlPath);
 });
 
+
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetSection("ApplicationSettings:MssqlSettings:ConnectionStrings").Value, tags: new[] { "database" })
     .AddCheck<MyHealthCheck>("MyHealthCheck", tags: new[] { "custom" }); ;
@@ -147,6 +149,8 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials()); // allow credentials
 
+var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(localizationOptions.Value);
 
 app.UseHttpsRedirection();
 

@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Application.Users.Events.ResetPasswordMail;
 using MonifiBackend.UserModule.Domain.Users;
 
@@ -12,24 +14,26 @@ internal class ResetPasswordCommandHandler : ICommandHandler<ResetPasswordComman
     private readonly IUserQueryDataPort _userQueryDataPort;
     private readonly IUserCommandDataPort _userCommandDataPort;
     private readonly IMediator _mediator;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public ResetPasswordCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IMediator mediator)
+    public ResetPasswordCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, IMediator mediator, IStringLocalizer<Resource> stringLocalizer)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
         _mediator = mediator;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<ResetPasswordCommandResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetEmailAsync(request.Email);
-        AppRule.ExistsAndActive(user, new BusinessValidationException("User not found exception.", $"User not found exception. Email: {request.Email}"));
+        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} Email: {request.Email}"));
 
         var resetPasswordCode = await GenerateResetPasswordCode();
         user.SetResetPasswordCode(resetPasswordCode);
 
         var result = await _userCommandDataPort.SaveAsync(user);
-        AppRule.True(result, new BusinessValidationException("User Not Updated Exception.", $"User already exist. UserId: {user.Id}"));
+        AppRule.True(result, new BusinessValidationException($"{string.Format(_stringLocalizer["NotUpdated"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotUpdated"], _stringLocalizer["User"])} UserId: {user.Id}"));
 
         var registerComplitedEvent = new ResetPasswordMailEvent(user.Id);
         await _mediator.Publish(registerComplitedEvent);

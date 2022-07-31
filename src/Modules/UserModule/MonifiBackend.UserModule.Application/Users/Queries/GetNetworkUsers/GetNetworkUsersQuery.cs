@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 
@@ -14,9 +16,9 @@ public class GetNetworkUsersQuery : IQuery<GetNetworkUsersQueryResponse>
 }
 internal class GetNetworkUsersQueryValidator : AbstractValidator<GetNetworkUsersQuery>
 {
-    public GetNetworkUsersQueryValidator()
+    public GetNetworkUsersQueryValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("UserId alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.UserId))}");
     }
 }

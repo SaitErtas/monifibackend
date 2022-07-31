@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using System.Text.Json.Serialization;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
@@ -31,21 +33,21 @@ public class RegistrationCompletionCommand : ICommand<RegistrationCompletionComm
 
 internal class RegistrationCompletionCommandValidator : AbstractValidator<RegistrationCompletionCommand>
 {
-    public RegistrationCompletionCommandValidator()
+    public RegistrationCompletionCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
         RuleFor(x => x.Username)
-            .NotEmpty().WithMessage("Username alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Username))}");
         RuleFor(x => x.FullName)
-            .NotEmpty().WithMessage("FullName alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.FullName))}");
         RuleFor(x => x.WalletAddress)
-            .NotEmpty().WithMessage("ContractAddress alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.WalletAddress))}");
         RuleFor(x => x.CryptoNetworkId)
-            .NotEmpty().WithMessage("CryptoNetwork alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.CryptoNetworkId))}");
         RuleFor(x => x.Phone)
-            .NotEmpty().WithMessage("Contact alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Phone))}");
         RuleFor(x => x.CountryId)
-            .NotEmpty().WithMessage("Language alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.CountryId))}");
         RuleFor(x => x.LanguageId)
-            .NotEmpty().WithMessage("Language alanı boş bırakılamaz.");
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.LanguageId))}");
     }
 }

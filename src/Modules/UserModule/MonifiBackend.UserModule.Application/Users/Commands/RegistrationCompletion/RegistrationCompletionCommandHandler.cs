@@ -1,9 +1,11 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Accounts;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.UserModule.Domain.Wallets;
@@ -20,8 +22,9 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
     private readonly IUserCommandDataPort _userCommandDataPort;
     private readonly IBscScanAccountsDataPort _bscScanAccountsDataPort;
     private readonly ITronNetworkAccountsDataPort _tronNetworkAccountsDataPort;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort)
+    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
@@ -29,13 +32,14 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         _walletQueryDataPort = walletQueryDataPort;
         _bscScanAccountsDataPort = bscScanAccountsDataPort;
         _tronNetworkAccountsDataPort = tronNetworkAccountsDataPort;
+        _stringLocalizer = stringLocalizer;
     }
 
     public async Task<RegistrationCompletionCommandResponse> Handle(RegistrationCompletionCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetAsync(request.UserId);
-        AppRule.ExistsAndActive(user, new BusinessValidationException("User not found.", $"User not found. UserId: {request.UserId}"));
-        AppRule.True(string.IsNullOrEmpty(user.Wallet.WalletAddress), new BusinessValidationException("Already subscribed user.", $"Already subscribed user UserId: {request.UserId}"));
+        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} UserId: {request.UserId}"));
+        AppRule.True(string.IsNullOrEmpty(user.Wallet.WalletAddress), new BusinessValidationException($"{_stringLocalizer["UserAlreadySubscribed"]}", $"{_stringLocalizer["UserAlreadySubscribed"]} UserId: {request.UserId}"));
 
         var language = await _localizationQueryDataPort.GetLanguageAsync(request.LanguageId);
         var country = await _localizationQueryDataPort.GetCountryAsync(request.CountryId);
@@ -48,12 +52,12 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
                 Address = request.WalletAddress,
             };
             var bnbBalance = await _bscScanAccountsDataPort.GetBnbBalanceAsync(bnbBalanceRequest);
-            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException("Wallet not found.", $"Wallet not found. WalletAddress: {request.WalletAddress}"));
+            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
         }
         else if (network.Id == TRONNETWORK_VALUE)
         {
             var account = await _tronNetworkAccountsDataPort.GetAccountsAsync(request.WalletAddress);
-            AppRule.True(account.Success, new BusinessValidationException("Wallet not found.", $"Wallet not found. WalletAddress: {request.WalletAddress}"));
+            AppRule.True(account.Success, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
         }
 
 

@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,10 +20,10 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
     }
     internal class GetUserQueryValidator : AbstractValidator<GetUserQuery>
     {
-        public GetUserQueryValidator()
+        public GetUserQueryValidator(IStringLocalizer<Resource> stringLocalizer)
         {
             RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage("UserId alanı boş bırakılamaz.");
+                .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.UserId))}");
 
         }
     }
