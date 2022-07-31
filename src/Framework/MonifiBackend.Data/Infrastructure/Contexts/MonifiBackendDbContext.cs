@@ -24,6 +24,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<LanguageEntity>().ToTable("Languages");
             modelBuilder.Entity<NetworkEntity>().ToTable("Networks");
             modelBuilder.Entity<UserIPEntity>().ToTable("UserIPs");
+            modelBuilder.Entity<NotificationEntity>().ToTable("Notifications");
             modelBuilder.Entity<WalletEntity>().ToTable("Wallets");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
@@ -35,6 +36,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new LanguageEntityConfiguration());
             modelBuilder.ApplyConfiguration(new NetworkEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserIPEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new WalletEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
@@ -79,6 +81,8 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         public DbSet<LanguageEntity> Languages { get; set; }
         public DbSet<NetworkEntity> Networks { get; set; }
         public DbSet<UserIPEntity> UserIPs { get; set; }
+        public DbSet<NotificationEntity> Notifications { get; set; }
+
         public DbSet<WalletEntity> Wallets { get; set; }
         public DbSet<AccountMovementEntity> AccountMovements { get; set; }
     }

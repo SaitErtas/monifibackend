@@ -2,6 +2,7 @@
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Data.Infrastructure.Entities;
 using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.UserModule.Domain.Users.Notifications;
 using MonifiBackend.UserModule.Domain.Users.Phones;
 
 namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
@@ -12,6 +13,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
         public static UserEntity Map(this User domain)
         {
             var contacts = domain.Phones != null ? domain.Phones.Select(x => x.Map()).ToList() : null;
+            var notifications = domain.Notifications != null ? domain.Notifications.Select(x => x.Map()).ToList() : null;
 
             return new UserEntity()
             {
@@ -32,7 +34,8 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 Username = domain.Username,
                 CountryId = domain.Country.Id,
                 LanguageId = domain.Language.Id,
-                Wallet = domain.Wallet.Map()
+                Wallet = domain.Wallet.Map(),
+                Notifications = notifications,
             };
         }
         #endregion
@@ -43,6 +46,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 return User.Default();
 
             var contacts = entity.Phones != null ? entity.Phones.Select(x => x.Map()).ToList() : new List<UserPhone>();
+            var notifications = entity.Notifications != null ? entity.Notifications.Select(x => x.Map()).ToList() : new List<UserNotification>();
 
             return User.Map(entity.Id,
                 entity.Status.ToEnum<BaseStatus>(),
@@ -61,7 +65,8 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.CreatedAt,
                 entity.ModifiedAt,
                 entity.Role.ToEnum<Role>(),
-                contacts);
+                contacts,
+                notifications);
         }
         #endregion
     }

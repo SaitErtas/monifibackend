@@ -13,6 +13,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         DbSet<LanguageEntity> Languages { get; set; }
         DbSet<NetworkEntity> Networks { get; set; }
         DbSet<UserIPEntity> UserIPs { get; set; }
+        DbSet<NotificationEntity> Notifications { get; set; }
         DbSet<WalletEntity> Wallets { get; set; }
         DbSet<AccountMovementEntity> AccountMovements { get; set; }
     }

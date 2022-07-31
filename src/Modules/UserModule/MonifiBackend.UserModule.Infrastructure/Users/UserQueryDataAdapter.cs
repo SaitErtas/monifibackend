@@ -6,6 +6,7 @@ using MonifiBackend.Core.Infrastructure.Extensions;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.Data.Infrastructure.Entities;
 using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.UserModule.Domain.Users.Notifications;
 using MonifiBackend.UserModule.Infrastructure.Extensions.Mappers;
 using System.Linq.Expressions;
 
@@ -124,6 +125,15 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     {
         return await _dbContext.Users
             .Where(x => !ids.Any(p2 => x.Id == p2))
+            .Select(x => x.Map())
+            .ToListAsync();
+    }
+
+    public async Task<List<UserNotification>> GetNotificationsAsync(int userId)
+    {
+        return await _dbContext.Notifications
+            .Include(i => i.User)
+            .Where(x => x.User.Id == userId)
             .Select(x => x.Map())
             .ToListAsync();
     }

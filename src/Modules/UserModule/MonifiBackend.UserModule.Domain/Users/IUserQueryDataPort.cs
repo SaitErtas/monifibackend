@@ -1,5 +1,6 @@
 ﻿using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Resources;
+using MonifiBackend.UserModule.Domain.Users.Notifications;
 
 namespace MonifiBackend.UserModule.Domain.Users;
 
@@ -17,4 +18,7 @@ public interface IUserQueryDataPort : IQueryDataPort
     Task<User> GetEmailAsync(string email);
     Task<List<User>> GetMeFirstNetworkAsync(int id);
     Task<List<User>> GetAllNetworkAsync(List<int> ids);
+
+
+    Task<List<UserNotification>> GetNotificationsAsync(int userId);
 }

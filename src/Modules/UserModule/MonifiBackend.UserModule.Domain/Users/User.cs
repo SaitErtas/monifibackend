@@ -3,6 +3,7 @@ using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Domain.Localizations;
+using MonifiBackend.UserModule.Domain.Users.Notifications;
 using MonifiBackend.UserModule.Domain.Users.Phones;
 using MonifiBackend.UserModule.Domain.Wallets;
 
@@ -29,6 +30,15 @@ namespace MonifiBackend.UserModule.Domain.Users
 
         private List<UserPhone> _phones = new();
         public IReadOnlyCollection<UserPhone> Phones => _phones.AsReadOnly();
+
+        private List<UserNotification> _notifications = new();
+        public IReadOnlyCollection<UserNotification> Notifications => _notifications.AsReadOnly();
+        public void AddNotification(string message)
+        {
+            AppRule.NotNullOrEmpty<DomainException>(message, "Message Cannot Be Null Or Empty");
+            var notification = UserNotification.CreateNew(message);
+            _notifications.Add(notification);
+        }
 
         public void SetTerms(bool terms)
         {
@@ -144,7 +154,8 @@ namespace MonifiBackend.UserModule.Domain.Users
             DateTime createdAt,
             DateTime modifiedAt,
             Role role,
-            List<UserPhone> phones)
+            List<UserPhone> phones,
+            List<UserNotification> notifications)
         {
             return new User()
             {
@@ -161,6 +172,7 @@ namespace MonifiBackend.UserModule.Domain.Users
                 ReferanceCode = referanceCode,
                 ConfirmationCode = confirmationCode,
                 _phones = phones,
+                _notifications = notifications,
                 Username = userName,
                 Country = country,
                 Language = language,

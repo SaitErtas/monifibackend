@@ -29,7 +29,6 @@ internal class ConfirmUserCommandHandler : ICommandHandler<ConfirmUserCommand, C
         var status = await _userCommandDataPort.SaveAsync(user);
         AppRule.True<BusinessValidationException>(status);
 
-        // authentication successful so generate jwt token
         JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);
         var jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 

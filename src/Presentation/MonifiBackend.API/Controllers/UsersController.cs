@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
+using MonifiBackend.UserModule.Application.Notifications.Commands.CreateNotification;
+using MonifiBackend.UserModule.Application.Notifications.Queries.GetNotifications;
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
 using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
@@ -30,6 +32,26 @@ namespace MonifiBackend.API.Controllers
             var currentUser = (User)HttpContext.Items["User"];
 
             var request = new GetUserQuery(currentUser.Id);
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpGet("notifications")]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
+        public async Task<IActionResult> NotificationsAsync()
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+
+            var request = new GetNotificationsQuery(currentUser.Id);
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpPost("notifications")]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
+        public async Task<IActionResult> CreateNotificationsAsync(CreateNotificationCommand request)
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+
+            request.UserId = currentUser.Id;
             var result = await _mediator.Send(request);
             return Ok(result);
         }

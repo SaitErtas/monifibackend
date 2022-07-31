@@ -24,6 +24,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
         public virtual CountryEntity Country { get; set; }
         public virtual ICollection<UserPhoneEntity> Phones { get; set; }
         public virtual ICollection<UserIPEntity> UserIps { get; set; }
+        public virtual ICollection<NotificationEntity> Notifications { get; set; }
         public virtual WalletEntity Wallet { get; set; }
     }
     public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
