@@ -12,8 +12,8 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    [Migration("20220730183125_InitialAbcd")]
-    partial class InitialAbcd
+    [Migration("20220731203157_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -279,6 +279,41 @@ namespace MonifiBackend.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Packages", (string)null);
+                });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.SettingEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxSale")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxSaleApy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxSaleReferance")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.UserEntity", b =>

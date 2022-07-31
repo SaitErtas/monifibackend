@@ -20,6 +20,7 @@ internal class BuyMonofiCommandValidator : AbstractValidator<BuyMonofiCommand>
         RuleFor(x => x.UserId)
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.UserId))}");
         RuleFor(x => x.Amount)
+            .GreaterThan(0)
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Amount))}");
         RuleFor(x => x.PackageDetailId)
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.PackageDetailId))}");
