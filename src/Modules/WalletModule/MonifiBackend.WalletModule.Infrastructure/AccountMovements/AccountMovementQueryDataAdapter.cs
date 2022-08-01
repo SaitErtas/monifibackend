@@ -47,4 +47,20 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
 
         return entity.Map();
     }
+
+    public async Task<decimal> GetTotalBonusAsync()
+    {
+        var totalSale = await _dbContext.AccountMovements
+            .Where(w => w.ActionType == ActionType.Bonus.ToInt())
+            .SumAsync(s => s.Amount);
+        return totalSale;
+    }
+
+    public async Task<decimal> GetTotalSaleAsync()
+    {
+        var totalSale = await _dbContext.AccountMovements
+            .Where(w => w.ActionType == ActionType.Sale.ToInt())
+            .SumAsync(s => s.Amount);
+        return totalSale;
+    }
 }

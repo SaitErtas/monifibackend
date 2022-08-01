@@ -5,26 +5,37 @@ using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
+using MonifiBackend.WalletModule.Domain.Settings;
 
 namespace MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 
 internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMonofiCommandResponse>
 {
+    private const int DEFAULT_SETTING_VALUE = 1;
     private readonly IAccountMovementQueryDataPort _accountMovementQueryDataPort;
     private readonly IAccountMovementCommandDataPort _accountMovementCommandDataPort;
     private readonly IPackageQueryDataPort _packageQueryDataPort;
+    private readonly ISettingQueryDataPort _settingQueryDataPort;
     private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public BuyMonofiCommandHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IStringLocalizer<Resource> stringLocalizer)
+    public BuyMonofiCommandHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, ISettingQueryDataPort settingQueryDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _accountMovementCommandDataPort = accountMovementCommandDataPort;
         _packageQueryDataPort = packageQueryDataPort;
+        _settingQueryDataPort = settingQueryDataPort;
         _stringLocalizer = stringLocalizer;
     }
 
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
     {
+        var setting = await _settingQueryDataPort.GetAsync(DEFAULT_SETTING_VALUE);
+        var totalSale = await _accountMovementQueryDataPort.GetTotalSaleAsync();
+        var totalBonus = await _accountMovementQueryDataPort.GetTotalBonusAsync();
+        AppRule.True(totalSale < setting.MaximumSalesQuantity, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+        AppRule.True(totalBonus < setting.MaximumReferenceBonus, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+        AppRule.True((totalBonus + totalSale) < setting.TotalPreSaleQuantity, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+
         //Seçilen Paket Var Mı Kontrol et?
         var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PackageDetailId);
         AppRule.ExistsAndActive(package, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));

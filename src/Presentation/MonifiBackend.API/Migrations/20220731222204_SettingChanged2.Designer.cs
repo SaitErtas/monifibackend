@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonifiBackend.Data.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    partial class MonifiBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731222204_SettingChanged2")]
+    partial class SettingChanged2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,7 +295,7 @@ namespace MonifiBackend.API.Migrations
                     b.Property<long>("MaximumDistributedAPY")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("MaximumReferenceBonus")
+                    b.Property<long>("MaximumReferenceGain")
                         .HasColumnType("bigint");
 
                     b.Property<long>("MaximumSalesQuantity")
@@ -311,9 +313,6 @@ namespace MonifiBackend.API.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<long>("TotalPreSaleQuantity")
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

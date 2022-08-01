@@ -12,8 +12,8 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    [Migration("20220731203157_Initial")]
-    partial class Initial
+    [Migration("20220731221837_SettingChanged")]
+    partial class SettingChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -292,17 +292,20 @@ namespace MonifiBackend.API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MaxSale")
+                    b.Property<int>("MaximumDistributedAPY")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxSaleApy")
+                    b.Property<int>("MaximumReferenceGain")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxSaleReferance")
+                    b.Property<int>("MaximumSalesQuantity")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("MonifiPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()

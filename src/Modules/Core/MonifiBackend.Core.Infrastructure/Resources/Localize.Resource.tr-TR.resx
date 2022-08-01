@@ -144,6 +144,9 @@
   <data name="Package" xml:space="preserve">
     <value>Paket</value>
   </data>
+  <data name="PreSaleMaxLimit" xml:space="preserve">
+    <value>The Pre-Sale has reached the maximum number.</value>
+  </data>
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referans Kodu</value>
   </data>
