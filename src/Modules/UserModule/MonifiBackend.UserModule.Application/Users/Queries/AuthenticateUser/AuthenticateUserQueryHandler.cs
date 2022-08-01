@@ -12,10 +12,12 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
     {
         private readonly IStringLocalizer<Resource> _stringLocalizer;
         private readonly IUserQueryDataPort _userQueryDataPort;
+        private readonly IUserCommandDataPort _userCommandDataPort;
         private readonly IJwtUtils _jwtUtils;
-        public AuthenticateUserQueryHandler(IUserQueryDataPort userQueryDataPort, IJwtUtils jwtUtils, IStringLocalizer<Resource> stringLocalizer)
+        public AuthenticateUserQueryHandler(IUserCommandDataPort userCommandDataPort, IUserQueryDataPort userQueryDataPort, IJwtUtils jwtUtils, IStringLocalizer<Resource> stringLocalizer)
         {
             _userQueryDataPort = userQueryDataPort;
+            _userCommandDataPort = userCommandDataPort;
             _jwtUtils = jwtUtils;
             _stringLocalizer = stringLocalizer;
         }
@@ -28,6 +30,8 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             var verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
             AppRule.True(verified, new BusinessValidationException($"{_stringLocalizer["UserNotVerified"]}", $"{_stringLocalizer["UserNotVerified"]}. Email: {request.Email}"));
 
+            user.AddUserIP(request.IpAddress, "Login");
+            await _userCommandDataPort.SaveAsync(user);
             // authentication successful so generate jwt token
             JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

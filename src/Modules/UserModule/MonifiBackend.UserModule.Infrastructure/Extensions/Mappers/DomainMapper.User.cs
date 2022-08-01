@@ -14,6 +14,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
         {
             var contacts = domain.Phones != null ? domain.Phones.Select(x => x.Map()).ToList() : null;
             var notifications = domain.Notifications != null ? domain.Notifications.Select(x => x.Map()).ToList() : null;
+            var userIPs = domain.UserIPs != null ? domain.UserIPs.Select(x => x.Map()).ToList() : null;
 
             return new UserEntity()
             {
@@ -36,6 +37,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 LanguageId = domain.Language.Id,
                 Wallet = domain.Wallet.Map(),
                 Notifications = notifications,
+                UserIps = userIPs,
             };
         }
         #endregion
@@ -47,6 +49,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
 
             var contacts = entity.Phones != null ? entity.Phones.Select(x => x.Map()).ToList() : new List<UserPhone>();
             var notifications = entity.Notifications != null ? entity.Notifications.Select(x => x.Map()).ToList() : new List<UserNotification>();
+            var userIPs = entity.UserIps != null ? entity.UserIps.Select(x => x.Map()).ToList() : new List<UserIP>();
 
             return User.Map(entity.Id,
                 entity.Status.ToEnum<BaseStatus>(),
@@ -66,7 +69,8 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.ModifiedAt,
                 entity.Role.ToEnum<Role>(),
                 contacts,
-                notifications);
+                notifications,
+                userIPs);
         }
         #endregion
     }

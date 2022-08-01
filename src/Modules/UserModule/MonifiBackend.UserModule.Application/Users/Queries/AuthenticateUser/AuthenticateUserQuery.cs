@@ -4,6 +4,7 @@ using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Infrastructure.Localize;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser;
 
@@ -21,6 +22,8 @@ public class AuthenticateUserQuery : IQuery<AuthenticateUserQueryResponse>
     [Required]
     [SwaggerSchema(Nullable = false)]
     public string Password { get; }
+    [JsonIgnore]
+    public string IpAddress { get; set; }
 }
 internal class AuthenticateUserQueryValidator : AbstractValidator<AuthenticateUserQuery>
 {

@@ -31,15 +31,21 @@ namespace MonifiBackend.UserModule.Domain.Users
         private List<UserPhone> _phones = new();
         public IReadOnlyCollection<UserPhone> Phones => _phones.AsReadOnly();
 
+        private List<UserIP> _userIPs = new();
+        public IReadOnlyCollection<UserIP> UserIPs => _userIPs.AsReadOnly();
+
         private List<UserNotification> _notifications = new();
         public IReadOnlyCollection<UserNotification> Notifications => _notifications.AsReadOnly();
         public void AddNotification(string message)
         {
-            AppRule.NotNullOrEmpty<DomainException>(message, "Message Cannot Be Null Or Empty");
             var notification = UserNotification.CreateNew(message);
             _notifications.Add(notification);
         }
-
+        public void AddUserIP(string ipAddress, string requestName)
+        {
+            var userIP = UserIP.CreateNew(ipAddress, requestName);
+            _userIPs.Add(userIP);
+        }
         public void SetTerms(bool terms)
         {
             Terms = terms;
@@ -155,7 +161,8 @@ namespace MonifiBackend.UserModule.Domain.Users
             DateTime modifiedAt,
             Role role,
             List<UserPhone> phones,
-            List<UserNotification> notifications)
+            List<UserNotification> notifications,
+            List<UserIP> userIPs)
         {
             return new User()
             {
@@ -177,7 +184,8 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Country = country,
                 Language = language,
                 Wallet = wallet,
-                FullName = fullName
+                FullName = fullName,
+                _userIPs = userIPs
             };
         }
 
