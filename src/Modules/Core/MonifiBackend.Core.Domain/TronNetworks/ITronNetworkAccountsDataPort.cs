@@ -1,13 +1,10 @@
 ﻿using MonifiBackend.Core.Domain.TronNetworks.Accounts;
+using MonifiBackend.Core.Domain.TronNetworks.Transactions;
 
 namespace MonifiBackend.Core.Domain.TronNetworks;
 
 public interface ITronNetworkAccountsDataPort
 {
-    /// <summary>
-    /// Get Tron for a Single Address
-    /// </summary>
-    /// <param name="request">BnbBalanceRequest Model</param>
-    /// <returns>Returns the BNB balance of a given address.</returns>
-    Task<Account?> GetAccountsAsync(string address);
+    Task<Account> GetAccountsAsync(string address);
+    public Task<Transaction> GetTransactionsAsync(string address);
 }
