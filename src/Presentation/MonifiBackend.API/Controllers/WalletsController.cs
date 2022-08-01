@@ -64,7 +64,9 @@ public class WalletsController : BaseApiController
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
     public async Task<IActionResult> GetStatisticsAsync()
     {
-        var request = new GetStatisticsQuery();
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new GetStatisticsQuery(currentUser.Id);
         var result = await _mediator.Send(request);
         return Ok(result);
     }

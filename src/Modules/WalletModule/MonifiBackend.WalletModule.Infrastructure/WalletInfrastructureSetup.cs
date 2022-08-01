@@ -2,9 +2,11 @@
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Settings;
+using MonifiBackend.WalletModule.Domain.Users;
 using MonifiBackend.WalletModule.Infrastructure.AccountMovements;
 using MonifiBackend.WalletModule.Infrastructure.Packages;
 using MonifiBackend.WalletModule.Infrastructure.Settings;
+using MonifiBackend.WalletModule.Infrastructure.Users;
 
 namespace MonifiBackend.WalletModule.Infrastructure;
 
@@ -17,6 +19,7 @@ public static class WalletInfrastructureSetup
         services.AddScoped<IAccountMovementQueryDataPort, AccountMovementQueryDataAdapter>();
         services.AddScoped<IPackageQueryDataPort, PackageQueryDataAdapter>();
         services.AddScoped<ISettingQueryDataPort, SettingQueryDataAdapter>();
+        services.AddScoped<IUserQueryDataPort, UserQueryDataAdapter>();
 
 
         #endregion

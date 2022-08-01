@@ -5,6 +5,11 @@ namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic
 
 public class GetStatisticsQuery : IQuery<GetStatisticsQueryResponse>
 {
+    public GetStatisticsQuery(int userId)
+    {
+        UserId = userId;
+    }
+    public int UserId { get; private set; }
 }
 
 internal class GetStatisticsQueryValidator : AbstractValidator<GetStatisticsQuery>

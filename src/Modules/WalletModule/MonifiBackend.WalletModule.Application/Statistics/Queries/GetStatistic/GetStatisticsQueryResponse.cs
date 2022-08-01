@@ -4,7 +4,7 @@ namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic
 
 public class GetStatisticsQueryResponse
 {
-    public GetStatisticsQueryResponse(Setting setting, decimal totalSale, decimal totalBonus)
+    public GetStatisticsQueryResponse(Setting setting, decimal totalSale, decimal totalBonus, int userCount, int referanceCount)
     {
         MaximumSalesQuantity = setting.MaximumSalesQuantity;
         MaximumDistributedAPY = setting.MaximumDistributedAPY;
@@ -14,6 +14,8 @@ public class GetStatisticsQueryResponse
         TotalSale = totalSale;
         TotalBonus = totalBonus;
         TotalDistributedMonifi = totalSale + totalBonus;
+        UserCount = userCount;
+        ReferanceCount = referanceCount;
     }
     public long MaximumSalesQuantity { get; private set; }
     public long MaximumDistributedAPY { get; private set; }
@@ -23,4 +25,6 @@ public class GetStatisticsQueryResponse
     public decimal TotalSale { get; private set; }
     public decimal TotalBonus { get; private set; }
     public decimal TotalDistributedMonifi { get; private set; }
+    public int UserCount { get; private set; }
+    public int ReferanceCount { get; private set; }
 }
