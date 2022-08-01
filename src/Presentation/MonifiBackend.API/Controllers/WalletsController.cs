@@ -7,6 +7,7 @@ using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
+using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
 
 namespace MonifiBackend.API.Controllers;
 
@@ -55,6 +56,15 @@ public class WalletsController : BaseApiController
     public async Task<IActionResult> GetNetworksAsync()
     {
         var request = new GetNetworksQuery();
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+
+    [HttpGet("statistics")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> GetStatisticsAsync()
+    {
+        var request = new GetStatisticsQuery();
         var result = await _mediator.Send(request);
         return Ok(result);
     }
