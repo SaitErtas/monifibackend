@@ -4,6 +4,7 @@ using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
@@ -31,6 +32,10 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             AppRule.True(verified, new BusinessValidationException($"{_stringLocalizer["UserNotVerified"]}", $"{_stringLocalizer["UserNotVerified"]}. Email: {request.Email}"));
 
             user.AddUserIP(request.IpAddress, "Login");
+
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
+            user.AddNotification($"{string.Format(_stringLocalizer["LoginNotification"], DateTime.Now.ToString("d"))}");
+
             await _userCommandDataPort.SaveAsync(user);
             // authentication successful so generate jwt token
             JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);

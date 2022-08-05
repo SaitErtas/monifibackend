@@ -7,8 +7,10 @@ using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Localizations;
+using MonifiBackend.UserModule.Domain.Notifications;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.UserModule.Domain.Wallets;
+using System.Globalization;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
 
@@ -22,9 +24,10 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
     private readonly IUserCommandDataPort _userCommandDataPort;
     private readonly IBscScanAccountsDataPort _bscScanAccountsDataPort;
     private readonly ITronNetworkAccountsDataPort _tronNetworkAccountsDataPort;
+    private readonly INotificationCommandDataPort _notificationCommandDataPort;
     private readonly IStringLocalizer<Resource> _stringLocalizer;
 
-    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IStringLocalizer<Resource> stringLocalizer)
+    public RegistrationCompletionCommandHandler(IUserQueryDataPort userQueryDataPort, IUserCommandDataPort userCommandDataPort, ILocalizationQueryDataPort localizationQueryDataPort, IWalletQueryDataPort walletQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IStringLocalizer<Resource> stringLocalizer, INotificationCommandDataPort notificationCommandDataPort)
     {
         _userQueryDataPort = userQueryDataPort;
         _userCommandDataPort = userCommandDataPort;
@@ -33,6 +36,7 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         _bscScanAccountsDataPort = bscScanAccountsDataPort;
         _tronNetworkAccountsDataPort = tronNetworkAccountsDataPort;
         _stringLocalizer = stringLocalizer;
+        _notificationCommandDataPort = notificationCommandDataPort;
     }
 
     public async Task<RegistrationCompletionCommandResponse> Handle(RegistrationCompletionCommand request, CancellationToken cancellationToken)
@@ -60,7 +64,6 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
             AppRule.True(account.Success, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
         }
 
-
         user.Wallet.SetWalletAddress(request.WalletAddress);
         user.Wallet.SetNetwork(network);
 
@@ -71,9 +74,14 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
 
         if (request.PhoneId == null) user.AddPhone(request.Phone);
 
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
+        user.AddNotification($"{_stringLocalizer["NewRegister"]}");
 
         var status = await _userCommandDataPort.SaveAsync(user);
         AppRule.True<BusinessValidationException>(status);
+
+        var notification = Notification.CreateNew(user.ReferanceUser, $"{string.Format(_stringLocalizer["NewRegisterReferanceUser"], user.FullName)}");
+        await _notificationCommandDataPort.SaveAsync(notification);
 
         return new RegistrationCompletionCommandResponse();
     }

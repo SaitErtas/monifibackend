@@ -123,6 +123,10 @@
   <data name="AlreadyExist" xml:space="preserve">
     <value>{0} zaten mevcut.</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Giriş şifresi değiştirildi.</value>
+    <comment>Giriş şifresi değiştirilir.</comment>
+  </data>
   <data name="ConfirmationCode" xml:space="preserve">
     <value>Doğrulama Kodu</value>
   </data>
@@ -132,8 +136,17 @@
   <data name="Leader" xml:space="preserve">
     <value>Lider</value>
   </data>
+  <data name="LoginNotification" xml:space="preserve">
+    <value>{0} tarihinde uygulamaya giriş yapıldı.</value>
+  </data>
   <data name="Member" xml:space="preserve">
     <value>Üye</value>
+  </data>
+  <data name="NewRegister" xml:space="preserve">
+    <value>Referans kodu ile üye oldun.</value>
+  </data>
+  <data name="NewRegisterReferanceUser" xml:space="preserve">
+    <value>{0} Kullanıcı referans kodunu kullanacak üye oldu.</value>
   </data>
   <data name="NotCreated" xml:space="preserve">
     <value>{0} kaydedilemedi.</value>

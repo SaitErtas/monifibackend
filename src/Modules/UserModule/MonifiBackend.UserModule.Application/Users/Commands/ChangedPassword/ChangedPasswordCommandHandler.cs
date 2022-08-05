@@ -4,6 +4,7 @@ using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MonifiBackend.UserModule.UnitTests")]
@@ -38,12 +39,17 @@ internal class ChangedPasswordCommandHandler : ICommandHandler<ChangedPasswordCo
         user.SetPassword(passwordHash);
         user.SetResetPasswordCode(string.Empty);
 
+
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
+        user.AddNotification($"{_stringLocalizer["ChangePassword"]}");
+
         var result = await _userCommandDataPort.SaveAsync(user);
         AppRule.True(result,
             new BusinessValidationException(
                 $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["User"])}",
                 $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["User"])} UserId: {user.Id}")
             );
+
 
         return new ChangedPasswordCommandResponse();
     }

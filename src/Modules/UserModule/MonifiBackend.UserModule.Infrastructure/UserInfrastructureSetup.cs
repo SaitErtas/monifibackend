@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MonifiBackend.UserModule.Domain.Localizations;
+using MonifiBackend.UserModule.Domain.Notifications;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.UserModule.Domain.Wallets;
 using MonifiBackend.UserModule.Infrastructure.Localizations;
+using MonifiBackend.UserModule.Infrastructure.Notifications;
 using MonifiBackend.UserModule.Infrastructure.Users;
 using MonifiBackend.UserModule.Infrastructure.Wallets;
 
@@ -17,6 +19,7 @@ namespace MonifiBackend.UserModule.Infrastructure
             services.AddScoped<IUserQueryDataPort, UserQueryDataAdapter>();
             services.AddScoped<ILocalizationQueryDataPort, LocalizationQueryDataAdapter>();
             services.AddScoped<IWalletQueryDataPort, WalletQueryDataAdapter>();
+            services.AddScoped<INotificationCommandDataPort, NotificationCommandDataAdapter>();
             services.AddScoped<IJwtUtils, JwtUtils>();
             #endregion
             return services;
