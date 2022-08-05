@@ -9,7 +9,7 @@ public class GetStatisticsQuery : IQuery<GetStatisticsQueryResponse>
     {
         UserId = userId;
     }
-    public int UserId { get; private set; }
+    public int UserId { get; }
 }
 
 internal class GetStatisticsQueryValidator : AbstractValidator<GetStatisticsQuery>

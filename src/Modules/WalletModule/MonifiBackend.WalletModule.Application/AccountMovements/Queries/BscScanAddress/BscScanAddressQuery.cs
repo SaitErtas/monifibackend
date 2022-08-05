@@ -9,7 +9,7 @@ public class BscScanAddressQuery : IQuery<BscScanAddressQueryResponse>
     {
         Address = address;
     }
-    public string Address { get; set; }
+    public string Address { get; }
 }
 
 internal class BscScanAddressQueryValidator : AbstractValidator<BscScanAddressQuery>

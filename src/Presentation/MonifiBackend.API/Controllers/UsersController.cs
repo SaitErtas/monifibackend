@@ -94,17 +94,19 @@ namespace MonifiBackend.API.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
-        [HttpPost("BscScanAddress")]
+        [HttpPost("BscScanAddress/{address}")]
         [AllowAnonymous]
-        public async Task<IActionResult> BscScanAddressAsync([FromBody] BscScanAddressQuery request)
+        public async Task<IActionResult> BscScanAddressAsync(string address)
         {
+            var request = new BscScanAddressQuery(address);
             var result = await _mediator.Send(request);
             return Ok(result);
         }
-        [HttpPost("BscScanNormalTransaction")]
+        [HttpPost("BscScanNormalTransaction/{address}")]
         [AllowAnonymous]
-        public async Task<IActionResult> BscScanNormalTransactionAsync([FromBody] BscScanNormalTransactionQuery request)
+        public async Task<IActionResult> BscScanNormalTransactionAsync(string address)
         {
+            var request = new BscScanNormalTransactionQuery(address);
             var result = await _mediator.Send(request);
             return Ok(result);
         }

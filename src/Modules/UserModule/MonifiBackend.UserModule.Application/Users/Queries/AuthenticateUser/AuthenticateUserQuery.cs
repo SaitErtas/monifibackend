@@ -23,7 +23,11 @@ public class AuthenticateUserQuery : IQuery<AuthenticateUserQueryResponse>
     [SwaggerSchema(Nullable = false)]
     public string Password { get; }
     [JsonIgnore]
-    public string IpAddress { get; set; }
+    public string IpAddress { get; private set; }
+    public void SetIpAddress(string ipAddress)
+    {
+        IpAddress = ipAddress;
+    }
 }
 internal class AuthenticateUserQueryValidator : AbstractValidator<AuthenticateUserQuery>
 {

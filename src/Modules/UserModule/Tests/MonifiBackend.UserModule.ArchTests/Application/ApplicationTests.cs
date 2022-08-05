@@ -20,14 +20,14 @@ namespace MonifiBackend.UserModule.ArchTests.Application
         //    AssertAreImmutable(types);
         //}
 
-        [Test]
-        public void Query_Should_Be_Immutable()
-        {
-            var types = Types.InAssembly(ApplicationAssembly)
-                .That().ImplementInterface(typeof(IQuery<>)).GetTypes();
+        //[Test]
+        //public void Query_Should_Be_Immutable()
+        //{
+        //    var types = Types.InAssembly(ApplicationAssembly)
+        //        .That().ImplementInterface(typeof(IQuery<>)).GetTypes();
 
-            AssertAreImmutable(types);
-        }
+        //    AssertAreImmutable(types);
+        //}
 
         [Test]
         public void CommandHandler_Should_Have_Name_EndingWith_CommandHandler()

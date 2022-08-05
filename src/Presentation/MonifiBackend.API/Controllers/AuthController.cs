@@ -33,7 +33,7 @@ public class AuthController : BaseApiController
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromBody, SwaggerRequestBody("Login", Required = true)] AuthenticateUserQuery request)
     {
-        request.IpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+        request.SetIpAddress(Request.HttpContext.Connection.RemoteIpAddress.ToString());
 
         var result = await _mediator.Send(request);
         return Ok(result);
