@@ -129,6 +129,12 @@
   <data name="FieldRequired" xml:space="preserve">
     <value>The {0} field is required</value>
   </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Leader</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
   <data name="NotCreated" xml:space="preserve">
     <value>{0} not created.</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referance Code</value>
+  </data>
+  <data name="Sub" xml:space="preserve">
+    <value>Sub</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>user</value>

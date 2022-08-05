@@ -1,4 +1,6 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
@@ -6,9 +8,11 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 internal class GetNetworkUsersQueryHandler : IQueryHandler<GetNetworkUsersQuery, GetNetworkUsersQueryResponse>
 {
     private readonly IUserQueryDataPort _userQueryDataPort;
-    public GetNetworkUsersQueryHandler(IUserQueryDataPort userQueryDataPort)
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
+    public GetNetworkUsersQueryHandler(IUserQueryDataPort userQueryDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _userQueryDataPort = userQueryDataPort;
+        _stringLocalizer = stringLocalizer;
     }
     public async Task<GetNetworkUsersQueryResponse> Handle(GetNetworkUsersQuery request, CancellationToken cancellationToken)
     {
@@ -18,6 +22,6 @@ internal class GetNetworkUsersQueryHandler : IQueryHandler<GetNetworkUsersQuery,
         networkUserIds.Add(request.UserId);
         var networkUsers = await _userQueryDataPort.GetAllNetworkAsync(networkUserIds);
 
-        return new GetNetworkUsersQueryResponse(user, meFirstNetworkUsers, networkUsers);
+        return new GetNetworkUsersQueryResponse(user, meFirstNetworkUsers, networkUsers, _stringLocalizer);
     }
 }

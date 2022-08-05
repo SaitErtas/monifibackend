@@ -129,6 +129,12 @@
   <data name="FieldRequired" xml:space="preserve">
     <value>{0} alanı zorunludur.</value>
   </data>
+  <data name="Leader" xml:space="preserve">
+    <value>Lider</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Üye</value>
+  </data>
   <data name="NotCreated" xml:space="preserve">
     <value>{0} kaydedilemedi.</value>
   </data>
@@ -149,6 +155,9 @@
   </data>
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referans Kodu</value>
+  </data>
+  <data name="Sub" xml:space="preserve">
+    <value>Alt</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>kullanıcı</value>
