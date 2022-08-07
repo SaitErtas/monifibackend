@@ -36,7 +36,7 @@ public class Bep20TokenTransferEventsRequest
     /// the number of transactions displayed per page (default is 10)
     /// </summary>
     [JsonPropertyName("offset")]
-    public int OffSet { get; set; } = 10;
+    public int OffSet { get; set; } = 100;
 
     /// <summary>
     /// the sorting preference, use asc to sort by ascending and desc to sort by descending (default is asc)

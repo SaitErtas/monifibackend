@@ -12,7 +12,6 @@ public sealed class AccountMovement : BaseActivityDomain<int>, IAggregateRoot
     public string Hash { get; private set; }
     public DateTime TransferTime { get; private set; }
     public string TokenSymbol { get; private set; }
-    public int UserId { get; private set; }
 
     public PackageDetail PackageDetail { get; protected set; }
     public Wallet Wallet { get; protected set; }
@@ -41,24 +40,7 @@ public sealed class AccountMovement : BaseActivityDomain<int>, IAggregateRoot
         TransactionStatus transactionStatus,
         ActionType actionType,
         PackageDetail packageDetail,
-        Wallet wallet)
-    {
-        return new AccountMovement()
-        {
-            Amount = amount,
-            Status = status,
-            ActionType = actionType,
-            TransactionStatus = transactionStatus,
-            PackageDetail = packageDetail,
-            Wallet = wallet
-        };
-    }
-    public static AccountMovement CreateNew(
-        decimal amount,
-        BaseStatus status,
-        TransactionStatus transactionStatus,
-        ActionType actionType,
-        int userId,
+        Wallet wallet,
         string hash,
         string tokenSymbol,
         DateTime transferTime)
@@ -69,7 +51,8 @@ public sealed class AccountMovement : BaseActivityDomain<int>, IAggregateRoot
             Status = status,
             ActionType = actionType,
             TransactionStatus = transactionStatus,
-            UserId = userId,
+            PackageDetail = packageDetail,
+            Wallet = wallet,
             Hash = hash,
             TokenSymbol = tokenSymbol,
             TransferTime = transferTime

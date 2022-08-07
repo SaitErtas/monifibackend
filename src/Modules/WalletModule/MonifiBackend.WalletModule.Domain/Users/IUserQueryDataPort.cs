@@ -4,5 +4,6 @@ public interface IUserQueryDataPort
 {
     Task<int> GetUserCountAsync();
     Task<int> GetReferanceCountAsync(int id);
+    Task<User> GetUserAsync(int id);
 
 }

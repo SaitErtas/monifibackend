@@ -42,7 +42,7 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);
         //Seçilen Paket ve Miktarı Hesap Haraketlerine ActionType Sale TransactionStatus Pending olarak kaydet
-        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PackageDetailId), wallet);
+        var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PackageDetailId), wallet, string.Empty, string.Empty, default(DateTime));
         wallet.AddMovement(movement);
         //Referans Olan Kişiye ActionType Bonus olarak paket ayı kadar hesap hareketi ekle
 
