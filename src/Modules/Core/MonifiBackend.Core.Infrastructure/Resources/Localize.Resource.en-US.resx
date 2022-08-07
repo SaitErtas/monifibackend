@@ -162,6 +162,9 @@
   <data name="Package" xml:space="preserve">
     <value>Package</value>
   </data>
+  <data name="PendingOrder" xml:space="preserve">
+    <value>You have a pending order. You need to buy this first.</value>
+  </data>
   <data name="PreSaleMaxLimit" xml:space="preserve">
     <value>Ön Satış maksimum sayıya ulaştı.</value>
   </data>

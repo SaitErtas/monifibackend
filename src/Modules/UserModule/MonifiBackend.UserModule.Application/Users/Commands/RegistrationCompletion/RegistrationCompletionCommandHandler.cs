@@ -42,12 +42,19 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
     public async Task<RegistrationCompletionCommandResponse> Handle(RegistrationCompletionCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetAsync(request.UserId);
-        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} UserId: {request.UserId}"));
-        AppRule.True(string.IsNullOrEmpty(user.Wallet.WalletAddress), new BusinessValidationException($"{_stringLocalizer["UserAlreadySubscribed"]}", $"{_stringLocalizer["UserAlreadySubscribed"]} UserId: {request.UserId}"));
+        AppRule.ExistsAndActive(user,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} UserId: {request.UserId}"));
+        AppRule.True(string.IsNullOrEmpty(user.Wallet.WalletAddress),
+            new BusinessValidationException($"{_stringLocalizer["UserAlreadySubscribed"]}", $"{_stringLocalizer["UserAlreadySubscribed"]} UserId: {request.UserId}"));
 
         var language = await _localizationQueryDataPort.GetLanguageAsync(request.LanguageId);
         var country = await _localizationQueryDataPort.GetCountryAsync(request.CountryId);
         var network = await _walletQueryDataPort.GetNetworkAsync(request.CryptoNetworkId);
+
+        var walletCheck = await _userQueryDataPort.CheckWalletAddressAsync(request.WalletAddress);
+        AppRule.False(walletCheck,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])} UserId: {request.UserId}"));
+
 
         if (network.Id == BSCSCAN_VALUE)
         {
@@ -56,12 +63,14 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
                 Address = request.WalletAddress,
             };
             var bnbBalance = await _bscScanAccountsDataPort.GetBnbBalanceAsync(bnbBalanceRequest);
-            AppRule.True(bnbBalance.Status == "1", new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
+            AppRule.True(bnbBalance.Status == "1",
+                new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
         }
         else if (network.Id == TRONNETWORK_VALUE)
         {
             var account = await _tronNetworkAccountsDataPort.GetAccountsAsync(request.WalletAddress);
-            AppRule.True(account.Success, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
+            AppRule.True(account.Success,
+                new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])} WalletAddress: {request.WalletAddress}"));
         }
 
         user.Wallet.SetWalletAddress(request.WalletAddress);

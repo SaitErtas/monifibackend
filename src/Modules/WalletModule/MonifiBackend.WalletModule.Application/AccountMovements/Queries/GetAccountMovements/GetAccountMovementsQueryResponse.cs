@@ -18,7 +18,7 @@ public class GetAccountMovementsSingleQueryResponse
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
-        BlockEndDate = accountMovement.CreatedAt.AddMonths(accountMovement.PackageDetail.Duration);
+        BlockEndDate = accountMovement.TransferTime == default(DateTime) ? default(DateTime) : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
         TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetMovementsWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);

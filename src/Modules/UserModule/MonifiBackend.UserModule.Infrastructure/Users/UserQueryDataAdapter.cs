@@ -138,4 +138,11 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Select(x => x.Map())
             .ToListAsync();
     }
+
+    public async Task<bool> CheckWalletAddressAsync(string walletAddress)
+    {
+        return await _dbContext.Users
+            .Include(i => i.Wallet)
+            .AnyAsync(x => x.Wallet.WalletAddress == walletAddress);
+    }
 }

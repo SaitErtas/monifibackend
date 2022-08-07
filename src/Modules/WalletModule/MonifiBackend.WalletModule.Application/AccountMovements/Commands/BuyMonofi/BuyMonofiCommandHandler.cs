@@ -32,15 +32,22 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
         var setting = await _settingQueryDataPort.GetAsync(DEFAULT_SETTING_VALUE);
         var totalSale = await _accountMovementQueryDataPort.GetTotalSaleAsync();
         var totalBonus = await _accountMovementQueryDataPort.GetTotalBonusAsync();
-        AppRule.True(totalSale < setting.MaximumSalesQuantity, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
-        AppRule.True(totalBonus < setting.MaximumReferenceBonus, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
-        AppRule.True((totalBonus + totalSale) < setting.TotalPreSaleQuantity, new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+        AppRule.True(totalSale < setting.MaximumSalesQuantity,
+            new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+        AppRule.True(totalBonus < setting.MaximumReferenceBonus,
+            new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
+        AppRule.True((totalBonus + totalSale) < setting.TotalPreSaleQuantity,
+            new BusinessValidationException($"{_stringLocalizer["PreSaleMaxLimit"]}", $"{_stringLocalizer["PreSaleMaxLimit"]} UserId: {request.UserId}"));
 
         //Seçilen Paket Var Mı Kontrol et?
         var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PackageDetailId);
-        AppRule.ExistsAndActive(package, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));
+        AppRule.ExistsAndActive(package,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);
+        AppRule.False(wallet.Movements.Any(a => a.TransactionStatus == TransactionStatus.Pending && a.Status == Core.Domain.Base.BaseStatus.Active),
+            new BusinessValidationException($"{_stringLocalizer["PendingOrder"]}", $"{_stringLocalizer["PendingOrder"]} UserId: {request.UserId}"));
+
         //Seçilen Paket ve Miktarı Hesap Haraketlerine ActionType Sale TransactionStatus Pending olarak kaydet
         var movement = AccountMovement.CreateNew(request.Amount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Sale, package.Details.FirstOrDefault(x => x.Id == request.PackageDetailId), wallet, string.Empty, string.Empty, default(DateTime));
         wallet.AddMovement(movement);

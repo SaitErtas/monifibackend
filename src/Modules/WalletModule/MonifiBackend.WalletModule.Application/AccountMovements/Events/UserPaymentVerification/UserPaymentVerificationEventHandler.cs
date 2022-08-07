@@ -111,7 +111,7 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                     var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
                     var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
                     var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
-                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
+                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
                     userAddedBonusList.Add(bonus);
                 }
                 // Database kayıt işlemlerini gerçekleştir

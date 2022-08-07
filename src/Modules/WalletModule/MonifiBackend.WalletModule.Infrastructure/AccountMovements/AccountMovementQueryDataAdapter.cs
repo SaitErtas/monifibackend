@@ -45,6 +45,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     {
         var entity = await _dbContext.Wallets
             .Include(i => i.CryptoNetwork)
+            .Include(i => i.AccountMovements)
             .FirstOrDefaultAsync(w => w.UserId == userId);
 
         return entity.Map();
