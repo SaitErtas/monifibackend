@@ -17,6 +17,7 @@ public static partial class DomainMapper
             Id = domain.Id,
             Name = domain.Name,
             Status = domain.Status.ToInt(),
+            Bonus = domain.Bonus,
             CreatedAt = domain.CreatedAt,
             ModifiedAt = domain.ModifiedAt,
             PackageDetails = details
@@ -38,6 +39,7 @@ public static partial class DomainMapper
             entity.MinValue,
             entity.MaxValue,
             entity.ChangePeriodDay,
+            entity.Bonus,
             entity.PackageDetails.Select(x => x.Map()).ToList());
     }
     #endregion

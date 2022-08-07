@@ -13,6 +13,10 @@ public class SettingEntity : BaseActivityEntity
     public long MaximumReferenceBonus { get; set; }
     public long TotalPreSaleQuantity { get; set; }
     public decimal MonifiPrice { get; set; }
+    public string BscScanAddress { get; set; }
+    public string TronNetworkAddress { get; set; }
+    public string BscScanTokenSymbol { get; set; }
+    public string TronNetworkTokenSymbol { get; set; }
 }
 public class SettingEntityConfiguration : IEntityTypeConfiguration<SettingEntity>
 {
@@ -24,7 +28,11 @@ public class SettingEntityConfiguration : IEntityTypeConfiguration<SettingEntity
         builder.Property(x => x.MaximumDistributedAPY).IsRequired();
         builder.Property(x => x.MaximumReferenceBonus).IsRequired();
         builder.Property(x => x.TotalPreSaleQuantity).IsRequired();
-        builder.Property(x => x.MonifiPrice).IsRequired();
+        builder.Property(x => x.MonifiPrice).HasPrecision(9, 5).IsRequired();
+        builder.Property(x => x.BscScanAddress).IsRequired();
+        builder.Property(x => x.TronNetworkAddress).IsRequired();
+        builder.Property(x => x.BscScanTokenSymbol).IsRequired();
+        builder.Property(x => x.TronNetworkTokenSymbol).IsRequired();
 
         BaseActivityConfiguration.Configure(builder);
     }

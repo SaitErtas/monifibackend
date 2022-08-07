@@ -11,9 +11,16 @@ public class AccountMovementCommandDataAdapter : IAccountMovementCommandDataPort
     {
         _dbContext = dbContext;
     }
+
     public async Task<bool> SaveAsync(Wallet wallet)
     {
         _dbContext.Wallets.Update(wallet.Map());
         return (await _dbContext.SaveChangesAsync()) > 0;
+    }
+
+    public async Task BulkSaveAsync(List<AccountMovement> accountMovements)
+    {
+        _dbContext.AccountMovements.UpdateRange(accountMovements.Select(x => x.Map()).ToList());
+        await _dbContext.SaveChangesAsync();
     }
 }

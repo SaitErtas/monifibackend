@@ -28,14 +28,14 @@ public class TronNetworkAccountsDataAdapter : ITronNetworkAccountsDataPort
         var result = await JsonSerializer.DeserializeAsync<Account>(responseStream);
         return result;
     }
-    public async Task<Transaction> GetTransactionsAsync(string address)
+    public async Task<Transfer> GetTransfersAsync(string address)
     {
-        var queryParameters = $"{_configuration["ApplicationSettings:TronNetworkOptions:TronScanApi"]}{TronModule.TRANSACTION.Replace("{address}", address)}";
+        var queryParameters = $"{_configuration["ApplicationSettings:TronNetworkOptions:TronScanApi"]}{TronModule.TRANSFER.Replace("{address}", address)}";
         using var response = await _bscScanHttpClient.GetAsync($"{queryParameters}")
             .ConfigureAwait(false);
 
         await using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-        var result = await JsonSerializer.DeserializeAsync<Transaction>(responseStream);
+        var result = await JsonSerializer.DeserializeAsync<Transfer>(responseStream);
         return result;
     }
 

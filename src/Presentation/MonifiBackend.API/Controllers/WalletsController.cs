@@ -5,6 +5,8 @@ using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
+using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
+using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
@@ -69,5 +71,25 @@ public class WalletsController : BaseApiController
         var request = new GetStatisticsQuery(currentUser.Id);
         var result = await _mediator.Send(request);
         return Ok(result);
+    }
+
+    [HttpGet("all-payment-sync")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> PaymentSyncAsync()
+    {
+        var request = new AllPaymentVerificationEvent();
+        await _mediator.Publish(request);
+        return Ok();
+    }
+
+    [HttpGet("user-payment-sync")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> UserPaymentSyncAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new UserPaymentVerificationEvent(currentUser.Id);
+        await _mediator.Publish(request);
+        return Ok();
     }
 }

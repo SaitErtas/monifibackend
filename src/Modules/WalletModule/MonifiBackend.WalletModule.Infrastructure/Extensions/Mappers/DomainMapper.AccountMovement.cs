@@ -21,6 +21,9 @@ public static partial class DomainMapper
             WalletId = domain.Wallet.Id,
             TransactionStatus = domain.TransactionStatus.ToInt(),
             Amount = domain.Amount,
+            Hash = domain.Hash,
+            TokenSymbol = domain.TokenSymbol,
+            TransferTime = domain.TransferTime,
         };
     }
     #endregion
@@ -37,6 +40,9 @@ public static partial class DomainMapper
             entity.Amount,
             entity.TransactionStatus.ToEnum<TransactionStatus>(),
             entity.ActionType.ToEnum<ActionType>(),
+            entity.Hash,
+            entity.TokenSymbol,
+            entity.TransferTime,
             entity.PackageDetail.Map(),
             entity.Wallet.Map());
     }

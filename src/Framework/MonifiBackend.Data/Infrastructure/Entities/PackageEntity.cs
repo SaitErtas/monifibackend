@@ -11,6 +11,7 @@ public class PackageEntity : BaseActivityEntity
     public int MinValue { get; set; }
     public int MaxValue { get; set; }
     public int ChangePeriodDay { get; set; }
+    public int Bonus { get; set; }
     public virtual ICollection<PackageDetailEntity> PackageDetails { get; set; }
 }
 public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity>
@@ -22,6 +23,7 @@ public class PackageEntityConfiguration : IEntityTypeConfiguration<PackageEntity
         builder.Property(x => x.MinValue).IsRequired();
         builder.Property(x => x.MaxValue).IsRequired();
         builder.Property(x => x.ChangePeriodDay).IsRequired();
+        builder.Property(x => x.Bonus).IsRequired();
 
         builder.HasMany(x => x.PackageDetails).WithOne(x => x.Package);
 

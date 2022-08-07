@@ -6,5 +6,5 @@ namespace MonifiBackend.Core.Domain.TronNetworks;
 public interface ITronNetworkAccountsDataPort
 {
     Task<Account> GetAccountsAsync(string address);
-    public Task<Transaction> GetTransactionsAsync(string address);
+    public Task<Transfer> GetTransfersAsync(string address);
 }

@@ -17,7 +17,7 @@ internal class BscScanNormalTransactionQueryHandler : IQueryHandler<BscScanNorma
     }
     public async Task<BscScanNormalTransactionQueryResponse> Handle(BscScanNormalTransactionQuery request, CancellationToken cancellationToken)
     {
-        var asdasd = await _tronNetworkAccountsDataPort.GetTransactionsAsync(request.Address);
+        var asdasd = await _tronNetworkAccountsDataPort.GetTransfersAsync(request.Address);
         var bnbBalanceRequest = new NormalTransactionsRequest
         {
             Address = request.Address,

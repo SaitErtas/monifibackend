@@ -7,6 +7,7 @@ internal static class TronModule
 {
     public const string ACCOUNT = "/accounts/{address}";
     public const string TRANSACTION = "/transaction?sort=-timestamp&count=true&limit=20&start=0&address={address}";
+    public const string TRANSFER = "/token_trc20/transfers?limit=20&start=0&sort=-timestamp&count=true&relatedAddress={address}";
 }
 
 /// <summary>
