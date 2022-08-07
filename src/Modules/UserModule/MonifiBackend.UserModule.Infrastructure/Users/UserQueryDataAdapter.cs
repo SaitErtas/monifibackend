@@ -134,6 +134,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Notifications
             .Include(i => i.User)
             .Where(x => x.User.Id == userId)
+            .OrderByDescending(x => x.CreatedAt)
             .Select(x => x.Map())
             .ToListAsync();
     }
