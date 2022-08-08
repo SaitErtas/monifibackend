@@ -14,7 +14,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
         _dbContext = dbContext;
     }
 
-    public async Task<List<AccountMovement>> GetAccountMovementAsync(int userId)
+    public async Task<List<AccountMovement>> GetAccountMovementsAsync(int userId)
     {
         var entity = await _dbContext.AccountMovements
             .Where(w => w.Wallet.UserId == userId)
@@ -104,5 +104,17 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
             .AsNoTracking()
             .ToListAsync();
         return entity.Select(s => s.Map()).ToList();
+    }
+
+    public async Task<AccountMovement> GetAccountMovementAsync(int accountMovementId)
+    {
+        var entity = await _dbContext.AccountMovements
+            .Where(w => w.Id == accountMovementId)
+            .Include(i => i.PackageDetail)
+            .ThenInclude(i => i.Package)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .FirstOrDefaultAsync();
+        return entity.Map();
     }
 }

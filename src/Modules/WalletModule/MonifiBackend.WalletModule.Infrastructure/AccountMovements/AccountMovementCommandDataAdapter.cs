@@ -23,4 +23,10 @@ public class AccountMovementCommandDataAdapter : IAccountMovementCommandDataPort
         _dbContext.AccountMovements.UpdateRange(accountMovements.Select(x => x.Map()).ToList());
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<bool> SaveAsync(AccountMovement accountMovement)
+    {
+        _dbContext.AccountMovements.Update(accountMovement.Map());
+        return (await _dbContext.SaveChangesAsync()) > 0;
+    }
 }
