@@ -25,6 +25,10 @@ internal class DeleteAccountMovementCommandHandler : ICommandHandler<DeleteAccou
     {
         var accountMovement = await _accountMovementQueryDataPort.GetAccountMovementAsync(request.AccountMovementId);
         AppRule.ExistsAndActive(accountMovement,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Wallet"])}", $"{_stringLocalizer["NotFound"]} AccountMovementId: {request.AccountMovementId}"));
+        AppRule.True(accountMovement.Wallet.UserId == request.UserId,
+            new BusinessValidationException($"{_stringLocalizer["NotFound"]}", $"{_stringLocalizer["NotFound"]} AccountMovementId: {request.AccountMovementId}"));
+        AppRule.True(accountMovement.TransactionStatus != TransactionStatus.Successful,
             new BusinessValidationException($"{_stringLocalizer["NotFound"]}", $"{_stringLocalizer["NotFound"]} AccountMovementId: {request.AccountMovementId}"));
 
         accountMovement.MarkAsDeleted();
