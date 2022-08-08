@@ -1,4 +1,6 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using MediatR;
+using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 
@@ -6,12 +8,14 @@ namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPur
 
 internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMovementsQuery, GetPurchasedMovementsQueryResponse>
 {
+    private readonly IMediator _mediator;
     private readonly IAccountMovementQueryDataPort _accountMovementQueryDataPort;
     private readonly IPackageQueryDataPort _packageQueryDataPort;
-    public GetPurchasedMovementsQueryHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort)
+    public GetPurchasedMovementsQueryHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort, IMediator mediator)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _packageQueryDataPort = packageQueryDataPort;
+        _mediator = mediator;
     }
     public async Task<GetPurchasedMovementsQueryResponse> Handle(GetPurchasedMovementsQuery request, CancellationToken cancellationToken)
     {
@@ -23,6 +27,9 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
             var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
             accountMovement.PackageDetail.SetPackage(package);
         }
+        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
+        await _mediator.Publish(verificationEvent);
+
         return new GetPurchasedMovementsQueryResponse(accountMovements);
     }
 }
