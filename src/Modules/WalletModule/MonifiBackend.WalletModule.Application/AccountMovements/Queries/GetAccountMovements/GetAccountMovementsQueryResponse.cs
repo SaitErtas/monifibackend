@@ -23,6 +23,9 @@ public class GetAccountMovementsSingleQueryResponse
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetMovementsWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
         PackageDetail = new GetMovementsPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Duration, accountMovement.PackageDetail.Commission, accountMovement.PackageDetail.Package);
+        TotalDay = BlockEndDate.Subtract(CreatedAt).Days;
+        RemainDay = BlockEndDate.Subtract(DateTime.Now).Days;
+        PassedDay = TotalDay - RemainDay;
     }
 
     public int Id { get; set; }
@@ -33,6 +36,10 @@ public class GetAccountMovementsSingleQueryResponse
     public DateTime BlockEndDate { get; set; }
     public GetMovementsWalletResponse Wallet { get; set; }
     public GetMovementsPackageDetailResponse PackageDetail { get; set; }
+
+    public int RemainDay { get; set; }
+    public int TotalDay { get; set; }
+    public int PassedDay { get; set; }
 }
 public class GetMovementsWalletResponse
 {
