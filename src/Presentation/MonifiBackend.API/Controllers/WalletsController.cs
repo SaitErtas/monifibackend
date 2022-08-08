@@ -5,6 +5,7 @@ using MonifiBackend.API.Controllers.Base;
 using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
+using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
@@ -91,5 +92,16 @@ public class WalletsController : BaseApiController
         var request = new UserPaymentVerificationEvent(currentUser.Id);
         await _mediator.Publish(request);
         return Ok();
+    }
+
+    [HttpDelete("{accountMovementId}")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> DeleteAccountMovementAsync(int accountMovementId)
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new DeleteAccountMovementCommand(currentUser.Id, accountMovementId);
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 }

@@ -15,7 +15,7 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
     }
     public async Task<GetAccountMovementsQueryResponse> Handle(GetAccountMovementsQuery request, CancellationToken cancellationToken)
     {
-        var accountMovements = await _accountMovementQueryDataPort.GetAccountMovementAsync(request.UserId);
+        var accountMovements = await _accountMovementQueryDataPort.GetAccountMovementsAsync(request.UserId);
         var packages = await _packageQueryDataPort.GetsAsync();
 
         foreach (var accountMovement in accountMovements)
