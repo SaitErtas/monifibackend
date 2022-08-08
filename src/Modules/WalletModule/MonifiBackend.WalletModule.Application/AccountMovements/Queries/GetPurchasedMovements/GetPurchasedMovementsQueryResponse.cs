@@ -18,13 +18,13 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
-        BlockEndDate = accountMovement.TransferTime == default(DateTime) ? default(DateTime) : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
+        BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
         TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetPurchasedWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
         PackageDetail = new GetPurchasedPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Package);
-        TotalDay = BlockEndDate.Subtract(CreatedAt).Days;
-        RemainDay = BlockEndDate.Subtract(DateTime.Now).Days;
+        TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(accountMovement.TransferTime).Days;
+        RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
     }
 
@@ -33,7 +33,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     public string TransactionStatus { get; set; }
     public string ActionType { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime BlockEndDate { get; set; }
+    public DateTime? BlockEndDate { get; set; }
     public GetPurchasedWalletResponse Wallet { get; set; }
     public GetPurchasedPackageDetailResponse PackageDetail { get; set; }
     public int RemainDay { get; set; }

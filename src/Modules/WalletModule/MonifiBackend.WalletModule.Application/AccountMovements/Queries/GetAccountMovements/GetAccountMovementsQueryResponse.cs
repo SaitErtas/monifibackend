@@ -18,11 +18,14 @@ public class GetAccountMovementsSingleQueryResponse
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
-        BlockEndDate = accountMovement.TransferTime == default(DateTime) ? default(DateTime) : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
+        BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
         TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
         ActionType = accountMovement.ActionType.ToActionType();
         Wallet = new GetMovementsWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
         PackageDetail = new GetMovementsPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Duration, accountMovement.PackageDetail.Commission, accountMovement.PackageDetail.Package);
+        TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(accountMovement.TransferTime).Days;
+        RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
+        PassedDay = TotalDay - RemainDay;
     }
 
     public int Id { get; set; }
@@ -30,9 +33,12 @@ public class GetAccountMovementsSingleQueryResponse
     public string TransactionStatus { get; set; }
     public string ActionType { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime BlockEndDate { get; set; }
+    public DateTime? BlockEndDate { get; set; }
     public GetMovementsWalletResponse Wallet { get; set; }
     public GetMovementsPackageDetailResponse PackageDetail { get; set; }
+    public int RemainDay { get; set; }
+    public int TotalDay { get; set; }
+    public int PassedDay { get; set; }
 }
 public class GetMovementsWalletResponse
 {
