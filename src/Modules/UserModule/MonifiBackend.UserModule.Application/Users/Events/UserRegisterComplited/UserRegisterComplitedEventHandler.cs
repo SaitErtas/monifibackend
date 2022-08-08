@@ -35,6 +35,8 @@ internal class UserRegisterComplitedEventHandler : IEventHandler<UserRegisterCom
         string mailText = str.ReadToEnd();
         str.Close();
         mailText = mailText.Replace("[VerificationAddress]", $"{_appSettings.ServiceAddress.FrontendAddress}/account-confirmation/{user.ConfirmationCode}");
+        mailText = mailText.Replace("[PrivacyPolicyTerms]", $"{_appSettings.ServiceAddress.FrontendAddress}/privacy-policy");
+
         _emailPort.Send(user.Email, $"Monofi.io Verification Email #{randomKey}", mailText);
     }
 }
