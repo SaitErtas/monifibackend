@@ -14,6 +14,7 @@ namespace MonifiBackend.UserModule.Domain.Users
         public string Username { get; private set; }
         public string FullName { get; private set; }
         public string Email { get; private set; }
+        public string Avatar { get; private set; }
 
         public Country Country { get; private set; } = new();
         public Language Language { get; private set; } = new();
@@ -139,7 +140,8 @@ namespace MonifiBackend.UserModule.Domain.Users
                 FullName = string.Empty,
                 Wallet = wallet,
                 Language = language,
-                Country = country
+                Country = country,
+                Avatar = "/images/avatars/1.png"
             };
         }
         public static User Map(
@@ -154,6 +156,7 @@ namespace MonifiBackend.UserModule.Domain.Users
             string referanceCode,
             string confirmationCode,
             string fullName,
+            string avatar,
             Language language,
             Country country,
             Wallet wallet,
@@ -185,7 +188,8 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Language = language,
                 Wallet = wallet,
                 FullName = fullName,
-                _userIPs = userIPs
+                _userIPs = userIPs,
+                Avatar = avatar,
             };
         }
 

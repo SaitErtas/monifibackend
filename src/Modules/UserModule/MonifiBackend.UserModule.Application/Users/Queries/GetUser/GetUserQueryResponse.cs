@@ -16,8 +16,8 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             WalletAddressId = user.Wallet.Id;
             Language = user.Language.Name;
             ReferenceCode = user.ReferanceCode;
-            Phone = "" + user.Phones?.FirstOrDefault()?.Number;
-            Avatar = "/images/avatars/1.png";
+            Phone = user.Phones?.FirstOrDefault()?.Number;
+            Avatar = user.Avatar;
             Company = "TestCompany";
             CryptoNetworkId = user.Wallet.CryptoNetwork.Id;
             CryptoNetwork = user.Wallet.CryptoNetwork.Name;
