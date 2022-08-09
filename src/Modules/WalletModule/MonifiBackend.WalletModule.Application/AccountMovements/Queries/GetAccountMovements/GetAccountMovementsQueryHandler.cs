@@ -29,7 +29,7 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
         }
 
         var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        await _mediator.Publish(verificationEvent);
+        _mediator.Publish(verificationEvent);
 
         return new GetAccountMovementsQueryResponse(accountMovements);
     }
