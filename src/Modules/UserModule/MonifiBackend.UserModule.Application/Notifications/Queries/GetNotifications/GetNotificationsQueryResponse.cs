@@ -16,7 +16,9 @@ public class GetNotificationQuery
     {
         Message = notification.Message;
         IsRead = notification.IsRead;
+        Id = notification.Id;
     }
     public string Message { get; set; }
     public bool IsRead { get; set; }
+    public int Id { get; set; }
 }
