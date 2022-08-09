@@ -10,6 +10,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
         public string Email { get; set; }
         public string Username { get; set; }
         public string FullName { get; set; }
+        public string Avatar { get; set; }
         public string Password { get; set; }
         public bool Terms { get; set; }
         public string ResetPasswordCode { get; set; }
@@ -17,7 +18,6 @@ namespace MonifiBackend.Data.Infrastructure.Entities
         public string ReferanceCode { get; set; }
         public string ConfirmationCode { get; set; }
         public virtual int Role { get; set; }
-
         public int LanguageId { get; set; }
         public virtual LanguageEntity Language { get; set; }
         public int CountryId { get; set; }
@@ -42,6 +42,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
             builder.Property(x => x.ConfirmationCode).HasMaxLength(250);
             builder.Property(x => x.LanguageId).IsRequired();
             builder.Property(x => x.CountryId).IsRequired();
+            builder.Property(x => x.Avatar).IsRequired();
 
             builder.HasMany(x => x.Phones).WithOne(x => x.User);
             builder.HasMany(x => x.UserIps).WithOne(x => x.User);
