@@ -12,6 +12,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
     public int MinValue { get; private set; }
     public int MaxValue { get; private set; }
     public int ChangePeriodDay { get; private set; }
+    public string Icon { get; private set; }
     private List<PackageDetail> _details = new();
     public IReadOnlyCollection<PackageDetail> Details => _details.AsReadOnly();
 
@@ -46,6 +47,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
         int minValue,
         int maxValue,
         int changePeriodDay,
+        string icon,
         List<PackageDetail> details)
     {
         return new Package()
@@ -58,6 +60,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
             MinValue = minValue,
             MaxValue = maxValue,
             ChangePeriodDay = changePeriodDay,
+            Icon = icon,
             _details = details
         };
     }
