@@ -1,5 +1,4 @@
-﻿using MonifiBackend.PackageDetailModule.Domain.PackageDetails;
-using MonifiBackend.PackageModule.Domain.Packages;
+﻿using MonifiBackend.PackageModule.Domain.Packages;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Queries.GetPackages;
 
@@ -7,27 +6,28 @@ public class GetPackagesQueryResponse
 {
     public GetPackagesQueryResponse(List<Package> packages)
     {
-        Packages = packages.Select(x => new GetPackageQueryResponse(x.Id, x.Name, x.Details)).ToList();
+        Packages = packages.Select(x => new GetPackageQueryResponse(x)).ToList();
     }
 
     public List<GetPackageQueryResponse> Packages { get; private set; }
 }
 public class GetPackageQueryResponse
 {
-    public GetPackageQueryResponse(int id, string name, IReadOnlyCollection<PackageDetail> details)
+    public GetPackageQueryResponse(Package package)
     {
-        Id = id;
-        Name = name;
-        Title = name;
-        Subtitle = name;
+        Id = package.Id;
+        Name = package.Name;
+        Title = package.Name;
+        Subtitle = package.Name;
         CurrentPlan = false;
         ImgHeight = 100;
         ImgSrc = "/images/pages/pricing-illustration-3.png";
+        Icon = package.Icon;
         PlanBenefits = new List<string> { "Unlimited responses", "CustomerService" };
         PopularPlan = false;
         YearlyPlan = new List<int> { 1, 2, 3 };
         MonthlyPrice = 100;
-        Details = details.Select(s => new GetPackageDetailQueryResponse(s.Id, s.Name, s.Duration, s.Commission)).ToList();
+        Details = package.Details.Select(s => new GetPackageDetailQueryResponse(s.Id, s.Name, s.Duration, s.Commission)).ToList();
     }
     public int Id { get; private set; }
     public string Name { get; private set; }
@@ -39,6 +39,7 @@ public class GetPackageQueryResponse
     public bool PopularPlan { get; private set; }
     public int ImgHeight { get; private set; }
     public string ImgSrc { get; private set; }
+    public string Icon { get; private set; }
     public List<string> PlanBenefits { get; private set; }
     public List<int> YearlyPlan { get; private set; }
     public int MonthlyPrice { get; private set; }
