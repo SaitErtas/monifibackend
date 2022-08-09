@@ -22,7 +22,7 @@ public class GetPackageQueryResponse
         Subtitle = name;
         CurrentPlan = false;
         ImgHeight = 100;
-        ImgSrc = "/images/pages/pricing-illustration-1.png";
+        ImgSrc = "/images/pages/pricing-illustration-3.png";
         PlanBenefits = new List<string> { "Unlimited responses", "CustomerService" };
         PopularPlan = false;
         YearlyPlan = new List<int> { 1, 2, 3 };
