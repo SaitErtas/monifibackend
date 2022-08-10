@@ -43,9 +43,14 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
         var package = await _packageQueryDataPort.GetPackageDetailIdAsync(request.PackageDetailId);
         AppRule.ExistsAndActive(package,
             new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));
+        AppRule.True(package.MinValue <= request.Amount,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["OutOfRange"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["OutOfRange"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));
+        AppRule.True(package.MaxValue >= request.Amount,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["OutOfRange"], _stringLocalizer["Package"])}", $"{string.Format(_stringLocalizer["OutOfRange"], _stringLocalizer["Package"])} Package: {request.PackageDetailId}"));
 
         var wallet = await _accountMovementQueryDataPort.GetUserWalletAsync(request.UserId);
-        AppRule.False(wallet.Movements.Any(a => a.TransactionStatus == TransactionStatus.Pending && a.Status == Core.Domain.Base.BaseStatus.Active),
+        var accountMovements = await _accountMovementQueryDataPort.GetAllMovementAsync(request.UserId, TransactionStatus.Pending);
+        AppRule.False(accountMovements.Any(a => a.Status == Core.Domain.Base.BaseStatus.Active),
             new BusinessValidationException($"{_stringLocalizer["PendingOrder"]}", $"{_stringLocalizer["PendingOrder"]} UserId: {request.UserId}"));
 
         //Seçilen Paket ve Miktarı Hesap Haraketlerine ActionType Sale TransactionStatus Pending olarak kaydet
