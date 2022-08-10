@@ -17,6 +17,8 @@ public class GetPackageQueryResponse
     {
         Id = package.Id;
         Name = package.Name;
+        MinValue = package.MinValue;
+        MaxValue = package.MaxValue;
         Title = package.Name;
         Subtitle = package.Name;
         CurrentPlan = false;
@@ -31,6 +33,8 @@ public class GetPackageQueryResponse
     }
     public int Id { get; private set; }
     public string Name { get; private set; }
+    public int MinValue { get; private set; }
+    public int MaxValue { get; private set; }
     public string Title { get; private set; }
     public string Subtitle { get; private set; }
     public int Duration { get; private set; }
