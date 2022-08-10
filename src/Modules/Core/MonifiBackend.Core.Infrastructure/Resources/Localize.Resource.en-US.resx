@@ -159,6 +159,9 @@
   <data name="NotUpdated" xml:space="preserve">
     <value>{0} not updated.</value>
   </data>
+  <data name="OutOfRange" xml:space="preserve">
+    <value>{0} Out of Range</value>
+  </data>
   <data name="Package" xml:space="preserve">
     <value>Package</value>
   </data>
