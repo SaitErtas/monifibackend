@@ -6,9 +6,9 @@ using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
-using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
 
@@ -74,14 +74,15 @@ public class WalletsController : BaseApiController
         return Ok(result);
     }
 
-    [HttpGet("all-payment-sync")]
+    [HttpGet("day-sale-statistics")]
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    public async Task<IActionResult> PaymentSyncAsync()
+    public async Task<IActionResult> GetDaySaleStatisticsAsync()
     {
-        var request = new AllPaymentVerificationEvent();
-        await _mediator.Publish(request);
-        return Ok();
+        var request = new GetDaySaleStatisticsQuery();
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
+
 
     [HttpGet("user-payment-sync")]
     [Authorize(Role.Administrator, Role.Owner, Role.User)]

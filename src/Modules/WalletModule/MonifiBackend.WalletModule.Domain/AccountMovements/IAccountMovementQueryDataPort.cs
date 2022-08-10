@@ -13,4 +13,5 @@ public interface IAccountMovementQueryDataPort : IQueryDataPort
     Task<Wallet> GetUserWalletAsync(int userId);
     Task<decimal> GetTotalSaleAsync();
     Task<decimal> GetTotalBonusAsync();
+    Task<List<DaySaleStatistics>> GetDayOfSalesAsync();
 }
