@@ -20,7 +20,12 @@ public class GetDaySaleStatisticQueryResponse
     {
         Day = daySaleStatistic.Day;
         TotalSales = daySaleStatistic.TotalSales;
+
+        Name = Day.ToString("dd/MM");
+        Pv = TotalSales;
     }
     public DateTime Day { get; set; }
     public decimal TotalSales { get; set; }
+    public string Name { get; set; }
+    public decimal Pv { get; set; }
 }
