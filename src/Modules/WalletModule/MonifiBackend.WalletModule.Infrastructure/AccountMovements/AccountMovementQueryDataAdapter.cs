@@ -120,13 +120,13 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
 
     public async Task<List<DaySaleStatistics>> GetDayOfSalesAsync()
     {
-        DateTime startDate = DateTime.Now.AddDays(-29);
+        DateTime startDate = DateTime.Now.AddDays(-10);
         DateTime endDate = DateTime.Now.AddDays(1);
 
         //get database sales from 29 days ago at midnight to the end of today
         var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.ActionType == ActionType.Sale.ToInt());
 
-        var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(30);
+        var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(10);
 
         var salesByDay = from s in salesForPeriod
                          group s by s.CreatedAt.Date into g
