@@ -117,4 +117,42 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
             .FirstOrDefaultAsync();
         return entity.Map();
     }
+
+    public async Task<List<DaySaleStatistics>> GetDayOfSalesAsync()
+    {
+        DateTime startDate = DateTime.Now.AddDays(-29);
+        DateTime endDate = DateTime.Now.AddDays(1);
+
+        //get database sales from 29 days ago at midnight to the end of today
+        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date);
+
+        var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(30);
+
+        var salesByDay = from s in salesForPeriod
+                         group s by s.CreatedAt.Date into g
+                         select new DaySaleStatistics { Day = g.Key, TotalSales = g.Sum(x => (decimal)x.Amount) };
+
+
+        var query = from d in allDays
+                    join s in salesByDay on d equals s.Day into j
+                    from s in j.DefaultIfEmpty()
+                    select new DaySaleStatistics { Day = d, TotalSales = (s != null) ? s.TotalSales : 0m };
+
+        return query.ToList();
+    }
+}
+
+public static partial class MoreEnumerable
+{
+    public static IEnumerable<TResult> GenerateByIndex<TResult>(Func<int, TResult> generator)
+    {
+        // Looping over 0...int.MaxValue inclusive is a pain. Simplest is to go exclusive,
+        // then go again for int.MaxValue.
+        for (int i = 0; i < int.MaxValue; i++)
+        {
+            yield return generator(i);
+        }
+        yield return generator(int.MaxValue);
+    }
+
 }
