@@ -174,8 +174,17 @@
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referance Code</value>
   </data>
+  <data name="StakingStarted" xml:space="preserve">
+    <value>{0} Package {1} Staking with time started.</value>
+  </data>
+  <data name="StakingStartedReferance" xml:space="preserve">
+    <value>{0} User {0} Buy the  package.</value>
+  </data>
   <data name="Sub" xml:space="preserve">
     <value>Sub</value>
+  </data>
+  <data name="TransactionCheck" xml:space="preserve">
+    <value>The payment for the package you purchased is in the approval process.</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>user</value>

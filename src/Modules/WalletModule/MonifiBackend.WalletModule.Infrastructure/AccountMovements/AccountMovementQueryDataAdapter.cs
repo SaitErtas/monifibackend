@@ -124,7 +124,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
         DateTime endDate = DateTime.Now.AddDays(1);
 
         //get database sales from 29 days ago at midnight to the end of today
-        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date);
+        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.ActionType == ActionType.Sale.ToInt());
 
         var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(30);
 
