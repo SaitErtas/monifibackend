@@ -1,14 +1,13 @@
 ﻿using MonifiBackend.WalletModule.Domain.AccountMovements;
-using MonifiBackend.WalletModule.Domain.Settings;
 
-namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetDaySaleStatistics;
+namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 
 public class GetDaySaleStatisticsQueryResponse
 {
-    public GetDaySaleStatisticsQueryResponse(List<DaySaleStatistics> daySaleStatistics, decimal totalSale, decimal totalBonus, decimal percentageofChange, Setting setting)
+    public GetDaySaleStatisticsQueryResponse(List<DaySaleStatistics> daySaleStatistics, decimal totalSale, decimal totalBonus, decimal percentageofChange)
     {
-        DaySaleStatistics = daySaleStatistics.Select(x => new GetDaySaleStatisticQueryResponse(x, setting)).ToList();
-        TotalMonifi = totalSale / setting.MonifiPrice;
+        DaySaleStatistics = daySaleStatistics.Select(x => new GetDaySaleStatisticQueryResponse(x)).ToList();
+        TotalMonifi = totalSale;
         PercentageofChange = percentageofChange;
     }
     public decimal PercentageofChange { get; set; }
@@ -17,7 +16,7 @@ public class GetDaySaleStatisticsQueryResponse
 }
 public class GetDaySaleStatisticQueryResponse
 {
-    public GetDaySaleStatisticQueryResponse(DaySaleStatistics daySaleStatistic, Setting setting)
+    public GetDaySaleStatisticQueryResponse(DaySaleStatistics daySaleStatistic)
     {
         Day = daySaleStatistic.Day;
         TotalSales = daySaleStatistic.TotalSales / setting.MonifiPrice;

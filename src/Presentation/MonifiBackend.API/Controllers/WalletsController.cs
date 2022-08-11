@@ -8,8 +8,8 @@ using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
-using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
+using MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
 
 namespace MonifiBackend.API.Controllers;
