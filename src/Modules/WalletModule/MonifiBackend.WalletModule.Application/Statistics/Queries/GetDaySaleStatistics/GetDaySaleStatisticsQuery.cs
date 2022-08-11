@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MonifiBackend.Core.Application.Abstractions;
 
-namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetDaySaleStatistics;
+namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 
 public class GetDaySaleStatisticsQuery : IQuery<GetDaySaleStatisticsQueryResponse>
 {
