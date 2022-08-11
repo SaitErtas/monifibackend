@@ -22,7 +22,9 @@ internal class GetDaySaleStatisticsQueryHandler : IQueryHandler<GetDaySaleStatis
 
         var todaySale = dayOfSales.FirstOrDefault(x => x.Day == today);
         var yesterdaySale = dayOfSales.FirstOrDefault(x => x.Day == yesterday);
-        var percentageofChange = (((todaySale.TotalSales - yesterdaySale.TotalSales) / yesterdaySale.TotalSales)) * 100;
+        var percentageofChange = 100m;
+        if (todaySale.TotalSales != 0)
+            percentageofChange = (((todaySale.TotalSales - yesterdaySale.TotalSales) / yesterdaySale.TotalSales)) * 100;
 
         return new GetDaySaleStatisticsQueryResponse(dayOfSales, totalSale, totalBonus, percentageofChange);
     }

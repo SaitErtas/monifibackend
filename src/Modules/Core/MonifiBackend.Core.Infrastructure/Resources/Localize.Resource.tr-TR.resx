@@ -175,8 +175,17 @@
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referans Kodu</value>
   </data>
+  <data name="StakingStarted" xml:space="preserve">
+    <value>{0} Paketi {1} Süre ile Stake başlatıldı.</value>
+  </data>
+  <data name="StakingStartedReferance" xml:space="preserve">
+    <value>{0} Kullanıcı {1} Paketini satın aldı.</value>
+  </data>
   <data name="Sub" xml:space="preserve">
     <value>Alt</value>
+  </data>
+  <data name="TransactionCheck" xml:space="preserve">
+    <value>Satın aldığınız paketin ödemesi onay sürecindedir.</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>kullanıcı</value>
