@@ -120,7 +120,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
 
     public async Task<List<DaySaleStatistics>> GetDayOfSalesAsync()
     {
-        DateTime startDate = DateTime.Now.AddDays(-10);
+        DateTime startDate = DateTime.Now.AddDays(-9);
         DateTime endDate = DateTime.Now.AddDays(1);
 
         //get database sales from 29 days ago at midnight to the end of today
