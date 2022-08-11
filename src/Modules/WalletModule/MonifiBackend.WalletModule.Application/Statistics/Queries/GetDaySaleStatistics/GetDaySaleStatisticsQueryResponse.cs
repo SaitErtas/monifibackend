@@ -19,7 +19,7 @@ public class GetDaySaleStatisticQueryResponse
     public GetDaySaleStatisticQueryResponse(DaySaleStatistics daySaleStatistic)
     {
         Day = daySaleStatistic.Day;
-        TotalSales = daySaleStatistic.TotalSales / setting.MonifiPrice;
+        TotalSales = daySaleStatistic.TotalSales;
 
         Name = Day.ToString("dd/MM");
         Pv = TotalSales;
