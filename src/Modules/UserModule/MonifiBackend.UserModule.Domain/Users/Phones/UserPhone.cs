@@ -17,7 +17,10 @@ namespace MonifiBackend.UserModule.Domain.Users.Phones
                 Number = number
             };
         }
-
+        public void SetPhone(string number)
+        {
+            Number = number;
+        }
         public static UserPhone Default() => new();
 
         public static UserPhone Map(

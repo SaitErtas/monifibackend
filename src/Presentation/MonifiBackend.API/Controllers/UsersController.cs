@@ -7,6 +7,8 @@ using MonifiBackend.UserModule.Application.Notifications.Commands.MarkAsRead;
 using MonifiBackend.UserModule.Application.Notifications.Queries.GetNotifications;
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
+using MonifiBackend.UserModule.Application.Users.Commands.UpdateLanguage;
+using MonifiBackend.UserModule.Application.Users.Commands.UpdateUser;
 using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
 using MonifiBackend.UserModule.Domain.Users;
@@ -111,5 +113,24 @@ namespace MonifiBackend.API.Controllers
             return Ok(result);
         }
 
+        [HttpPut("update-user")]
+        [Authorize(Role.User)]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserCommand request)
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+            request.UserId = currentUser.Id;
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpPut("update-language")]
+        [Authorize(Role.User)]
+        public async Task<IActionResult> UpdateLanguageAsync([FromBody] UpdateLanguageCommand request)
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+            request.UserId = currentUser.Id;
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
     }
 }
