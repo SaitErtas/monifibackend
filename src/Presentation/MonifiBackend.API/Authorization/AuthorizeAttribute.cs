@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MonifiBackend.UserModule.Domain.Users;
+using System.Globalization;
 
 namespace MonifiBackend.API.Authorization
 {
@@ -27,6 +28,10 @@ namespace MonifiBackend.API.Authorization
             {
                 // not logged in or role not authorized
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+            }
+            else
+            {
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
             }
         }
     }
