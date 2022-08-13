@@ -26,6 +26,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             LanguageCode = user.Language.ShortName;
             PhoneId = user.Phones?.FirstOrDefault()?.Id;
             Status = user.Status.ToString().ToLower();
+            LanguageShortCode = LanguageCode.Substring(0, 2);
         }
         public int Id { get; set; }
         public string UserName { get; set; }
@@ -47,5 +48,6 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public int? LanguageId { get; set; }
         public string? LanguageCode { get; set; }
         public string Status { get; set; }
+        public string LanguageShortCode { get; set; }
     }
 }
