@@ -4,6 +4,7 @@ using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
+using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Settings;
 
@@ -17,14 +18,16 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
     private readonly IPackageQueryDataPort _packageQueryDataPort;
     private readonly ISettingQueryDataPort _settingQueryDataPort;
     private readonly IStringLocalizer<Resource> _stringLocalizer;
+    private readonly INotificationCommandDataPort _notificationCommandDataPort;
 
-    public BuyMonofiCommandHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, ISettingQueryDataPort settingQueryDataPort, IStringLocalizer<Resource> stringLocalizer)
+    public BuyMonofiCommandHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, ISettingQueryDataPort settingQueryDataPort, IStringLocalizer<Resource> stringLocalizer, INotificationCommandDataPort notificationCommandDataPort)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _accountMovementCommandDataPort = accountMovementCommandDataPort;
         _packageQueryDataPort = packageQueryDataPort;
         _settingQueryDataPort = settingQueryDataPort;
         _stringLocalizer = stringLocalizer;
+        _notificationCommandDataPort = notificationCommandDataPort;
     }
 
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
@@ -60,6 +63,9 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
 
         var result = await _accountMovementCommandDataPort.SaveAsync(wallet);
         AppRule.True(result, new BusinessValidationException($"{string.Format(_stringLocalizer["NotCreated"], _stringLocalizer["AccountMovement"])}", $"{string.Format(_stringLocalizer["NotCreated"], _stringLocalizer["AccountMovement"])} UserId: {request.UserId}"));
+
+        var notification = Notification.CreateNew(request.UserId, $"{_stringLocalizer["TransactionCheck"]}");
+        await _notificationCommandDataPort.SaveAsync(notification);
 
         return new BuyMonofiCommandResponse();
     }

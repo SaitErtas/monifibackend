@@ -1,9 +1,12 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.BscScans.Accounts;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
+using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Users;
 
@@ -17,6 +20,8 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
     private readonly IBscScanAccountsDataPort _bscScanAccountsDataPort;
     private readonly ITronNetworkAccountsDataPort _tronNetworkAccountsDataPort;
     private readonly IUserQueryDataPort _userQueryDataPort;
+    private readonly INotificationCommandDataPort _notificationCommandDataPort;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
 
     private const int BSCSCAN_VALUE = 1;
     private const int TRONNETWORK_VALUE = 2;
@@ -24,7 +29,7 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
     private const string BSCSCAN_TOKEN_SYMBOL = "BSC-USD";//TODO: database setting
     private const string TRONNETWORK_ADDRESS = "TErTFxBLsDVxMTaqEhDFL9CbE79YKwpuhY";//TODO: database setting
     private const string TRON_TOKEN_SYMBOL = "USDT";//TODO: database setting
-    public UserPaymentVerificationEventHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IUserQueryDataPort userQueryDataPort)
+    public UserPaymentVerificationEventHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IUserQueryDataPort userQueryDataPort, INotificationCommandDataPort notificationCommandDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _accountMovementCommandDataPort = accountMovementCommandDataPort;
@@ -32,6 +37,8 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
         _bscScanAccountsDataPort = bscScanAccountsDataPort;
         _tronNetworkAccountsDataPort = tronNetworkAccountsDataPort;
         _userQueryDataPort = userQueryDataPort;
+        _notificationCommandDataPort = notificationCommandDataPort;
+        _stringLocalizer = stringLocalizer;
     }
     public async Task Handle(UserPaymentVerificationEvent request, CancellationToken cancellationToken)
     {
@@ -101,6 +108,9 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
 
             if (accountMovement.TransactionStatus == TransactionStatus.Successful)
             {
+                var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
+                var notification = Notification.CreateNew(accountMovement.Wallet.UserId, $"{string.Format(_stringLocalizer["StakingStarted"], package.Name, accountMovement.PackageDetail.Duration)}");
+                await _notificationCommandDataPort.SaveAsync(notification);
                 // Kişinin ilk satın alması ise Üst kişiye bonus ekle
                 var userAccountMovement = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
                 if (userAccountMovement.Count == 0)
@@ -108,11 +118,12 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                     var mainUser = await _userQueryDataPort.GetUserAsync(accountMovement.Wallet.UserId);
                     var referanceUser = await _userQueryDataPort.GetUserAsync(mainUser.ReferanceUser);
                     // Paketin changedDay değerini al
-                    var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
                     var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
                     var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
                     var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
                     userAddedBonusList.Add(bonus);
+                    var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}");
+                    await _notificationCommandDataPort.SaveAsync(bonusNotification);
                 }
                 // Database kayıt işlemlerini gerçekleştir
                 // Notification bildirimlerini ekle

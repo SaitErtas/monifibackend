@@ -135,6 +135,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(i => i.User)
             .Where(x => x.User.Id == userId)
             .OrderByDescending(x => x.CreatedAt)
+            .Take(20)
             .Select(x => x.Map())
             .ToListAsync();
     }
