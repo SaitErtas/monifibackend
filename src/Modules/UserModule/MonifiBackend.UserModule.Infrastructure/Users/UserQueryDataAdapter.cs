@@ -151,10 +151,11 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .ToListAsync();
     }
 
-    public async Task<bool> CheckWalletAddressAsync(string walletAddress)
+    public async Task<User> CheckWalletAddressAsync(string walletAddress)
     {
-        return await _dbContext.Users
+        var userEntity = await _dbContext.Users
             .Include(i => i.Wallet)
-            .AnyAsync(x => x.Wallet.WalletAddress == walletAddress);
+            .FirstOrDefaultAsync(x => x.Wallet.WalletAddress == walletAddress);
+        return userEntity.Map();
     }
 }
