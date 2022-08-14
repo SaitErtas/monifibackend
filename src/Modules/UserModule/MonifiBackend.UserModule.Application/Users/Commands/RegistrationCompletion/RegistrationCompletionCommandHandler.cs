@@ -52,7 +52,7 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
         var network = await _walletQueryDataPort.GetNetworkAsync(request.CryptoNetworkId);
 
         var walletCheck = await _userQueryDataPort.CheckWalletAddressAsync(request.WalletAddress);
-        AppRule.False(walletCheck,
+        AppRule.False(walletCheck.IsExist(),
             new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])} UserId: {request.UserId}"));
 
 

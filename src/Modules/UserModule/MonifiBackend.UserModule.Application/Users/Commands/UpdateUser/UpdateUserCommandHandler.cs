@@ -47,7 +47,7 @@ internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, Upd
         var network = await _walletQueryDataPort.GetNetworkAsync(request.CryptoNetworkId);
 
         var walletCheck = await _userQueryDataPort.CheckWalletAddressAsync(request.WalletAddress);
-        AppRule.False(walletCheck,
+        AppRule.False(walletCheck.Id != user.Id,
             new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])}", $"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["Wallet"])} UserId: {request.UserId}"));
 
 
