@@ -17,11 +17,12 @@ internal class GetNetworkUsersQueryHandler : IQueryHandler<GetNetworkUsersQuery,
     public async Task<GetNetworkUsersQueryResponse> Handle(GetNetworkUsersQuery request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetAsync(request.UserId);
-        var meFirstNetworkUsers = await _userQueryDataPort.GetMeFirstNetworkAsync(request.UserId);
+        var lead = await _userQueryDataPort.GetAsync(user.ReferanceUser);
+        var meFirstNetworkUsers = await _userQueryDataPort.GetMeFirstNetworkAsync(user.Id);
+
         var networkUserIds = meFirstNetworkUsers.Select(x => x.Id).ToList();
-        networkUserIds.Add(request.UserId);
         var networkUsers = await _userQueryDataPort.GetAllNetworkAsync(networkUserIds);
 
-        return new GetNetworkUsersQueryResponse(user, meFirstNetworkUsers, networkUsers, _stringLocalizer);
+        return new GetNetworkUsersQueryResponse(lead, meFirstNetworkUsers, networkUsers, _stringLocalizer);
     }
 }
