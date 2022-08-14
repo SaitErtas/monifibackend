@@ -26,12 +26,12 @@ internal class ChangedPasswordCommandHandler : ICommandHandler<ChangedPasswordCo
 
     public async Task<ChangedPasswordCommandResponse> Handle(ChangedPasswordCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userQueryDataPort.GetEmailAsync(request.Email);
-        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} Email: {request.Email}"));
+        var user = await _userQueryDataPort.GetResetPasswordCodeAsync(request.ResetPasswordCode);
+        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} ResetPasswordCode: {request.ResetPasswordCode}"));
         AppRule.True(user.ResetPasswordCode == request.ResetPasswordCode,
             new BusinessValidationException(
                 $"{string.Format(_stringLocalizer["NotMach"], nameof(request.ResetPasswordCode))}",
-                $"{string.Format(_stringLocalizer["NotMach"], nameof(request.ResetPasswordCode))} Email: {request.Email}, ResetPasswordCode: {request.ResetPasswordCode}")
+                $"{string.Format(_stringLocalizer["NotMach"], nameof(request.ResetPasswordCode))} ResetPasswordCode: {request.ResetPasswordCode}, ResetPasswordCode: {request.ResetPasswordCode}")
             );
 
         string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
