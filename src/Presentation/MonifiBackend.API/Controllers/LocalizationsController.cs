@@ -19,6 +19,7 @@ public class LocalizationsController : BaseApiController
     }
 
     [HttpGet("languages")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetLanguagesAsync()
     {
         var request = new GetLanguagesQuery();
@@ -26,6 +27,7 @@ public class LocalizationsController : BaseApiController
         return Ok(result);
     }
     [HttpGet("countries")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetCountriesAsync()
     {
         var request = new GetCountriesQuery();
