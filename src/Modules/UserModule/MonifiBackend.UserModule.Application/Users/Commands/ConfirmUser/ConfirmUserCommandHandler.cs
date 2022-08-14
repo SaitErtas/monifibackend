@@ -26,7 +26,7 @@ internal class ConfirmUserCommandHandler : ICommandHandler<ConfirmUserCommand, C
     public async Task<ConfirmUserCommandResponse> Handle(ConfirmUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetUserConfirmationCodeAsync(request.ConfirmationCode);
-        AppRule.ExistsAndPassive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])}", $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])} ConfirmationCode: {request.ConfirmationCode}"));
+        AppRule.Exists(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])}", $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ConfirmationCode"])} ConfirmationCode: {request.ConfirmationCode}"));
 
         user.MarkAsActive();
 
