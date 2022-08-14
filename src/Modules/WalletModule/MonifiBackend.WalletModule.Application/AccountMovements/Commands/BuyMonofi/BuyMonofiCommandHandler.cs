@@ -7,6 +7,7 @@ using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Settings;
+using MonifiBackend.WalletModule.Domain.Users;
 
 namespace MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 
@@ -19,8 +20,9 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
     private readonly ISettingQueryDataPort _settingQueryDataPort;
     private readonly IStringLocalizer<Resource> _stringLocalizer;
     private readonly INotificationCommandDataPort _notificationCommandDataPort;
+    private readonly IUserQueryDataPort _userQueryDataPort;
 
-    public BuyMonofiCommandHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, ISettingQueryDataPort settingQueryDataPort, IStringLocalizer<Resource> stringLocalizer, INotificationCommandDataPort notificationCommandDataPort)
+    public BuyMonofiCommandHandler(IUserQueryDataPort userQueryDataPort, IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, ISettingQueryDataPort settingQueryDataPort, IStringLocalizer<Resource> stringLocalizer, INotificationCommandDataPort notificationCommandDataPort)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _accountMovementCommandDataPort = accountMovementCommandDataPort;
@@ -28,10 +30,17 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
         _settingQueryDataPort = settingQueryDataPort;
         _stringLocalizer = stringLocalizer;
         _notificationCommandDataPort = notificationCommandDataPort;
+        _userQueryDataPort = userQueryDataPort;
     }
 
     public async Task<BuyMonofiCommandResponse> Handle(BuyMonofiCommand request, CancellationToken cancellationToken)
     {
+        var user = await _userQueryDataPort.GetUserAsync(request.UserId);
+        AppRule.ExistsAndActive(user,
+            new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} UserId: {request.UserId}"));
+        AppRule.False(string.IsNullOrEmpty(user.Wallet.WalletAddress),
+            new BusinessValidationException($"{string.Format(_stringLocalizer["FieldRequired"], _stringLocalizer["Wallet"])}", $"{_stringLocalizer["FieldRequired"]} UserId: {request.UserId}"));
+
         var setting = await _settingQueryDataPort.GetAsync(DEFAULT_SETTING_VALUE);
         var totalSale = await _accountMovementQueryDataPort.GetTotalSaleAsync();
         var totalBonus = await _accountMovementQueryDataPort.GetTotalBonusAsync();

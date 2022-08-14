@@ -79,8 +79,8 @@ namespace MonifiBackend.API.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
-        [HttpGet("confirm/{confirmationCode}")]
         [AllowAnonymous]
+        [HttpGet("confirm/{confirmationCode}")]
         public async Task<IActionResult> ConfirmAsync(string confirmationCode)
         {
             var request = new ConfirmUserCommand(confirmationCode);
