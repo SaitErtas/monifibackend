@@ -27,7 +27,7 @@ internal class ResetPasswordCommandHandler : ICommandHandler<ResetPasswordComman
     public async Task<ResetPasswordCommandResponse> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
         var user = await _userQueryDataPort.GetEmailAsync(request.Email);
-        AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} Email: {request.Email}"));
+        AppRule.Exists(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["NotFound"], _stringLocalizer["User"])} Email: {request.Email}"));
 
         var resetPasswordCode = await GenerateResetPasswordCode();
         user.SetResetPasswordCode(resetPasswordCode);
