@@ -17,6 +17,7 @@ public interface IUserQueryDataPort : IQueryDataPort
     Task<bool> CheckUserResetPasswordCodeAsync(string resetPasswordCode);
     Task<bool> CheckUserConfirmationCodeAsync(string confirmationCode);
     Task<User> GetEmailAsync(string email);
+    Task<User> GetResetPasswordCodeAsync(string resetPasswordCode);
     Task<List<User>> GetMeFirstNetworkAsync(int id);
     Task<List<User>> GetAllNetworkAsync(List<int> ids);
 

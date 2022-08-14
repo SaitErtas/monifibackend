@@ -101,6 +101,17 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .FirstOrDefaultAsync(x => x.Email == email && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
+    public async Task<User> GetResetPasswordCodeAsync(string resetPasswordCode)
+    {
+        var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
+            .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .FirstOrDefaultAsync(x => x.ResetPasswordCode == resetPasswordCode && x.Status == BaseStatus.Active.ToInt());
+        return userEntity.Map();
+    }
 
     public async Task<User> GetUserConfirmationCodeAsync(string confirmationCode)
     {

@@ -15,8 +15,6 @@ internal class ChangedPasswordCommandValidator : AbstractValidator<ChangedPasswo
 {
     public ChangedPasswordCommandValidator(IStringLocalizer<Resource> stringLocalizer)
     {
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Email))}");
         RuleFor(x => x.ResetPasswordCode)
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.ResetPasswordCode))}");
         RuleFor(x => x.NewPassword)
