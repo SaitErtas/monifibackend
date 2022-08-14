@@ -8,14 +8,13 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegistrationComple
 
 public class RegistrationCompletionCommand : ICommand<RegistrationCompletionCommandResponse>
 {
-    public RegistrationCompletionCommand(int userId, string username, string fullName, string walletAddress, int cryptoNetworkId, int? phoneId, string phone, int countryId, int languageId)
+    public RegistrationCompletionCommand(int userId, string username, string fullName, string walletAddress, int cryptoNetworkId, string phone, int countryId, int languageId)
     {
         Username = username;
         FullName = fullName;
         WalletAddress = walletAddress;
         CryptoNetworkId = cryptoNetworkId;
         Phone = phone;
-        PhoneId = phoneId;
         CountryId = countryId;
         LanguageId = languageId;
     }
@@ -28,7 +27,6 @@ public class RegistrationCompletionCommand : ICommand<RegistrationCompletionComm
     public string Phone { get; set; }
     public int CountryId { get; set; }
     public int LanguageId { get; set; }
-    public int? PhoneId { get; set; }
 }
 
 internal class RegistrationCompletionCommandValidator : AbstractValidator<RegistrationCompletionCommand>

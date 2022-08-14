@@ -8,13 +8,14 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.UpdateUser;
 
 public class UpdateUserCommand : ICommand<UpdateUserCommandResponse>
 {
-    public UpdateUserCommand(int userId, string username, string fullName, int? phoneId, string phone, int countryId, int languageId)
+    public UpdateUserCommand(int userId, string username, string fullName, string walletAddress, int cryptoNetworkId, string phone, int countryId, int languageId)
     {
         UserId = userId;
         Username = username;
         FullName = fullName;
+        WalletAddress = walletAddress;
+        CryptoNetworkId = cryptoNetworkId;
         Phone = phone;
-        PhoneId = phoneId;
         CountryId = countryId;
         LanguageId = languageId;
     }
@@ -22,10 +23,11 @@ public class UpdateUserCommand : ICommand<UpdateUserCommandResponse>
     public int UserId { get; set; }
     public string Username { get; set; }
     public string FullName { get; set; }
+    public string WalletAddress { get; set; }
+    public int CryptoNetworkId { get; set; }
     public string Phone { get; set; }
     public int CountryId { get; set; }
     public int LanguageId { get; set; }
-    public int? PhoneId { get; set; }
 }
 
 internal class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
