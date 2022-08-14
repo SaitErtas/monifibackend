@@ -38,8 +38,10 @@ internal class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, Upd
         user.SetCountry(country);
         user.SetLanguage(language);
 
-        if (request.PhoneId == null)
+        if (user.Phones.Any())
             user.Phones.FirstOrDefault().SetPhone(request.Phone);
+        else
+            user.AddPhone(request.Phone);
 
         Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
 
