@@ -124,7 +124,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     public async Task<List<User>> GetAllNetworkAsync(List<int> ids)
     {
         return await _dbContext.Users
-            .Where(x => !ids.Any(p2 => x.Id == p2))
+            .Where(x => ids.Any(p2 => x.ReferanceUser == p2))
             .Select(x => x.Map())
             .ToListAsync();
     }
