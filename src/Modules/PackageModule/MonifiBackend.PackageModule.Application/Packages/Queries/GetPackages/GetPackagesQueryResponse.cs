@@ -25,7 +25,7 @@ public class GetPackageQueryResponse
         ImgHeight = 100;
         ImgSrc = "/images/pages/pricing-illustration-3.png";
         Icon = package.Icon;
-        PlanBenefits = new List<string> { "Unlimited responses", "CustomerService" };
+        PlanBenefits = new List<string> { };
         PopularPlan = false;
         YearlyPlan = new List<int> { 1, 2, 3 };
         MonthlyPrice = 100;
