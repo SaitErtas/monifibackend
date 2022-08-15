@@ -170,7 +170,7 @@
     <value>Bekleyen siparişiniz var. Önce bunu satın almanız gerekiyor.</value>
   </data>
   <data name="PreSaleMaxLimit" xml:space="preserve">
-    <value>The Pre-Sale has reached the maximum number.</value>
+    <value>Ön Satış maksimum sayıya ulaştı.</value>
   </data>
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referans Kodu</value>

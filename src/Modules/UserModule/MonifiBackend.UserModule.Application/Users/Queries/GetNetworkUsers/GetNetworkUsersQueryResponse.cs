@@ -30,6 +30,7 @@ public class GetUser
         Status = status;
         UserId = userId;
         Id = userId;
+        UniqueKey = userId + " - " + status;
     }
 
     public string Email { get; set; }
@@ -38,4 +39,5 @@ public class GetUser
     public string Status { get; set; }
     public int UserId { get; set; }
     public int Id { get; set; }
+    public string UniqueKey { get; set; }
 }

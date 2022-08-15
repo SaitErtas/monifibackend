@@ -1,4 +1,5 @@
-﻿using MonifiBackend.WalletModule.Domain.AccountMovements;
+﻿using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 
 namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
@@ -26,6 +27,7 @@ public class GetAccountMovementsSingleQueryResponse
         TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(accountMovement.TransferTime).Days;
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
+        Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
     }
 
     public int Id { get; set; }
@@ -39,6 +41,7 @@ public class GetAccountMovementsSingleQueryResponse
     public int RemainDay { get; set; }
     public int TotalDay { get; set; }
     public int PassedDay { get; set; }
+    public decimal Earning { get; set; }
 }
 public class GetMovementsWalletResponse
 {
