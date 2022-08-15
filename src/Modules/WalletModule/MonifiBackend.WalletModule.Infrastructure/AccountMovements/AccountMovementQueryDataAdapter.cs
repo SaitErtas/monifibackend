@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
@@ -17,7 +18,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<List<AccountMovement>> GetAccountMovementsAsync(int userId)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.Wallet.UserId == userId)
+            .Where(w => w.Wallet.UserId == userId && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -30,7 +31,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<List<AccountMovement>> GetPurchasedMovementAsync(int userId)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt())
+            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -45,7 +46,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     {
         var entity = await _dbContext.Wallets
             .Include(i => i.CryptoNetwork)
-            .Include(i => i.AccountMovements)
+            .Include(i => i.AccountMovements.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .FirstOrDefaultAsync(w => w.UserId == userId);
 
         return entity.Map();
@@ -54,7 +55,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<decimal> GetTotalBonusAsync()
     {
         var totalSale = await _dbContext.AccountMovements
-            .Where(w => w.ActionType == ActionType.Bonus.ToInt())
+            .Where(w => w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .SumAsync(s => s.Amount);
         return totalSale;
     }
@@ -62,7 +63,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<decimal> GetTotalSaleAsync()
     {
         var totalSale = await _dbContext.AccountMovements
-            .Where(w => w.ActionType == ActionType.Sale.ToInt())
+            .Where(w => w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .SumAsync(s => s.Amount);
         return totalSale;
     }
@@ -70,7 +71,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<List<AccountMovement>> GetAllMovementAsync(TransactionStatus transactionStatus)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.TransactionStatus == transactionStatus.ToInt())
+            .Where(w => w.TransactionStatus == transactionStatus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -83,7 +84,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<List<AccountMovement>> GetUserMovementAsync(int userId)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt())
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -96,7 +97,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<List<AccountMovement>> GetAllMovementAsync(int userId, TransactionStatus transactionStatus)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == transactionStatus.ToInt())
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == transactionStatus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -109,7 +110,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<AccountMovement> GetAccountMovementAsync(int accountMovementId)
     {
         var entity = await _dbContext.AccountMovements
-            .Where(w => w.Id == accountMovementId)
+            .Where(w => w.Id == accountMovementId && w.Status != BaseStatus.Deleted.ToInt())
             .Include(i => i.PackageDetail)
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
@@ -124,7 +125,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
         DateTime endDate = DateTime.Now.AddDays(1);
 
         //get database sales from 29 days ago at midnight to the end of today
-        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.ActionType == ActionType.Sale.ToInt());
+        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.ActionType == ActionType.Sale.ToInt() && b.Status != BaseStatus.Deleted.ToInt());
 
         var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(10);
 
