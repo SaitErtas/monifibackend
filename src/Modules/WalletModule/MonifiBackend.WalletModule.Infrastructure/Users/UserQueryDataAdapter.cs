@@ -17,6 +17,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     {
         return await _dbContext.Users.CountAsync();
     }
+
     public async Task<int> GetReferanceCountAsync(int id)
     {
         return await _dbContext.Users.CountAsync(x => x.ReferanceUser == id);
@@ -28,5 +29,20 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(i => i.Wallet)
             .FirstOrDefaultAsync(x => x.Id == id);
         return userEntity.Map();
+    }
+    public async Task<List<User>> GetMeFirstNetworkAsync(int id)
+    {
+        return await _dbContext.Users
+            .Where(x => x.ReferanceUser == id)
+            .Select(x => x.Map())
+            .ToListAsync();
+    }
+
+    public async Task<List<User>> GetAllNetworkAsync(List<int> ids)
+    {
+        return await _dbContext.Users
+            .Where(x => ids.Any(p2 => x.Id == p2))
+            .Select(x => x.Map())
+            .ToListAsync();
     }
 }
