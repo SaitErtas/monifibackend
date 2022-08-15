@@ -7,6 +7,7 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.Data.Infrastructure.Entities;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.UserModule.Domain.Users.Notifications;
+using MonifiBackend.UserModule.Domain.Wallets;
 using MonifiBackend.UserModule.Infrastructure.Extensions.Mappers;
 using System.Linq.Expressions;
 
@@ -158,4 +159,29 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .FirstOrDefaultAsync(x => x.Wallet.WalletAddress == walletAddress);
         return userEntity.Map();
     }
+
+    public async Task<decimal> GetTotalBonusAsync(int userId)
+    {
+        var totalSales = await _dbContext.AccountMovements
+            .Include(i => i.PackageDetail)
+            .Include(i => i.Wallet)
+            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Bonus.ToInt())
+            .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .ToListAsync();
+
+        return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
+    }
+
+    public async Task<decimal> GetTotalSaleAsync(int userId)
+    {
+        var totalSales = await _dbContext.AccountMovements
+            .Include(i => i.PackageDetail)
+            .Include(i => i.Wallet)
+            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt())
+            .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .ToListAsync();
+
+        return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
+    }
+
 }

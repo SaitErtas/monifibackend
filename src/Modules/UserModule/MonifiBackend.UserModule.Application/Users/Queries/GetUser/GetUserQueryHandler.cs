@@ -21,6 +21,10 @@ internal class GetUserQueryHandler : IQueryHandler<GetUserQuery, GetUserQueryRes
         var user = await _userQueryDataPort.GetAsync(request.UserId);
         AppRule.ExistsAndActive(user, new BusinessValidationException($"{string.Format(_stringLocalizer["NotFound"], request.UserId)}", $"{string.Format(_stringLocalizer["NotFound"], request.UserId)} UserId: {request.UserId}"));
 
-        return new GetUserQueryResponse(user);
+        var userBonus = await _userQueryDataPort.GetTotalBonusAsync(request.UserId);
+        var userTotalSale = await _userQueryDataPort.GetTotalSaleAsync(request.UserId);
+        var totalEarning = userTotalSale + userBonus;
+
+        return new GetUserQueryResponse(user, totalEarning);
     }
 }

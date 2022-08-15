@@ -4,7 +4,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
 {
     public class GetUserQueryResponse
     {
-        public GetUserQueryResponse(User user)
+        public GetUserQueryResponse(User user, decimal totalEarning)
         {
             Id = user.Id;
             Role = user.Role.ToRole();
@@ -27,6 +27,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             PhoneId = user.Phones?.FirstOrDefault()?.Id;
             Status = user.Status.ToString().ToLower();
             LanguageShortCode = LanguageCode.Substring(0, 2);
+            TotalEarning = totalEarning;
         }
         public int Id { get; set; }
         public string UserName { get; set; }
@@ -49,5 +50,6 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public string? LanguageCode { get; set; }
         public string Status { get; set; }
         public string LanguageShortCode { get; set; }
+        public decimal TotalEarning { get; set; }
     }
 }
