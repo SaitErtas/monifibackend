@@ -32,7 +32,7 @@ public class GoogleEmailAdapter : IEmailPort
 
         // send email
         using var smtp = new SmtpClient();
-        smtp.Connect(_appSettings.EmailConfigurations.SmtpServer, _appSettings.EmailConfigurations.Port, false);
+        smtp.Connect(_appSettings.EmailConfigurations.SmtpServer, _appSettings.EmailConfigurations.Port, true);
         smtp.Authenticate(_appSettings.EmailConfigurations.UserName, _appSettings.EmailConfigurations.Password);
         smtp.CheckCertificateRevocation = false;
         smtp.Send(email);
