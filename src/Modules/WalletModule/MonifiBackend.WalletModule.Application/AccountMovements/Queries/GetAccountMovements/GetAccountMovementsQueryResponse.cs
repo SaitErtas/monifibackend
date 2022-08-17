@@ -1,4 +1,5 @@
-﻿using MonifiBackend.Core.Domain.Utility;
+﻿using MonifiBackend.Core.Domain.Base;
+using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 
