@@ -28,6 +28,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
             Status = user.Status.ToString().ToLower();
             LanguageShortCode = LanguageCode.Substring(0, 2);
             TotalEarning = totalEarning;
+            TotalEarningMonifi = decimal.Divide(totalEarning, 0.002m);
         }
         public int Id { get; set; }
         public string UserName { get; set; }
@@ -51,5 +52,6 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public string Status { get; set; }
         public string LanguageShortCode { get; set; }
         public decimal TotalEarning { get; set; }
+        public decimal TotalEarningMonifi { get; set; }
     }
 }
