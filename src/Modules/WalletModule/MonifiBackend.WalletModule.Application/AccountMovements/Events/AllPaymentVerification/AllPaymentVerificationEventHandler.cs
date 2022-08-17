@@ -1,4 +1,5 @@
 ﻿using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.BscScans.Accounts;
 using MonifiBackend.Core.Domain.TronNetworks;

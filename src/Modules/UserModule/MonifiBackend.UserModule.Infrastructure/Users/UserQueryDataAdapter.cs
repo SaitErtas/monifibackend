@@ -165,7 +165,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         var totalSales = await _dbContext.AccountMovements
             .Include(i => i.PackageDetail)
             .Include(i => i.Wallet)
-            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Select(s => new { s.Amount, s.PackageDetail.Commission })
             .ToListAsync();
 
@@ -177,7 +177,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         var totalSales = await _dbContext.AccountMovements
             .Include(i => i.PackageDetail)
             .Include(i => i.Wallet)
-            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Select(s => new { s.Amount, s.PackageDetail.Commission })
             .ToListAsync();
 

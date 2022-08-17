@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Core.Infrastructure.Localize;

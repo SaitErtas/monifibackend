@@ -1,4 +1,4 @@
-﻿namespace MonifiBackend.WalletModule.Domain.AccountMovements;
+﻿namespace MonifiBackend.Core.Domain.Base;
 
 public enum TransactionStatus
 {
@@ -36,3 +36,4 @@ public static class TransactionStatusExtensions
         };
     }
 }
+
