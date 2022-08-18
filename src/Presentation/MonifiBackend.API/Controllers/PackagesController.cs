@@ -6,6 +6,7 @@ using MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.DeletePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Queries.GetPackages;
+using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.API.Controllers;
 
@@ -29,7 +30,7 @@ public class PackagesController : BaseApiController
         return Ok(result);
     }
 
-    [AllowAnonymous]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
     [HttpPost("create")]
     public async Task<IActionResult> CreatePackageAsync([FromBody] CreatePackageCommand request)
     {
@@ -37,7 +38,7 @@ public class PackagesController : BaseApiController
         return Ok(result);
     }
 
-    [AllowAnonymous]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
     [HttpPost("update/{id}")]
     public async Task<IActionResult> UpdatePackageAsync([FromRoute] int id, [FromBody] UpdatePackageCommand request)
     {
@@ -45,7 +46,7 @@ public class PackagesController : BaseApiController
         var result = await _mediator.Send(request);
         return Ok(result);
     }
-    [AllowAnonymous]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeletePackageAsync([FromRoute] int id)
     {
