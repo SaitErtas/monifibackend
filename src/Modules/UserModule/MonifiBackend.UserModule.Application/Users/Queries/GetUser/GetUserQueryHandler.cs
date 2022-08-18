@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.Utility;
-using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser;
@@ -25,6 +25,6 @@ internal class GetUserQueryHandler : IQueryHandler<GetUserQuery, GetUserQueryRes
         var userTotalSale = await _userQueryDataPort.GetTotalSaleAsync(request.UserId);
         var totalEarning = userTotalSale + userBonus;
 
-        return new GetUserQueryResponse(user, totalEarning);
+        return new GetUserQueryResponse(user, totalEarning, _stringLocalizer);
     }
 }

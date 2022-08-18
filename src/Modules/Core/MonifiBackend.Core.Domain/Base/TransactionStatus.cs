@@ -1,4 +1,7 @@
-﻿namespace MonifiBackend.Core.Domain.Base;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Domain.Localize;
+
+namespace MonifiBackend.Core.Domain.Base;
 
 public enum TransactionStatus
 {
@@ -15,23 +18,13 @@ public class TransactionStatusStrings
 }
 public static class TransactionStatusExtensions
 {
-    public static TransactionStatus ToTransactionStatus(this string status)
+    public static string ToTransactionStatus(this TransactionStatus status, IStringLocalizer<Resource> stringLocalizer)
     {
         return status switch
         {
-            TransactionStatusStrings.SUCCESSFUL => TransactionStatus.Successful,
-            TransactionStatusStrings.PENDING => TransactionStatus.Pending,
-            TransactionStatusStrings.FAIL => TransactionStatus.Fail,
-            _ => throw new NotImplementedException()
-        };
-    }
-    public static string ToTransactionStatus(this TransactionStatus status)
-    {
-        return status switch
-        {
-            TransactionStatus.Successful => TransactionStatusStrings.SUCCESSFUL,
-            TransactionStatus.Pending => TransactionStatusStrings.PENDING,
-            TransactionStatus.Fail => TransactionStatusStrings.FAIL,
+            TransactionStatus.Successful => stringLocalizer["Successful"],
+            TransactionStatus.Pending => stringLocalizer["Pending"],
+            TransactionStatus.Fail => stringLocalizer["Fail"],
             _ => throw new NotImplementedException()
         };
     }

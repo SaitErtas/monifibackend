@@ -26,7 +26,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Users
                 new Claim("id", user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("roles", user.Role.ToRole())
+                new Claim("roles", user.Role.ToString())
             };
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret.Key));

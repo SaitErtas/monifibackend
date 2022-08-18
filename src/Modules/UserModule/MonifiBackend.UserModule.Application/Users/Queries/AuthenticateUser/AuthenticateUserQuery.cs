@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
-using MonifiBackend.Core.Infrastructure.Localize;
+using MonifiBackend.Core.Domain.Localize;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
