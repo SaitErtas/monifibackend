@@ -129,6 +129,9 @@
   <data name="AlreadyExist" xml:space="preserve">
     <value>{0} already exist.</value>
   </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>The login password has been changed.</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Deleted</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Fail</value>
   </data>
   <data name="FieldRequired" xml:space="preserve">
     <value>The {0} field is required</value>
@@ -180,6 +186,9 @@
   <data name="Passive" xml:space="preserve">
     <value>Passive</value>
   </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="PendingOrder" xml:space="preserve">
     <value>You have a pending order. You need to buy this first.</value>
   </data>
@@ -189,6 +198,12 @@
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referance Code</value>
   </data>
+  <data name="Refund" xml:space="preserve">
+    <value>Refund</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>Sale</value>
+  </data>
   <data name="StakingStarted" xml:space="preserve">
     <value>{0} Package {1} Staking with time started.</value>
   </data>
@@ -197,6 +212,9 @@
   </data>
   <data name="Sub" xml:space="preserve">
     <value>Sub</value>
+  </data>
+  <data name="Successful" xml:space="preserve">
+    <value>Successful</value>
   </data>
   <data name="TransactionCheck" xml:space="preserve">
     <value>The payment for the package you purchased is in the approval process.</value>
@@ -210,6 +228,9 @@
   <data name="UserNotVerified" xml:space="preserve">
     <value>User not verified.</value>
     <comment>Email and Password do not match.</comment>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>Void</value>
   </data>
   <data name="Wallet" xml:space="preserve">
     <value>Wallet</value>

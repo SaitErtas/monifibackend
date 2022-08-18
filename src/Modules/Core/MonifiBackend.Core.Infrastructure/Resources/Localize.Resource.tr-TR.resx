@@ -129,6 +129,9 @@
   <data name="AlreadyExist" xml:space="preserve">
     <value>{0} zaten mevcut.</value>
   </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Giriş şifresi değiştirildi.</value>
     <comment>Giriş şifresi değiştirilir.</comment>
@@ -138,6 +141,9 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Silindi</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Başarısız</value>
   </data>
   <data name="FieldRequired" xml:space="preserve">
     <value>{0} alanı zorunludur.</value>
@@ -181,6 +187,9 @@
   <data name="Passive" xml:space="preserve">
     <value>Pasif</value>
   </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Bekleniyor</value>
+  </data>
   <data name="PendingOrder" xml:space="preserve">
     <value>Bekleyen siparişiniz var. Önce bunu satın almanız gerekiyor.</value>
   </data>
@@ -190,6 +199,12 @@
   <data name="ReferanceCode" xml:space="preserve">
     <value>Referans Kodu</value>
   </data>
+  <data name="Refund" xml:space="preserve">
+    <value>İade</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>Satış</value>
+  </data>
   <data name="StakingStarted" xml:space="preserve">
     <value>{0} Paketi {1} Süre ile Stake başlatıldı.</value>
   </data>
@@ -198,6 +213,9 @@
   </data>
   <data name="Sub" xml:space="preserve">
     <value>Alt</value>
+  </data>
+  <data name="Successful" xml:space="preserve">
+    <value>Başarılı</value>
   </data>
   <data name="TransactionCheck" xml:space="preserve">
     <value>Satın aldığınız paketin ödemesi onay sürecindedir.</value>
@@ -211,6 +229,9 @@
   <data name="UserNotVerified" xml:space="preserve">
     <value>Kullanıcı doğrulanamadı.</value>
     <comment>Email and Password do not match.</comment>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>İptal</value>
   </data>
   <data name="Wallet" xml:space="preserve">
     <value>Cüzdan</value>
