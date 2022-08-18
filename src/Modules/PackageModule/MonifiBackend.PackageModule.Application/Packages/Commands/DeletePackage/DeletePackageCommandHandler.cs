@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.Utility;
-using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.PackageModule.Domain.Packages;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.DeletePackage;

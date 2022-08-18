@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
-using MonifiBackend.Core.Infrastructure.Localize;
+using MonifiBackend.Core.Domain.Localize;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 

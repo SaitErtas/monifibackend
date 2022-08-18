@@ -120,6 +120,12 @@
   <data name="AccountMovement" xml:space="preserve">
     <value>Hesap hareketleri</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Yönetici</value>
+  </data>
   <data name="AlreadyExist" xml:space="preserve">
     <value>{0} zaten mevcut.</value>
   </data>
@@ -129,6 +135,9 @@
   </data>
   <data name="ConfirmationCode" xml:space="preserve">
     <value>Doğrulama Kodu</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Silindi</value>
   </data>
   <data name="FieldRequired" xml:space="preserve">
     <value>{0} alanı zorunludur.</value>
@@ -163,8 +172,14 @@
   <data name="OutOfRange" xml:space="preserve">
     <value>{0} Aralık Dışı</value>
   </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Sahip</value>
+  </data>
   <data name="Package" xml:space="preserve">
     <value>Paket</value>
+  </data>
+  <data name="Passive" xml:space="preserve">
+    <value>Pasif</value>
   </data>
   <data name="PendingOrder" xml:space="preserve">
     <value>Bekleyen siparişiniz var. Önce bunu satın almanız gerekiyor.</value>
@@ -188,7 +203,7 @@
     <value>Satın aldığınız paketin ödemesi onay sürecindedir.</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>kullanıcı</value>
+    <value>Kullanıcı</value>
   </data>
   <data name="UserAlreadySubscribed" xml:space="preserve">
     <value>Zaten abone olan kullanıcı.</value>

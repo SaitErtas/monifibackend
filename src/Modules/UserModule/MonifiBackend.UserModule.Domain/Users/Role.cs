@@ -1,4 +1,7 @@
-﻿namespace MonifiBackend.UserModule.Domain.Users
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Domain.Localize;
+
+namespace MonifiBackend.UserModule.Domain.Users
 {
     public enum Role
     {
@@ -14,23 +17,13 @@
     }
     public static class RoleExtensions
     {
-        public static Role ToRole(this string status)
+        public static string ToRole(this Role status, IStringLocalizer<Resource> stringLocalizer)
         {
             return status switch
             {
-                RoleStrings.ADMINISTRATOR => Role.Administrator,
-                RoleStrings.OWNER => Role.Owner,
-                RoleStrings.USER => Role.User,
-                _ => throw new NotImplementedException()
-            };
-        }
-        public static string ToRole(this Role status)
-        {
-            return status switch
-            {
-                Role.Administrator => RoleStrings.ADMINISTRATOR,
-                Role.Owner => RoleStrings.OWNER,
-                Role.User => RoleStrings.USER,
+                Role.Administrator => stringLocalizer["Admin"],
+                Role.Owner => stringLocalizer["Owner"],
+                Role.User => stringLocalizer["User"],
                 _ => throw new NotImplementedException()
             };
         }
