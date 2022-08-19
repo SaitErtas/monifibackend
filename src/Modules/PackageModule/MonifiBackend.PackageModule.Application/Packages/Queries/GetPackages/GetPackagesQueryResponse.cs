@@ -26,7 +26,7 @@ public class GetPackageQueryResponse
         ImgSrc = "/images/pages/pricing-illustration-3.png";
         Icon = package.Icon;
         PlanBenefits = new List<string> { };
-        PopularPlan = false;
+        PopularPlan = Name == "Hype" || Name == "Moon";
         YearlyPlan = new List<int> { 1, 2, 3 };
         MonthlyPrice = 100;
         Details = package.Details.Select(s => new GetPackageDetailQueryResponse(s.Id, s.Name, s.Duration, s.Commission)).ToList();
