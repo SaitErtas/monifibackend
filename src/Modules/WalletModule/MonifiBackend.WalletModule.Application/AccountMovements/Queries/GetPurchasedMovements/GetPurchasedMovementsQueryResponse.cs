@@ -1,4 +1,7 @@
-﻿using MonifiBackend.Core.Domain.Utility;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Domain.Base;
+using MonifiBackend.Core.Domain.Localize;
+using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 
@@ -6,9 +9,9 @@ namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPur
 
 public class GetPurchasedMovementsQueryResponse
 {
-    public GetPurchasedMovementsQueryResponse(List<AccountMovement> accountMovements)
+    public GetPurchasedMovementsQueryResponse(List<AccountMovement> accountMovements, IStringLocalizer<Resource> stringLocalizer)
     {
-        Movements = accountMovements.Select(x => new GetPurchasedAccountMovementsSingleQueryResponse(x)).ToList();
+        Movements = accountMovements.Select(x => new GetPurchasedAccountMovementsSingleQueryResponse(x, stringLocalizer)).ToList();
     }
     public GetPurchasedMovementsQueryResponse(List<GetPurchasedAccountMovementsSingleQueryResponse> accountMovements)
     {
@@ -18,7 +21,7 @@ public class GetPurchasedMovementsQueryResponse
 }
 public class GetPurchasedAccountMovementsSingleQueryResponse
 {
-    public GetPurchasedAccountMovementsSingleQueryResponse(int id, string fullName, bool isReferanceUser, decimal amount, DateTime createdAt, DateTime transferTime, TransactionStatus transactionStatus, ActionType actionType, int walletId, string walletAddress, Network cryptoNetwork, int packageDetailId, string packageDetailName, int packageDetailDuration, int packageDetailCommission, Package package)
+    public GetPurchasedAccountMovementsSingleQueryResponse(int id, string fullName, bool isReferanceUser, decimal amount, DateTime createdAt, DateTime transferTime, TransactionStatus transactionStatus, ActionType actionType, int walletId, string walletAddress, Network cryptoNetwork, int packageDetailId, string packageDetailName, int packageDetailDuration, int packageDetailCommission, Package package, IStringLocalizer<Resource> stringLocalizer)
     {
         FullName = fullName;
         IsReferanceUser = isReferanceUser;
@@ -26,8 +29,8 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         Amount = amount;
         CreatedAt = createdAt;
         BlockEndDate = transferTime == default(DateTime) ? null : transferTime.AddMonths(packageDetailDuration);
-        TransactionStatus = transactionStatus.ToTransactionStatus();
-        ActionType = actionType.ToActionType();
+        TransactionStatus = transactionStatus.ToTransactionStatus(stringLocalizer);
+        ActionType = actionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(walletId, walletAddress, cryptoNetwork);
         PackageDetail = new GetPurchasedPackageDetailResponse(packageDetailId, packageDetailName, packageDetailDuration, packageDetailCommission, package);
         TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(transferTime).Days;
@@ -35,14 +38,14 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
     }
-    public GetPurchasedAccountMovementsSingleQueryResponse(AccountMovement accountMovement)
+    public GetPurchasedAccountMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
     {
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
         BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
-        TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus();
-        ActionType = accountMovement.ActionType.ToActionType();
+        TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus(stringLocalizer);
+        ActionType = accountMovement.ActionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
         PackageDetail = new GetPurchasedPackageDetailResponse(accountMovement.PackageDetail.Id, accountMovement.PackageDetail.Name, accountMovement.PackageDetail.Duration, accountMovement.PackageDetail.Commission, accountMovement.PackageDetail.Package);
         TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(accountMovement.TransferTime).Days;

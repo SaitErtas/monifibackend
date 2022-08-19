@@ -1,4 +1,5 @@
 ﻿using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Base;
 
 namespace MonifiBackend.WalletModule.Domain.AccountMovements;
 

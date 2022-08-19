@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
@@ -11,11 +13,13 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
     private readonly IMediator _mediator;
     private readonly IAccountMovementQueryDataPort _accountMovementQueryDataPort;
     private readonly IPackageQueryDataPort _packageQueryDataPort;
-    public GetAccountMovementsQueryHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort, IMediator mediator)
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
+    public GetAccountMovementsQueryHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort, IMediator mediator, IStringLocalizer<Resource> stringLocalizer)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _packageQueryDataPort = packageQueryDataPort;
         _mediator = mediator;
+        _stringLocalizer = stringLocalizer;
     }
     public async Task<GetAccountMovementsQueryResponse> Handle(GetAccountMovementsQuery request, CancellationToken cancellationToken)
     {
@@ -31,6 +35,6 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
         var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
         _mediator.Publish(verificationEvent);
 
-        return new GetAccountMovementsQueryResponse(accountMovements);
+        return new GetAccountMovementsQueryResponse(accountMovements, _stringLocalizer);
     }
 }

@@ -1,13 +1,15 @@
-﻿using MonifiBackend.UserModule.Domain.Users;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Domain.Localize;
+using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
 {
     public class GetUserQueryResponse
     {
-        public GetUserQueryResponse(User user, decimal totalEarning)
+        public GetUserQueryResponse(User user, decimal totalEarning, IStringLocalizer<Resource> stringLocalizer)
         {
             Id = user.Id;
-            Role = user.Role.ToRole();
+            Role = user.Role.ToRole(stringLocalizer);
             UserName = user.Username;
             FullName = user.FullName;
             Email = user.Email;

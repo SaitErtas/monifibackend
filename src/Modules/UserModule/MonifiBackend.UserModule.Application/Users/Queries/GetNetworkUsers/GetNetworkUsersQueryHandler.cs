@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
-using MonifiBackend.Core.Infrastructure.Localize;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;

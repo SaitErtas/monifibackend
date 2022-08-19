@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
@@ -13,12 +15,14 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
     private readonly IMediator _mediator;
     private readonly IAccountMovementQueryDataPort _accountMovementQueryDataPort;
     private readonly IPackageQueryDataPort _packageQueryDataPort;
-    public GetPurchasedMovementsQueryHandler(IUserQueryDataPort userQueryDataPort, IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort, IMediator mediator)
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
+    public GetPurchasedMovementsQueryHandler(IUserQueryDataPort userQueryDataPort, IAccountMovementQueryDataPort accountMovementQueryDataPort, IPackageQueryDataPort packageQueryDataPort, IMediator mediator, IStringLocalizer<Resource> stringLocalizer)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _packageQueryDataPort = packageQueryDataPort;
         _mediator = mediator;
         _userQueryDataPort = userQueryDataPort;
+        _stringLocalizer = stringLocalizer;
     }
     public async Task<GetPurchasedMovementsQueryResponse> Handle(GetPurchasedMovementsQuery request, CancellationToken cancellationToken)
     {
@@ -32,7 +36,7 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
             accountMovement.PackageDetail.SetPackage(package);
         }
 
-        purchasedAccountMovementsSingleQueryResponse = accountMovements.Select(x => new GetPurchasedAccountMovementsSingleQueryResponse(x)).ToList();
+        purchasedAccountMovementsSingleQueryResponse = accountMovements.Select(x => new GetPurchasedAccountMovementsSingleQueryResponse(x, _stringLocalizer)).ToList();
 
         var user = await _userQueryDataPort.GetUserAsync(request.UserId);
         var meFirstNetworkUsers = await _userQueryDataPort.GetMeFirstNetworkAsync(user.Id);
@@ -46,7 +50,7 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
             {
                 var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == networkAccountMovement.PackageDetail.Id));
                 networkAccountMovement.PackageDetail.SetPackage(package);
-                purchasedAccountMovementsSingleQueryResponse.Add(new GetPurchasedAccountMovementsSingleQueryResponse(networkAccountMovement.Id, networkUser.FullName, true, networkAccountMovement.Amount, networkAccountMovement.CreatedAt, networkAccountMovement.TransferTime, networkAccountMovement.TransactionStatus, networkAccountMovement.ActionType, networkAccountMovement.Wallet.Id, networkAccountMovement.Wallet.WalletAddress, networkAccountMovement.Wallet.CryptoNetwork, networkAccountMovement.PackageDetail.Id, networkAccountMovement.PackageDetail.Name, networkAccountMovement.PackageDetail.Duration, networkAccountMovement.PackageDetail.Commission, package));
+                purchasedAccountMovementsSingleQueryResponse.Add(new GetPurchasedAccountMovementsSingleQueryResponse(networkAccountMovement.Id, networkUser.FullName, true, networkAccountMovement.Amount, networkAccountMovement.CreatedAt, networkAccountMovement.TransferTime, networkAccountMovement.TransactionStatus, networkAccountMovement.ActionType, networkAccountMovement.Wallet.Id, networkAccountMovement.Wallet.WalletAddress, networkAccountMovement.Wallet.CryptoNetwork, networkAccountMovement.PackageDetail.Id, networkAccountMovement.PackageDetail.Name, networkAccountMovement.PackageDetail.Duration, networkAccountMovement.PackageDetail.Commission, package, _stringLocalizer));
             }
         }
 

@@ -1,4 +1,7 @@
-﻿namespace MonifiBackend.Core.Domain.Base
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Domain.Localize;
+
+namespace MonifiBackend.Core.Domain.Base
 {
     public enum BaseStatus
     {
@@ -14,23 +17,13 @@
     }
     public static class BaseStatusExtensions
     {
-        public static BaseStatus ToBaseStatus(this string status)
+        public static string ToBaseStatus(this BaseStatus status, IStringLocalizer<Resource> stringLocalizer)
         {
             return status switch
             {
-                BaseStatusStrings.ACTIVE => BaseStatus.Active,
-                BaseStatusStrings.PASSIVE => BaseStatus.Passive,
-                BaseStatusStrings.DELETED => BaseStatus.Deleted,
-                _ => throw new NotImplementedException()
-            };
-        }
-        public static string ToBaseStatus(this BaseStatus status)
-        {
-            return status switch
-            {
-                BaseStatus.Active => BaseStatusStrings.ACTIVE,
-                BaseStatus.Passive => BaseStatusStrings.PASSIVE,
-                BaseStatus.Deleted => BaseStatusStrings.DELETED,
+                BaseStatus.Active => stringLocalizer["Active"],
+                BaseStatus.Passive => stringLocalizer["Passive"],
+                BaseStatus.Deleted => stringLocalizer["Deleted"],
                 _ => throw new NotImplementedException()
             };
         }
