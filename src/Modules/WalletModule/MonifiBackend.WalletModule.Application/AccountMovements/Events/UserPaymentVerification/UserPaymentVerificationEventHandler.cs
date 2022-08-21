@@ -104,7 +104,6 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                         break;
                     }
                 }
-                await Task.Delay(10000);
             }
 
             if (accountMovement.TransactionStatus == TransactionStatus.Successful)

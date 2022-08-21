@@ -26,6 +26,9 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
     }
     public async Task<GetPurchasedMovementsQueryResponse> Handle(GetPurchasedMovementsQuery request, CancellationToken cancellationToken)
     {
+        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
+        await _mediator.Publish(verificationEvent);
+
         var purchasedAccountMovementsSingleQueryResponse = new List<GetPurchasedAccountMovementsSingleQueryResponse>();
         var accountMovements = await _accountMovementQueryDataPort.GetPurchasedMovementAsync(request.UserId);
         var packages = await _packageQueryDataPort.GetsAsync();
@@ -53,9 +56,6 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
                 purchasedAccountMovementsSingleQueryResponse.Add(new GetPurchasedAccountMovementsSingleQueryResponse(networkAccountMovement.Id, networkUser.FullName, true, networkAccountMovement.Amount, networkAccountMovement.CreatedAt, networkAccountMovement.TransferTime, networkAccountMovement.TransactionStatus, networkAccountMovement.ActionType, networkAccountMovement.Wallet.Id, networkAccountMovement.Wallet.WalletAddress, networkAccountMovement.Wallet.CryptoNetwork, networkAccountMovement.PackageDetail.Id, networkAccountMovement.PackageDetail.Name, networkAccountMovement.PackageDetail.Duration, networkAccountMovement.PackageDetail.Commission, package, _stringLocalizer));
             }
         }
-
-        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        _mediator.Publish(verificationEvent);
 
         return new GetPurchasedMovementsQueryResponse(purchasedAccountMovementsSingleQueryResponse);
     }
