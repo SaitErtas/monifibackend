@@ -8,6 +8,7 @@ using MonifiBackend.UserModule.Application.Notifications.Queries.GetNotification
 using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion;
 using MonifiBackend.UserModule.Application.Users.Commands.UpdateLanguage;
+using MonifiBackend.UserModule.Application.Users.Commands.UpdatePassword;
 using MonifiBackend.UserModule.Application.Users.Commands.UpdateUser;
 using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
@@ -88,7 +89,7 @@ namespace MonifiBackend.API.Controllers
             return Ok(result);
         }
         [HttpPost("registration-completion")]
-        [Authorize(Role.User)]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
         public async Task<IActionResult> RegistrationCompletionAsync([FromBody] RegistrationCompletionCommand request)
         {
             var currentUser = (User)HttpContext.Items["User"];
@@ -114,7 +115,7 @@ namespace MonifiBackend.API.Controllers
         }
 
         [HttpPut("update-user")]
-        [Authorize(Role.User)]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserCommand request)
         {
             var currentUser = (User)HttpContext.Items["User"];
@@ -124,11 +125,21 @@ namespace MonifiBackend.API.Controllers
         }
 
         [HttpPut("update-language")]
-        [Authorize(Role.User)]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
         public async Task<IActionResult> UpdateLanguageAsync([FromBody] UpdateLanguageCommand request)
         {
             var currentUser = (User)HttpContext.Items["User"];
             request.UserId = currentUser.Id;
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpGet("update-password")]
+        [Authorize(Role.Administrator, Role.Owner, Role.User)]
+        public async Task<IActionResult> UpdatePasswordAsync()
+        {
+            var currentUser = (User)HttpContext.Items["User"];
+            var request = new UpdatePasswordCommand(currentUser.Id);
             var result = await _mediator.Send(request);
             return Ok(result);
         }
