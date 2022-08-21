@@ -17,6 +17,8 @@ public class SettingEntity : BaseActivityEntity
     public string TronNetworkAddress { get; set; }
     public string BscScanTokenSymbol { get; set; }
     public string TronNetworkTokenSymbol { get; set; }
+    public bool MaintenanceMode { get; set; }
+
 }
 public class SettingEntityConfiguration : IEntityTypeConfiguration<SettingEntity>
 {
@@ -33,6 +35,7 @@ public class SettingEntityConfiguration : IEntityTypeConfiguration<SettingEntity
         builder.Property(x => x.TronNetworkAddress).IsRequired();
         builder.Property(x => x.BscScanTokenSymbol).IsRequired();
         builder.Property(x => x.TronNetworkTokenSymbol).IsRequired();
+        builder.Property(x => x.MaintenanceMode).IsRequired();
 
         BaseActivityConfiguration.Configure(builder);
     }
