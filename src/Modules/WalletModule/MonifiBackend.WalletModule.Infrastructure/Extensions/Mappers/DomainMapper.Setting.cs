@@ -42,7 +42,8 @@ public static partial class DomainMapper
             entity.MaximumDistributedAPY,
             entity.MaximumReferenceBonus,
             entity.TotalPreSaleQuantity,
-            entity.MonifiPrice);
+            entity.MonifiPrice,
+            entity.MaintenanceMode);
     }
     #endregion
 }

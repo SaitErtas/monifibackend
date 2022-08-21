@@ -10,6 +10,7 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
     public long MaximumReferenceBonus { get; private set; }
     public long TotalPreSaleQuantity { get; private set; }
     public decimal MonifiPrice { get; private set; }
+    public bool MaintenanceMode { get; private set; }
 
     public static Setting Default() => new();
 
@@ -23,7 +24,8 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
         long maximumDistributedAPY,
         long maximumReferenceBonus,
         long totalPreSaleQuantity,
-        decimal monifiPrice)
+        decimal monifiPrice,
+        bool maintenanceMode)
     {
         return new Setting()
         {
@@ -36,7 +38,8 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
             MaximumDistributedAPY = maximumDistributedAPY,
             MaximumReferenceBonus = maximumReferenceBonus,
             TotalPreSaleQuantity = totalPreSaleQuantity,
-            MonifiPrice = monifiPrice
+            MonifiPrice = monifiPrice,
+            MaintenanceMode = maintenanceMode
         };
     }
 }
