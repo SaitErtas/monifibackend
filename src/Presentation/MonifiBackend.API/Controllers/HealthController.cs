@@ -14,7 +14,7 @@ namespace MonifiBackend.API.Controllers
         [HttpGet("version")]
         public async Task<IActionResult> Version()
         {
-            return Ok("1.01");
+            return Ok("1.02");
         }
     }
 }
