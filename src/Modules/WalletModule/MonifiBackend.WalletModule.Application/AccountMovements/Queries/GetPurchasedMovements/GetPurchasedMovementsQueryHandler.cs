@@ -26,9 +26,6 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
     }
     public async Task<GetPurchasedMovementsQueryResponse> Handle(GetPurchasedMovementsQuery request, CancellationToken cancellationToken)
     {
-        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        await _mediator.Publish(verificationEvent);
-
         var purchasedAccountMovementsSingleQueryResponse = new List<GetPurchasedAccountMovementsSingleQueryResponse>();
         var accountMovements = await _accountMovementQueryDataPort.GetPurchasedMovementAsync(request.UserId);
         var packages = await _packageQueryDataPort.GetsAsync();
@@ -57,6 +54,8 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
             }
         }
 
+        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
+        _mediator.Publish(verificationEvent);
         return new GetPurchasedMovementsQueryResponse(purchasedAccountMovementsSingleQueryResponse);
     }
 }

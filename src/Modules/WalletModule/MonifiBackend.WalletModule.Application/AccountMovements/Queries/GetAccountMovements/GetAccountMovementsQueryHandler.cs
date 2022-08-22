@@ -23,8 +23,6 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
     }
     public async Task<GetAccountMovementsQueryResponse> Handle(GetAccountMovementsQuery request, CancellationToken cancellationToken)
     {
-        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        await _mediator.Publish(verificationEvent);
 
         var accountMovements = await _accountMovementQueryDataPort.GetAccountMovementsAsync(request.UserId);
         var packages = await _packageQueryDataPort.GetsAsync();
@@ -35,6 +33,8 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
             accountMovement.PackageDetail.SetPackage(package);
         }
 
+        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
+        _mediator.Publish(verificationEvent);
         return new GetAccountMovementsQueryResponse(accountMovements, _stringLocalizer);
     }
 }
