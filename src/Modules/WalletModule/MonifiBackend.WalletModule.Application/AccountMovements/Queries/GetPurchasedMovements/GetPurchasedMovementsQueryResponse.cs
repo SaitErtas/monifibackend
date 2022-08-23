@@ -35,11 +35,12 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         PackageDetail = new GetPurchasedPackageDetailResponse(packageDetailId, packageDetailName, packageDetailDuration, packageDetailCommission, package);
         TotalDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(transferTime).Days;
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
-        PassedDay = TotalDay - RemainDay;
+        PassedDay = RemainDay - TotalDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
     }
     public GetPurchasedAccountMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
     {
+        FullName = "You";
         Id = accountMovement.Id;
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
