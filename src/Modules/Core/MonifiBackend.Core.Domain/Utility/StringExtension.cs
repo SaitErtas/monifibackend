@@ -26,25 +26,27 @@ public static class StringExtension
 
         return result.ToString();
     }
-    public static string CapitalizeFirstAndHideText(this string s, string hideCharacter = "*")
+    public static string CapitalizeFirstAndHideText(this string s, int characterCount = 3, string hideCharacter = "*")
     {
         if (s == null)
             return null;
-        bool IsNewSentense = true;
+        var IsNewSentense = 0;
         var result = new StringBuilder(s.Length);
         for (int i = 0; i < s.Length; i++)
         {
-            if (IsNewSentense && char.IsLetter(s[i]))
+            IsNewSentense++;
+            if (IsNewSentense < characterCount && char.IsLetter(s[i]))
             {
-                result.Append(char.ToUpper(s[i]));
-                IsNewSentense = false;
+                result.Append(s[i].ToString());
             }
-            else
+            else if (s[i] != ' ')
                 result.Append(hideCharacter);
+            else if (s[i] == ' ')
+                result.Append(' ');
 
-            if (s[i] == '!' || s[i] == '?' || s[i] == '.')
+            if (s[i] == ' ')
             {
-                IsNewSentense = true;
+                IsNewSentense = 0;
             }
         }
 
