@@ -37,6 +37,18 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = RemainDay - TotalDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
+        Color = GetPackageColor(PackageDetail.Package.Name);
+
+        string GetPackageColor(string name)
+                        => name switch
+                        {
+                            "Seed" => "error",
+                            "Growth" => "warning",
+                            "Hype" => "primary",
+                            "Moon" => "secondary",
+                            "Bonus" => "success",
+                            _ => "warning"
+                        };
     }
     public GetPurchasedAccountMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
     {
@@ -53,7 +65,10 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
+
     }
+
+
 
     public int Id { get; set; }
     public decimal Amount { get; set; }
@@ -69,6 +84,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     public int TotalDay { get; set; }
     public int PassedDay { get; set; }
     public decimal Earning { get; set; }
+    public string Color { get; set; }
 }
 public class GetPurchasedWalletResponse
 {
