@@ -8,6 +8,7 @@ using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
@@ -50,6 +51,16 @@ public class WalletsController : BaseApiController
         var currentUser = (User)HttpContext.Items["User"];
 
         var request = new GetPurchasedMovementsQuery(currentUser.Id);
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    [HttpGet("nobonus-purchased-movements")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> GetNoBonusPurchasedMovementsAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new GetNoBonusPurchasedMovementsQuery(currentUser.Id);
         var result = await _mediator.Send(request);
         return Ok(result);
     }

@@ -104,7 +104,6 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                         break;
                     }
                 }
-                await Task.Delay(10000);
             }
 
             if (accountMovement.TransactionStatus == TransactionStatus.Successful)
@@ -121,7 +120,7 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                     // Paketin changedDay değerini al
                     var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
                     var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
-                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
+                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
                     userAddedBonusList.Add(bonus);
                     var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}");
                     await _notificationCommandDataPort.SaveAsync(bonusNotification);

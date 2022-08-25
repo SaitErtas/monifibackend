@@ -16,6 +16,7 @@ public class GetStatisticsQueryResponse
         TotalDistributedMonifi = totalSale + totalBonus;
         UserCount = userCount;
         ReferanceCount = referanceCount;
+        RemainderMonifi = setting.TotalPreSaleQuantity - (totalSale + totalBonus);
     }
     public long MaximumSalesQuantity { get; private set; }
     public long MaximumDistributedAPY { get; private set; }
@@ -27,4 +28,5 @@ public class GetStatisticsQueryResponse
     public decimal TotalDistributedMonifi { get; private set; }
     public int UserCount { get; private set; }
     public int ReferanceCount { get; private set; }
+    public decimal RemainderMonifi { get; private set; }
 }

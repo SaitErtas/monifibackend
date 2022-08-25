@@ -5,23 +5,23 @@ using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 
-namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
+namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
 
-public class GetPurchasedMovementsQueryResponse
+public class GetNoBonusPurchasedMovementsQueryResponse
 {
-    public GetPurchasedMovementsQueryResponse(List<AccountMovement> accountMovements, IStringLocalizer<Resource> stringLocalizer)
+    public GetNoBonusPurchasedMovementsQueryResponse(List<AccountMovement> accountMovements, IStringLocalizer<Resource> stringLocalizer)
     {
-        Movements = accountMovements.Select(x => new GetPurchasedAccountMovementsSingleQueryResponse(x, stringLocalizer)).ToList();
+        Movements = accountMovements.Select(x => new GetNoBonusPurchasedMovementsSingleQueryResponse(x, stringLocalizer)).ToList();
     }
-    public GetPurchasedMovementsQueryResponse(List<GetPurchasedAccountMovementsSingleQueryResponse> accountMovements)
+    public GetNoBonusPurchasedMovementsQueryResponse(List<GetNoBonusPurchasedMovementsSingleQueryResponse> accountMovements)
     {
         Movements = accountMovements;
     }
-    public List<GetPurchasedAccountMovementsSingleQueryResponse> Movements { get; set; }
+    public List<GetNoBonusPurchasedMovementsSingleQueryResponse> Movements { get; set; }
 }
-public class GetPurchasedAccountMovementsSingleQueryResponse
+public class GetNoBonusPurchasedMovementsSingleQueryResponse
 {
-    public GetPurchasedAccountMovementsSingleQueryResponse(int id, string fullName, bool isReferanceUser, decimal amount, DateTime createdAt, DateTime transferTime, TransactionStatus transactionStatus, ActionType actionType, int walletId, string walletAddress, Network cryptoNetwork, int packageDetailId, string packageDetailName, int packageDetailDuration, int packageDetailCommission, Package package, IStringLocalizer<Resource> stringLocalizer)
+    public GetNoBonusPurchasedMovementsSingleQueryResponse(int id, string fullName, bool isReferanceUser, decimal amount, DateTime createdAt, DateTime transferTime, TransactionStatus transactionStatus, ActionType actionType, int walletId, string walletAddress, Network cryptoNetwork, int packageDetailId, string packageDetailName, int packageDetailDuration, int packageDetailCommission, Package package, IStringLocalizer<Resource> stringLocalizer)
     {
         FullName = fullName;
         IsReferanceUser = isReferanceUser;
@@ -37,20 +37,8 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = RemainDay - TotalDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
-        Color = GetPackageColor(PackageDetail.Package.Name);
-
-        string GetPackageColor(string name)
-                        => name switch
-                        {
-                            "Seed" => "error",
-                            "Growth" => "warning",
-                            "Hype" => "primary",
-                            "Moon" => "secondary",
-                            "Bonus" => "success",
-                            _ => "warning"
-                        };
     }
-    public GetPurchasedAccountMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
+    public GetNoBonusPurchasedMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
     {
         FullName = "You";
         Id = accountMovement.Id;
@@ -65,10 +53,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
-
     }
-
-
 
     public int Id { get; set; }
     public decimal Amount { get; set; }
@@ -84,7 +69,6 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     public int TotalDay { get; set; }
     public int PassedDay { get; set; }
     public decimal Earning { get; set; }
-    public string Color { get; set; }
 }
 public class GetPurchasedWalletResponse
 {

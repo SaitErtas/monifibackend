@@ -56,7 +56,6 @@ internal class GetPurchasedMovementsQueryHandler : IQueryHandler<GetPurchasedMov
 
         var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
         _mediator.Publish(verificationEvent);
-
         return new GetPurchasedMovementsQueryResponse(purchasedAccountMovementsSingleQueryResponse);
     }
 }

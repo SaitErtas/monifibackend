@@ -141,6 +141,20 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
 
         return query.ToList();
     }
+
+    public async Task<List<AccountMovement>> GetNoBonusPurchasedMovementAsync(int userId)
+    {
+        var entity = await _dbContext.AccountMovements
+            .Where(w => w.Wallet.UserId == userId && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Include(i => i.PackageDetail)
+            .ThenInclude(i => i.Package)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .AsNoTracking()
+            .ToListAsync();
+
+        return entity.Select(s => s.Map()).ToList();
+    }
 }
 
 public static partial class MoreEnumerable
