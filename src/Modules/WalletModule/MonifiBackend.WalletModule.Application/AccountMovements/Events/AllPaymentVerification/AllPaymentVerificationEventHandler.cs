@@ -21,9 +21,9 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
 
     private const int BSCSCAN_VALUE = 1;
     private const int TRONNETWORK_VALUE = 2;
-    private const string BSCSCAN_ADDRESS = "0x21D4356Bb2822A5307A9470fa3bb7524f4067cfE";//TODO: database setting
+    private const string BSCSCAN_ADDRESS = "0x292EC45AAE11525E6f3c0115Aa3aC3A27cB250c0";//TODO: database setting
     private const string BSCSCAN_TOKEN_SYMBOL = "BSC-USD";//TODO: database setting
-    private const string TRONNETWORK_ADDRESS = "TErTFxBLsDVxMTaqEhDFL9CbE79YKwpuhY";//TODO: database setting
+    private const string TRONNETWORK_ADDRESS = "TTkPhAy9WbpRCVBzS4KYFsRGiKL61ygLVG";//TODO: database setting
     private const string TRON_TOKEN_SYMBOL = "USDT";//TODO: database setting
     public AllPaymentVerificationEventHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IUserQueryDataPort userQueryDataPort)
     {
