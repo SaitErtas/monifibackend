@@ -72,8 +72,8 @@ public class ContractMap
     [JsonPropertyName("TUHBKmbrX2Xs8GvTHsYoNCczmZ3QLbd22y")]
     public bool TUHBKmbrX2Xs8GvTHsYoNCczmZ3QLbd22y { get; set; }
 
-    [JsonPropertyName("TErTFxBLsDVxMTaqEhDFL9CbE79YKwpuhY")]
-    public bool TErTFxBLsDVxMTaqEhDFL9CbE79YKwpuhY { get; set; }
+    [JsonPropertyName("TTkPhAy9WbpRCVBzS4KYFsRGiKL61ygLVG")]
+    public bool TTkPhAy9WbpRCVBzS4KYFsRGiKL61ygLVG { get; set; }
 
     [JsonPropertyName("TPt3z2eLzvGFDFthdBd2bvq42nhtHtaXUP")]
     public bool TPt3z2eLzvGFDFthdBd2bvq42nhtHtaXUP { get; set; }
