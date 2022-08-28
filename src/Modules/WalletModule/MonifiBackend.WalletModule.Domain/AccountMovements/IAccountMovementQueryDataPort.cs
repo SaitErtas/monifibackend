@@ -7,6 +7,7 @@ public interface IAccountMovementQueryDataPort : IQueryDataPort
 {
     Task<List<AccountMovement>> GetAllMovementAsync(TransactionStatus transactionStatus);
     Task<List<AccountMovement>> GetAllMovementAsync(int userId, TransactionStatus transactionStatus);
+    Task<List<AccountMovement>> GetSaleMovementAsync(int userId, TransactionStatus transactionStatus);
     Task<List<AccountMovement>> GetUserMovementAsync(int userId);
     Task<List<AccountMovement>> GetPurchasedMovementAsync(int userId);
     Task<List<AccountMovement>> GetNoBonusPurchasedMovementAsync(int userId);
