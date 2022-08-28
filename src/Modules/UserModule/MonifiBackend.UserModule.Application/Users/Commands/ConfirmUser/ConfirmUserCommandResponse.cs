@@ -1,16 +1,14 @@
-﻿using Microsoft.Extensions.Localization;
-using MonifiBackend.Core.Domain.Localize;
-using MonifiBackend.UserModule.Domain.Users;
+﻿using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 
 public class ConfirmUserCommandResponse
 {
-    public ConfirmUserCommandResponse(User user, string accessToken, IStringLocalizer<Resource> stringLocalizer)
+    public ConfirmUserCommandResponse(User user, string accessToken)
     {
         Id = user.Id;
         Email = user.Email;
-        Role = user.Role.ToRole(stringLocalizer);
+        Role = user.Role.ToString();
         AccessToken = accessToken;
     }
     public int Id { get; set; }

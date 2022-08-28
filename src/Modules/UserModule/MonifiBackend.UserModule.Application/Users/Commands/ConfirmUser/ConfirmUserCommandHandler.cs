@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -36,6 +36,6 @@ internal class ConfirmUserCommandHandler : ICommandHandler<ConfirmUserCommand, C
         JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);
         var jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-        return new ConfirmUserCommandResponse(user, jwtToken, _stringLocalizer);
+        return new ConfirmUserCommandResponse(user, jwtToken);
     }
 }

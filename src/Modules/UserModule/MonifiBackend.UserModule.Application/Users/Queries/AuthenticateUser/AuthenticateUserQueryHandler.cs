@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
@@ -34,14 +34,14 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             user.AddUserIP(request.IpAddress, "Login");
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
-            user.AddNotification($"{string.Format(_stringLocalizer["LoginNotification"], DateTime.Now.ToString("d"))}");
+            user.AddNotification($"{string.Format(_stringLocalizer["LoginNotification"], DateTime.Now.ToString("d"))}", user.FullName, default(decimal));
 
             await _userCommandDataPort.SaveAsync(user);
             // authentication successful so generate jwt token
             JwtSecurityToken jwtSecurityToken = await _jwtUtils.GenerateJwtToken(user);
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-            return new AuthenticateUserQueryResponse(user, jwtToken, _stringLocalizer);
+            return new AuthenticateUserQueryResponse(user, jwtToken);
         }
     }
 }

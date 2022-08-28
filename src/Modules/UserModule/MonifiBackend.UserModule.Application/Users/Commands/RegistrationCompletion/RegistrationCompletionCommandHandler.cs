@@ -3,9 +3,9 @@ using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Accounts;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Notifications;
 using MonifiBackend.UserModule.Domain.Users;
@@ -87,12 +87,12 @@ internal class RegistrationCompletionCommandHandler : ICommandHandler<Registrati
             user.AddPhone(request.Phone);
 
         Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
-        user.AddNotification($"{_stringLocalizer["NewRegister"]}");
+        user.AddNotification($"{_stringLocalizer["NewRegister"]}", user.FullName, default(decimal));
 
         var status = await _userCommandDataPort.SaveAsync(user);
         AppRule.True<BusinessValidationException>(status);
 
-        var notification = Notification.CreateNew(user.ReferanceUser, $"{string.Format(_stringLocalizer["NewRegisterReferanceUser"], user.FullName)}");
+        var notification = Notification.CreateNew(user.ReferanceUser, $"{string.Format(_stringLocalizer["NewRegisterReferanceUser"], user.FullName)}", user.FullName, default(decimal));
         await _notificationCommandDataPort.SaveAsync(notification);
 
         return new RegistrationCompletionCommandResponse();

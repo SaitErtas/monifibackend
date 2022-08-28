@@ -3,9 +3,9 @@ using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.BscScans.Accounts;
-using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
@@ -109,7 +109,7 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
             if (accountMovement.TransactionStatus == TransactionStatus.Successful)
             {
                 var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
-                var notification = Notification.CreateNew(accountMovement.Wallet.UserId, $"{string.Format(_stringLocalizer["StakingStarted"], package.Name, accountMovement.PackageDetail.Duration)}");
+                var notification = Notification.CreateNew(accountMovement.Wallet.UserId, $"{string.Format(_stringLocalizer["StakingStarted"], package.Name, accountMovement.PackageDetail.Duration)}", string.Empty, accountMovement.Amount);
                 await _notificationCommandDataPort.SaveAsync(notification);
                 // Kişinin ilk satın alması ise Üst kişiye bonus ekle
                 var userAccountMovement = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
@@ -122,7 +122,7 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                     var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
                     var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
                     userAddedBonusList.Add(bonus);
-                    var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}");
+                    var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}", mainUser.FullName, bonus.Amount);
                     await _notificationCommandDataPort.SaveAsync(bonusNotification);
                 }
                 // Database kayıt işlemlerini gerçekleştir

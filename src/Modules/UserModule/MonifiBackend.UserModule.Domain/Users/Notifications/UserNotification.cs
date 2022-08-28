@@ -9,14 +9,18 @@ public sealed class UserNotification : BaseActivityDomain<int>
     private UserNotification() { }
     public string Message { get; private set; }
     public bool IsRead { get; private set; }
-    public static UserNotification CreateNew(string message)
+    public string CustomerName { get; private set; }
+    public decimal Price { get; private set; }
+    public static UserNotification CreateNew(string message, string customerName, decimal price)
     {
         AppRule.NotNullOrEmpty<DomainException>(message, "Message not null or empty", $"Message not null or empty. Message: {message}");
 
         return new UserNotification()
         {
             Message = message,
-            IsRead = false
+            IsRead = false,
+            CustomerName = customerName,
+            Price = price
         };
     }
 
@@ -28,7 +32,9 @@ public sealed class UserNotification : BaseActivityDomain<int>
         DateTime createdAt,
         DateTime modifiedAt,
         string message,
-        bool isRead)
+        bool isRead,
+        string customerName,
+        decimal price)
     {
         return new UserNotification()
         {
@@ -37,7 +43,9 @@ public sealed class UserNotification : BaseActivityDomain<int>
             Message = message,
             IsRead = isRead,
             CreatedAt = createdAt,
-            ModifiedAt = modifiedAt
+            ModifiedAt = modifiedAt,
+            CustomerName = customerName,
+            Price = price
         };
     }
 }

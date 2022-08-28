@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Domain.Users;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -41,7 +41,7 @@ internal class ChangedPasswordCommandHandler : ICommandHandler<ChangedPasswordCo
 
 
         Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
-        user.AddNotification($"{_stringLocalizer["ChangePassword"]}");
+        user.AddNotification($"{_stringLocalizer["ChangePassword"]}", user.FullName, default(decimal));
 
         var result = await _userCommandDataPort.SaveAsync(user);
         AppRule.True(result,

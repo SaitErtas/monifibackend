@@ -17,8 +17,12 @@ public class GetNotificationQuery
         Message = notification.Message;
         IsRead = notification.IsRead;
         Id = notification.Id;
+        CustomerName = notification.CustomerName;
+        Price = notification.Price;
     }
     public string Message { get; set; }
     public bool IsRead { get; set; }
     public int Id { get; set; }
+    public string CustomerName { get; set; }
+    public decimal Price { get; set; }
 }
