@@ -37,9 +37,9 @@ namespace MonifiBackend.UserModule.Domain.Users
 
         private List<UserNotification> _notifications = new();
         public IReadOnlyCollection<UserNotification> Notifications => _notifications.AsReadOnly();
-        public void AddNotification(string message)
+        public void AddNotification(string message, string customerName, decimal price)
         {
-            var notification = UserNotification.CreateNew(message);
+            var notification = UserNotification.CreateNew(message, customerName, price);
             _notifications.Add(notification);
         }
         public void AddUserIP(string ipAddress, string requestName)

@@ -10,7 +10,9 @@ public sealed class Notification : BaseActivityDomain<int>
     public int UserId { get; private set; }
     public string Message { get; private set; }
     public bool IsRead { get; private set; }
-    public static Notification CreateNew(int userId, string message)
+    public string CustomerName { get; private set; }
+    public decimal Price { get; private set; }
+    public static Notification CreateNew(int userId, string message, string customerName, decimal price)
     {
         AppRule.NotNegativeOrZero<DomainException>(userId, "UserId not null or empty", $"UserId not null or empty. Message: {message}");
         AppRule.NotNullOrEmpty<DomainException>(message, "Message not null or empty", $"Message not null or empty. Message: {message}");
@@ -19,7 +21,9 @@ public sealed class Notification : BaseActivityDomain<int>
         {
             UserId = userId,
             Message = message,
-            IsRead = false
+            IsRead = false,
+            CustomerName = customerName,
+            Price = price
         };
     }
 

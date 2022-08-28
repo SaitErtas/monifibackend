@@ -34,7 +34,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
             user.AddUserIP(request.IpAddress, "Login");
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo($"{user.Language.ShortName}");
-            user.AddNotification($"{string.Format(_stringLocalizer["LoginNotification"], DateTime.Now.ToString("d"))}");
+            user.AddNotification($"{string.Format(_stringLocalizer["LoginNotification"], DateTime.Now.ToString("d"))}", user.FullName, default(decimal));
 
             await _userCommandDataPort.SaveAsync(user);
             // authentication successful so generate jwt token
