@@ -19,10 +19,12 @@ public class GetNotificationQuery
         Id = notification.Id;
         CustomerName = notification.CustomerName;
         Price = notification.Price;
+        CreatedAt = notification.CreatedAt;
     }
     public string Message { get; set; }
     public bool IsRead { get; set; }
     public int Id { get; set; }
     public string CustomerName { get; set; }
     public decimal Price { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
