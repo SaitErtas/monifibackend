@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
-using MonifiBackend.Core.Domain.Localize;
+using MonifiBackend.Core.Infrastructure.Localize;
 using System.Text.Json.Serialization;
 
 namespace MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;

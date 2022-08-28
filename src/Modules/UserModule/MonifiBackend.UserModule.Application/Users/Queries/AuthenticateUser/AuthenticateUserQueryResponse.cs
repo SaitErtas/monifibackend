@@ -1,16 +1,14 @@
-﻿using Microsoft.Extensions.Localization;
-using MonifiBackend.Core.Domain.Localize;
-using MonifiBackend.UserModule.Domain.Users;
+﻿using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser;
 
 public class AuthenticateUserQueryResponse
 {
-    public AuthenticateUserQueryResponse(User user, string accessToken, IStringLocalizer<Resource> stringLocalizer)
+    public AuthenticateUserQueryResponse(User user, string accessToken)
     {
         Id = user.Id;
         Email = user.Email;
-        Role = user.Role.ToRole(stringLocalizer);
+        Role = user.Role.ToString();
         AccessToken = accessToken;
     }
     public int Id { get; set; }
