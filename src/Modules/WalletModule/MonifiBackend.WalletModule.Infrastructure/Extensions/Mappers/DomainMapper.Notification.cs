@@ -19,6 +19,8 @@ public static partial class DomainMapper
             UserId = domain.UserId,
             IsRead = domain.IsRead,
             Message = domain.Message,
+            CustomerName = domain.CustomerName,
+            Price = domain.Price,
         };
     }
     #endregion
@@ -33,7 +35,9 @@ public static partial class DomainMapper
             entity.CreatedAt,
             entity.ModifiedAt,
             entity.Message,
-            entity.IsRead);
+            entity.IsRead,
+            entity.CustomerName,
+            entity.Price);
     }
     #endregion
 }

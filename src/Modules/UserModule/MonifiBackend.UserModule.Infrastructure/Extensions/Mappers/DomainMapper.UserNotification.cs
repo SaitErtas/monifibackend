@@ -17,7 +17,9 @@ public static partial class DomainMapper
             IsRead = domain.IsRead,
             Status = domain.Status.ToInt(),
             CreatedAt = domain.CreatedAt,
-            ModifiedAt = domain.ModifiedAt
+            ModifiedAt = domain.ModifiedAt,
+            CustomerName = domain.CustomerName,
+            Price = domain.Price,
         };
     }
     #endregion
