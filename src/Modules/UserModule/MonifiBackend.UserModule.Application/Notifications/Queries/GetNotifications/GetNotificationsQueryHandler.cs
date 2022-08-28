@@ -17,6 +17,6 @@ internal class GetNotificationsQueryHandler : IQueryHandler<GetNotificationsQuer
         var user = await _userQueryDataPort.GetAsync(request.UserId);
         var notifications = await _userQueryDataPort.GetNotificationsAsync(request.UserId);
 
-        return new GetNotificationsQueryResponse(notifications);
+        return new GetNotificationsQueryResponse(notifications, user);
     }
 }
