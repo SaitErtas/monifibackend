@@ -35,7 +35,9 @@ public sealed class Notification : BaseActivityDomain<int>
         DateTime createdAt,
         DateTime modifiedAt,
         string message,
-        bool isRead)
+        bool isRead,
+        string customerName,
+        decimal price)
     {
         return new Notification()
         {
@@ -45,6 +47,8 @@ public sealed class Notification : BaseActivityDomain<int>
             IsRead = isRead,
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
+            CustomerName = customerName,
+            Price = price
         };
     }
 }

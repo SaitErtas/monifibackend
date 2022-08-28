@@ -18,6 +18,8 @@ public static partial class DomainMapper
             UserId = domain.UserId,
             IsRead = domain.IsRead,
             Message = domain.Message,
+            CustomerName = domain.CustomerName,
+            Price = domain.Price,
         };
     }
     #endregion
