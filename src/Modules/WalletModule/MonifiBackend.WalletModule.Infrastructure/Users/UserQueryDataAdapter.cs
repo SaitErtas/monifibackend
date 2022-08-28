@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MonifiBackend.Core.Domain.Base;
+using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.WalletModule.Domain.Users;
 using MonifiBackend.WalletModule.Infrastructure.Extensions.Mappers;
@@ -44,5 +46,28 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Where(x => ids.Any(p2 => x.Id == p2))
             .Select(x => x.Map())
             .ToListAsync();
+    }
+    public async Task<decimal> GetTotalBonusAsync(int userId)
+    {
+        var totalSales = await _dbContext.AccountMovements
+            .Include(i => i.PackageDetail)
+            .Include(i => i.Wallet)
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .ToListAsync();
+
+        return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
+    }
+
+    public async Task<decimal> GetTotalSaleAsync(int userId)
+    {
+        var totalSales = await _dbContext.AccountMovements
+            .Include(i => i.PackageDetail)
+            .Include(i => i.Wallet)
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .ToListAsync();
+
+        return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
     }
 }
