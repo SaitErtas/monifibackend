@@ -2,8 +2,8 @@
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
@@ -74,7 +74,7 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
         var result = await _accountMovementCommandDataPort.SaveAsync(wallet);
         AppRule.True(result, new BusinessValidationException($"{string.Format(_stringLocalizer["NotCreated"], _stringLocalizer["AccountMovement"])}", $"{string.Format(_stringLocalizer["NotCreated"], _stringLocalizer["AccountMovement"])} UserId: {request.UserId}"));
 
-        var notification = Notification.CreateNew(request.UserId, $"{_stringLocalizer["TransactionCheck"]}");
+        var notification = Notification.CreateNew(request.UserId, $"{_stringLocalizer["TransactionCheck"]}", user.FullName, default(decimal));
         await _notificationCommandDataPort.SaveAsync(notification);
 
         return new BuyMonofiCommandResponse();

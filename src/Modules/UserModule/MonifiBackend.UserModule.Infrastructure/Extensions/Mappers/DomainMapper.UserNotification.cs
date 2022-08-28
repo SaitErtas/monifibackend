@@ -33,7 +33,9 @@ public static partial class DomainMapper
                     entity.CreatedAt,
                     entity.ModifiedAt,
                     entity.Message,
-                    entity.IsRead);
+                    entity.IsRead,
+                    entity.CustomerName,
+                    entity.Price);
     }
     #endregion
 }
