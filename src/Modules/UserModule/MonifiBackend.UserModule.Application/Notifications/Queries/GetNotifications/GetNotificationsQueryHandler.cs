@@ -14,6 +14,7 @@ internal class GetNotificationsQueryHandler : IQueryHandler<GetNotificationsQuer
     }
     public async Task<GetNotificationsQueryResponse> Handle(GetNotificationsQuery request, CancellationToken cancellationToken)
     {
+        var user = await _userQueryDataPort.GetAsync(request.UserId);
         var notifications = await _userQueryDataPort.GetNotificationsAsync(request.UserId);
 
         return new GetNotificationsQueryResponse(notifications);
