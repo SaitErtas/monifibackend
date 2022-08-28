@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
-using MonifiBackend.Core.Domain.Localize;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Domain.Users;
 

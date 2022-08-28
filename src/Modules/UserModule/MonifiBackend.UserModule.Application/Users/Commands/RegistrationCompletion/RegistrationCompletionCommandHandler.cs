@@ -3,7 +3,7 @@ using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Accounts;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Domain.Localize;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.UserModule.Domain.Localizations;
