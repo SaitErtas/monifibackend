@@ -102,7 +102,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Email == email && x.Status == BaseStatus.Active.ToInt());
+            .FirstOrDefaultAsync(x => x.Email == email);
         return userEntity.Map();
     }
     public async Task<User> GetResetPasswordCodeAsync(string resetPasswordCode)

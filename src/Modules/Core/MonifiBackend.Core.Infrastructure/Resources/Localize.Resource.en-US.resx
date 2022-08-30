@@ -162,6 +162,9 @@
   <data name="NewRegisterReferanceUser" xml:space="preserve">
     <value>{0} The user has become a member to use the reference code.</value>
   </data>
+  <data name="NotActivetedUser" xml:space="preserve">
+    <value>Click on the confirmation e-mail link in your e-mail address.</value>
+  </data>
   <data name="NotCreated" xml:space="preserve">
     <value>{0} not created.</value>
   </data>

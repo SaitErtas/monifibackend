@@ -163,6 +163,9 @@
   <data name="NewRegisterReferanceUser" xml:space="preserve">
     <value>{0} Kullanıcı referans kodunu kullanacak üye oldu.</value>
   </data>
+  <data name="NotActivetedUser" xml:space="preserve">
+    <value>Mail adresinizdeki onay mail linkine tıklayın.</value>
+  </data>
   <data name="NotCreated" xml:space="preserve">
     <value>{0} kaydedilemedi.</value>
   </data>
