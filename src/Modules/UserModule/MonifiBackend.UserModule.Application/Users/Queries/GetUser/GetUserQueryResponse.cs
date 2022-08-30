@@ -9,7 +9,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetUser
         public GetUserQueryResponse(User user, decimal totalEarning, IStringLocalizer<Resource> stringLocalizer)
         {
             Id = user.Id;
-            Role = "user"; //.ToRole(stringLocalizer);
+            Role = user.Role.ToRole();
             UserName = user.Username;
             FullName = user.FullName;
             Email = user.Email;
