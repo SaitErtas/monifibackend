@@ -10,5 +10,5 @@ public interface IUserQueryDataPort
 
     Task<decimal> GetTotalSaleAsync(int id);
     Task<decimal> GetTotalBonusAsync(int id);
-
+    Task<decimal> GetNotCommissionTotalSaleAsync(int id);
 }

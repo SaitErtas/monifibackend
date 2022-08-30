@@ -118,14 +118,19 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                 if (userAccountMovement.Count == 0)
                 {
                     var mainUser = await _userQueryDataPort.GetUserAsync(accountMovement.Wallet.UserId);
-                    var referanceUser = await _userQueryDataPort.GetUserAsync(mainUser.ReferanceUser);
-                    // Paketin changedDay değerini al
-                    var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
-                    var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
-                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
-                    userAddedBonusList.Add(bonus);
-                    var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}", mainUser.FullName, bonus.Amount);
-                    await _notificationCommandDataPort.SaveAsync(bonusNotification);
+                    var referanceUserMoments = await _accountMovementQueryDataPort.GetSaleMovementAsync(mainUser.ReferanceUser, TransactionStatus.Successful);
+                    if (referanceUserMoments.Count != 0)
+                    {
+                        var referanceUser = await _userQueryDataPort.GetUserAsync(mainUser.ReferanceUser);
+                        // Paketin changedDay değerini al
+                        var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
+                        var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
+                        var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
+                        userAddedBonusList.Add(bonus);
+                        var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}", mainUser.FullName, bonus.Amount);
+                        await _notificationCommandDataPort.SaveAsync(bonusNotification);
+                    }
+
                 }
                 // Database kayıt işlemlerini gerçekleştir
                 // Notification bildirimlerini ekle
