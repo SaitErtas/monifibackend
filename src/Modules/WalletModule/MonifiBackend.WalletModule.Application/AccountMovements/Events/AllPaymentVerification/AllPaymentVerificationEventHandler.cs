@@ -1,10 +1,13 @@
-﻿using MonifiBackend.Core.Application.Abstractions;
+﻿using Microsoft.Extensions.Localization;
+using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.BscScans;
 using MonifiBackend.Core.Domain.BscScans.Accounts;
+using MonifiBackend.Core.Domain.Localize;
 using MonifiBackend.Core.Domain.TronNetworks;
 using MonifiBackend.Core.Domain.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
+using MonifiBackend.WalletModule.Domain.Notifications;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Users;
 
@@ -18,6 +21,8 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
     private readonly IBscScanAccountsDataPort _bscScanAccountsDataPort;
     private readonly ITronNetworkAccountsDataPort _tronNetworkAccountsDataPort;
     private readonly IUserQueryDataPort _userQueryDataPort;
+    private readonly IStringLocalizer<Resource> _stringLocalizer;
+    private readonly INotificationCommandDataPort _notificationCommandDataPort;
 
     private const int BSCSCAN_VALUE = 1;
     private const int TRONNETWORK_VALUE = 2;
@@ -25,7 +30,7 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
     private const string BSCSCAN_TOKEN_SYMBOL = "BSC-USD";//TODO: database setting
     private const string TRONNETWORK_ADDRESS = "TTkPhAy9WbpRCVBzS4KYFsRGiKL61ygLVG";//TODO: database setting
     private const string TRON_TOKEN_SYMBOL = "USDT";//TODO: database setting
-    public AllPaymentVerificationEventHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IUserQueryDataPort userQueryDataPort)
+    public AllPaymentVerificationEventHandler(IAccountMovementQueryDataPort accountMovementQueryDataPort, IAccountMovementCommandDataPort accountMovementCommandDataPort, IPackageQueryDataPort packageQueryDataPort, IBscScanAccountsDataPort bscScanAccountsDataPort, ITronNetworkAccountsDataPort tronNetworkAccountsDataPort, IUserQueryDataPort userQueryDataPort, INotificationCommandDataPort notificationCommandDataPort, IStringLocalizer<Resource> stringLocalizer)
     {
         _accountMovementQueryDataPort = accountMovementQueryDataPort;
         _accountMovementCommandDataPort = accountMovementCommandDataPort;
@@ -33,11 +38,14 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
         _bscScanAccountsDataPort = bscScanAccountsDataPort;
         _tronNetworkAccountsDataPort = tronNetworkAccountsDataPort;
         _userQueryDataPort = userQueryDataPort;
+        _stringLocalizer = stringLocalizer;
+        _notificationCommandDataPort = notificationCommandDataPort;
     }
     public async Task Handle(AllPaymentVerificationEvent request, CancellationToken cancellationToken)
     {
         var packages = await _packageQueryDataPort.GetsAsync();
         var userAddedBonusList = new List<AccountMovement>();
+        var userNotificationList = new List<Notification>();
         // AccountMovient Listesini Al (TransactionStatus Pending olan)
         var accountMovements = await _accountMovementQueryDataPort.GetAllMovementAsync(TransactionStatus.Pending);
         // Foreach ile döngüye sok
@@ -46,6 +54,7 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
             // Network türüne göz at
             // Network türüne göre ödemeyi kontrol et
             // Koşullar sağlanıyorsa UpdatedList'e at
+            await Task.Delay(10000);
             if (accountMovement.Wallet.CryptoNetwork.Id == BSCSCAN_VALUE)
             {
                 var bep20TokenTransferEventsRequest = new Bep20TokenTransferEventsRequest
@@ -72,36 +81,40 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
                         break;
                     }
                 }
-                await Task.Delay(10000);
             }
             else if (accountMovement.Wallet.CryptoNetwork.Id == TRONNETWORK_VALUE)
             {
                 var tronTransfers = await _tronNetworkAccountsDataPort.GetTransfersAsync(accountMovement.Wallet.WalletAddress);
-                var appropriateTransfers = tronTransfers.TokenTransfers.Where(x =>
-                x.ToAddress.ToLower() == TRONNETWORK_ADDRESS.ToLower() &&
-                x.TokenInfo.TokenAbbr == TRON_TOKEN_SYMBOL &&
-                x.Confirmed == true &&
-                AmountCheck(IntToDec(x.Quant, x.TokenInfo.TokenDecimal.ToString()), accountMovement.Amount)).ToList();
-
-                foreach (var appropriateTransfer in appropriateTransfers)
+                if (tronTransfers.TokenTransfers != null)
                 {
-                    //Daha Önce bu hash ile işlme var mı?
-                    //Yoksa AccountMovement'a hash'i set et işlemi başarılı de
-                    var userMoments = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
-                    if (userMoments.Count == 0 || userMoments.Any(x => x.Hash != appropriateTransfer.TransactionId))
+                    var appropriateTransfers = tronTransfers.TokenTransfers.Where(x =>
+                    x.ToAddress.ToLower() == TRONNETWORK_ADDRESS.ToLower() &&
+                    x.TokenInfo.TokenAbbr == TRON_TOKEN_SYMBOL &&
+                    x.Confirmed == true &&
+                    AmountCheck(IntToDec(x.Quant, x.TokenInfo.TokenDecimal.ToString()), accountMovement.Amount)).ToList();
+
+                    foreach (var appropriateTransfer in appropriateTransfers)
                     {
-                        accountMovement.SetTransactionStatus(TransactionStatus.Successful);
-                        accountMovement.SetHash(appropriateTransfer.TransactionId);
-                        accountMovement.SetTransferTime(appropriateTransfer.BlockTs.UnixTimeStampToDateTime());
-                        accountMovement.SetTokenSymbol(appropriateTransfer.TokenInfo.TokenAbbr);
-                        break;
+                        //Daha Önce bu hash ile işlme var mı?
+                        //Yoksa AccountMovement'a hash'i set et işlemi başarılı de
+                        var userMoments = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
+                        if (userMoments.Count == 0 || userMoments.Any(x => x.Hash != appropriateTransfer.TransactionId))
+                        {
+                            accountMovement.SetTransactionStatus(TransactionStatus.Successful);
+                            accountMovement.SetHash(appropriateTransfer.TransactionId);
+                            accountMovement.SetTransferTime(appropriateTransfer.BlockTs.UnixTimeStampToDateTime());
+                            accountMovement.SetTokenSymbol(appropriateTransfer.TokenInfo.TokenAbbr);
+                            break;
+                        }
                     }
                 }
-                await Task.Delay(10000);
             }
 
             if (accountMovement.TransactionStatus == TransactionStatus.Successful)
             {
+                var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
+                var notification = Notification.CreateNew(accountMovement.Wallet.UserId, $"{string.Format(_stringLocalizer["StakingStarted"], package.Name, accountMovement.PackageDetail.Duration)}", string.Empty, accountMovement.Amount);
+                userNotificationList.Add(notification);
                 // Kişinin ilk satın alması ise Üst kişiye bonus ekle
                 var userAccountMovement = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
                 if (userAccountMovement.Count == 0)
@@ -109,11 +122,12 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
                     var mainUser = await _userQueryDataPort.GetUserAsync(accountMovement.Wallet.UserId);
                     var referanceUser = await _userQueryDataPort.GetUserAsync(mainUser.ReferanceUser);
                     // Paketin changedDay değerini al
-                    var package = packages.FirstOrDefault(x => x.Details.Any(y => y.Id == accountMovement.PackageDetail.Id));
                     var bonusAmount = ((accountMovement.Amount * package.Bonus) / 100);
                     var bonusDetail = packages.FirstOrDefault(x => x.Id == 5).Details.FirstOrDefault();
-                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Pending, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
+                    var bonus = AccountMovement.CreateNew(bonusAmount, Core.Domain.Base.BaseStatus.Active, TransactionStatus.Successful, ActionType.Bonus, bonusDetail, referanceUser.Wallet, string.Empty, string.Empty, DateTime.Now.AddDays(package.ChangePeriodDay + 1));
                     userAddedBonusList.Add(bonus);
+                    var bonusNotification = Notification.CreateNew(referanceUser.Id, $"{string.Format(_stringLocalizer["StakingStartedReferance"], mainUser.FullName, package.Name)}", mainUser.FullName, bonus.Amount);
+                    userNotificationList.Add(bonusNotification);
                 }
                 // Database kayıt işlemlerini gerçekleştir
                 // Notification bildirimlerini ekle
@@ -122,6 +136,7 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
 
         await _accountMovementCommandDataPort.BulkSaveAsync(accountMovements);
         await _accountMovementCommandDataPort.BulkSaveAsync(userAddedBonusList);
+        await _notificationCommandDataPort.SaveAsync(userNotificationList);
     }
     private decimal IntToDec(string x, string powBy)
     {

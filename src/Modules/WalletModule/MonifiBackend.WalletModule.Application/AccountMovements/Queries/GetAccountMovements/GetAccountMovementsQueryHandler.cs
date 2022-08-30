@@ -33,8 +33,6 @@ internal class GetAccountMovementsQueryHandler : IQueryHandler<GetAccountMovemen
             accountMovement.PackageDetail.SetPackage(package);
         }
 
-        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        _mediator.Publish(verificationEvent);
         return new GetAccountMovementsQueryResponse(accountMovements, _stringLocalizer);
     }
 }

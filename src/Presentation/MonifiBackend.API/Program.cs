@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.HealthCheck;
+using MonifiBackend.API.Services;
 using MonifiBackend.Core.Infrastructure;
 using MonifiBackend.Core.Infrastructure.Environments;
 using MonifiBackend.Core.Infrastructure.Middlewares;
@@ -55,6 +56,7 @@ builder.Services.AddWalletServiceInfrastructure();
 #endregion
 
 // Add services to the container.
+builder.Services.AddHostedService<AllPaymentVerificationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
