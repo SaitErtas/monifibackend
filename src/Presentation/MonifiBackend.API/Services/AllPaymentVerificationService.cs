@@ -17,12 +17,18 @@ public class AllPaymentVerificationService : BackgroundService
     {
         // At minute 0
         using var timer = new CronTimer("*/5 * * * *");
-
-        while (await timer.WaitForNextTickAsync())
+        try
         {
-            _logger.LogInformation($"Worker running at: {DateTime.Now}");
-            var request = new AllPaymentVerificationEvent();
-            await _mediator.Publish(request);
+            while (await timer.WaitForNextTickAsync())
+            {
+                _logger.LogInformation($"Worker running at: {DateTime.Now}");
+                var request = new AllPaymentVerificationEvent();
+                await _mediator.Publish(request);
+            }
+        }
+        catch (Exception e)
+        {
+
         }
         await Task.CompletedTask;
     }
