@@ -25,7 +25,8 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.AuthenticateUser
         public async Task<AuthenticateUserQueryResponse> Handle(AuthenticateUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _userQueryDataPort.GetEmailAsync(request.Email);
-            AppRule.ExistsAndActive(user, new BusinessValidationException(string.Format(_stringLocalizer["NotFound"], request.Email), $"{string.Format(_stringLocalizer["NotFound"], request.Email)} Email: {request.Email}"));
+            AppRule.Exists(user, new BusinessValidationException(string.Format(_stringLocalizer["NotFound"], request.Email), $"{string.Format(_stringLocalizer["NotFound"], request.Email)} Email: {request.Email}"));
+            AppRule.ExistsAndActive(user, new BusinessValidationException(string.Format(_stringLocalizer["NotActivetedUser"], request.Email), $"{string.Format(_stringLocalizer["NotActivetedUser"], request.Email)} Email: {request.Email}"));
 
             //var userPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
