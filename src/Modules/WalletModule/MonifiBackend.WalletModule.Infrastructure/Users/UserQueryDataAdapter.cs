@@ -75,4 +75,17 @@ public class UserQueryDataAdapter : IUserQueryDataPort
 
         return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
     }
+
+    public async Task<decimal> GetNotCommissionTotalSaleAsync(int userId)
+    {
+        var totalSales = await _dbContext.AccountMovements
+            .Include(i => i.PackageDetail)
+            .Include(i => i.Wallet)
+            .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .AsNoTracking()
+            .ToListAsync();
+
+        return totalSales.Sum(s => s.Amount);
+    }
 }

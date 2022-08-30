@@ -22,8 +22,15 @@ internal class ApyAnalysisQueryHandler : IQueryHandler<ApyAnalysisQuery, ApyAnal
     {
         var user = await _userQueryDataPort.GetUserAsync(request.UserId);
         var userBonus = await _userQueryDataPort.GetTotalBonusAsync(request.UserId);
+        var userNotComission = await _userQueryDataPort.GetNotCommissionTotalSaleAsync(request.UserId);
         var userTotalSale = await _userQueryDataPort.GetTotalSaleAsync(request.UserId);
         var totalEarning = userTotalSale + userBonus;
+        decimal percent = 0;
+        if (userNotComission != 0)
+            percent = (totalEarning / userNotComission) * 100;
+        else if (userNotComission == 0)
+            percent = totalEarning;
+
 
         var movements = await _accountMovementQueryDataPort.GetSaleMovementAsync(request.UserId, TransactionStatus.Successful);
         var firstTime = movements.OrderBy(o => o.TransferTime).FirstOrDefault()?.TransferTime;
@@ -31,6 +38,6 @@ internal class ApyAnalysisQueryHandler : IQueryHandler<ApyAnalysisQuery, ApyAnal
         var kazanc = movements.Select(s => new { ExistDate = s.TransferTime.AddMonths(s.PackageDetail.Duration) }).ToList();
         var lastTime = kazanc.OrderByDescending(o => o.ExistDate).FirstOrDefault()?.ExistDate;
 
-        return new ApyAnalysisQueryResponse(user.ReferanceCode, totalEarning, firstTime, lastTime);
+        return new ApyAnalysisQueryResponse(user.ReferanceCode, totalEarning, firstTime, lastTime, percent);
     }
 }
