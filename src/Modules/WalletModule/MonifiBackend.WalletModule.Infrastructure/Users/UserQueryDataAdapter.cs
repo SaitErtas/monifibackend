@@ -29,6 +29,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     {
         var userEntity = await _dbContext.Users
             .Include(i => i.Wallet)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
         return userEntity.Map();
     }
@@ -37,6 +38,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Users
             .Where(x => x.ReferanceUser == id)
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -45,6 +47,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Users
             .Where(x => ids.Any(p2 => x.Id == p2))
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
     public async Task<decimal> GetTotalBonusAsync(int userId)
@@ -54,6 +57,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(i => i.Wallet)
             .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .AsNoTracking()
             .ToListAsync();
 
         return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
@@ -66,6 +70,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(i => i.Wallet)
             .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .AsNoTracking()
             .ToListAsync();
 
         return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));

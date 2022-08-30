@@ -15,7 +15,9 @@ public class SettingQueryDataAdapter : ISettingQueryDataPort
 
     public async Task<Setting> GetAsync(int id)
     {
-        var item = await _dbContext.Settings.FirstOrDefaultAsync(x => x.Id == id);
+        var item = await _dbContext.Settings
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
         return item.Map();
     }
 }

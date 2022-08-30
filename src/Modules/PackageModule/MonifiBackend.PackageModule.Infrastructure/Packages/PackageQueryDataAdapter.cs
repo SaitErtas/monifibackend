@@ -23,6 +23,7 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
     public async Task<Package> GetPackageAsync(int id)
     {
         var packageEntity = await _dbContext.Packages
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id && x.Status == BaseStatus.Active.ToInt());
         return packageEntity.Map();
     }
@@ -32,6 +33,7 @@ public class PackageQueryDataAdapter : IPackageQueryDataPort
         var packagesEntity = await _dbContext.Packages
             .Include(i => i.PackageDetails)
             .Where(x => x.Status == BaseStatus.Active.ToInt())
+            .AsNoTracking()
             .ToListAsync();
 
         return packagesEntity.Select(x => x.Map()).ToList();

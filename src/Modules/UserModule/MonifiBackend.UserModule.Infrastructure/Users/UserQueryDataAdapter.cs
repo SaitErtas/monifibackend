@@ -7,7 +7,6 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 using MonifiBackend.Data.Infrastructure.Entities;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.UserModule.Domain.Users.Notifications;
-using MonifiBackend.UserModule.Domain.Wallets;
 using MonifiBackend.UserModule.Infrastructure.Extensions.Mappers;
 using System.Linq.Expressions;
 
@@ -47,6 +46,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
         return userEntity.Map();
     }
@@ -58,6 +58,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == email && x.Password == password && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
@@ -73,6 +74,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Country)
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ReferanceCode == referanceCode && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
@@ -99,6 +101,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == email && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
@@ -110,6 +113,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ResetPasswordCode == resetPasswordCode && x.Status == BaseStatus.Active.ToInt());
         return userEntity.Map();
     }
@@ -122,6 +126,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.ConfirmationCode == confirmationCode);
         return userEntity.Map();
     }
@@ -131,6 +136,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Users
             .Where(x => x.ReferanceUser == id)
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
     public async Task<List<User>> GetAllNetworkAsync(List<int> ids)
@@ -138,6 +144,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.Users
             .Where(x => ids.Any(p2 => x.ReferanceUser == p2))
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -149,6 +156,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .OrderByDescending(x => x.CreatedAt)
             .Take(20)
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -156,6 +164,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
     {
         var userEntity = await _dbContext.Users
             .Include(i => i.Wallet)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Wallet.WalletAddress == walletAddress);
         return userEntity.Map();
     }
@@ -167,6 +176,7 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(i => i.Wallet)
             .Where(w => w.Wallet.UserId == userId && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
             .Select(s => new { s.Amount, s.PackageDetail.Commission })
+            .AsNoTracking()
             .ToListAsync();
 
         return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));

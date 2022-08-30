@@ -17,11 +17,14 @@ public class WalletQueryDataAdapter : IWalletQueryDataPort
     {
         return await _dbContext.Networks
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
     public async Task<Network> GetNetworkAsync(int id)
     {
-        var network = await _dbContext.Networks.FirstOrDefaultAsync(x => x.Id == id);
+        var network = await _dbContext.Networks
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
         return network.Map();
     }
 }

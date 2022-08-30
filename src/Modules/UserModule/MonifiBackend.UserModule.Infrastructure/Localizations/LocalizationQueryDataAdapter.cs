@@ -16,6 +16,7 @@ public class LocalizationQueryDataAdapter : ILocalizationQueryDataPort
     public async Task<Country> GetCountryAsync(int id)
     {
         var entity = await _dbContext.Countries
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
         return entity.Map();
     }
@@ -23,12 +24,14 @@ public class LocalizationQueryDataAdapter : ILocalizationQueryDataPort
     {
         return await _dbContext.Countries
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<Language> GetLanguageAsync(int id)
     {
         var entity = await _dbContext.Languages
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
         return entity.Map();
     }
@@ -37,6 +40,7 @@ public class LocalizationQueryDataAdapter : ILocalizationQueryDataPort
     {
         return await _dbContext.Languages
             .Select(x => x.Map())
+            .AsNoTracking()
             .ToListAsync();
     }
 }

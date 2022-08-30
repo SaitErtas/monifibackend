@@ -47,6 +47,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
         var entity = await _dbContext.Wallets
             .Include(i => i.CryptoNetwork)
             .Include(i => i.AccountMovements.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
             .FirstOrDefaultAsync(w => w.UserId == userId);
 
         return entity.Map();
@@ -128,6 +129,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
             .ThenInclude(i => i.Package)
             .Include(i => i.Wallet)
             .ThenInclude(i => i.CryptoNetwork)
+            .AsNoTracking()
             .FirstOrDefaultAsync();
         return entity.Map();
     }
