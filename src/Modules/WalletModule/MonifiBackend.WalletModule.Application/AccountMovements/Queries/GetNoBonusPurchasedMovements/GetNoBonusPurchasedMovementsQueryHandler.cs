@@ -37,9 +37,7 @@ internal class GetNoBonusPurchasedMovementsQueryHandler : IQueryHandler<GetNoBon
         }
 
         purchasedAccountMovementsSingleQueryResponse = accountMovements.Select(x => new GetNoBonusPurchasedMovementsSingleQueryResponse(x, _stringLocalizer)).ToList();
-
-        var verificationEvent = new UserPaymentVerificationEvent(request.UserId);
-        _mediator.Publish(verificationEvent);
+       
         return new GetNoBonusPurchasedMovementsQueryResponse(purchasedAccountMovementsSingleQueryResponse);
     }
 }

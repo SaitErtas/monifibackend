@@ -16,4 +16,9 @@ public class NotificationCommandDataAdapter : INotificationCommandDataPort
         _dbContext.Notifications.Update(notification.Map());
         return (await _dbContext.SaveChangesAsync()) > 0;
     }
+    public async Task SaveAsync(List<Notification> notifications)
+    {
+        _dbContext.Notifications.UpdateRange(notifications.Select(x => x.Map()).ToList());
+        await _dbContext.SaveChangesAsync();
+    }
 }

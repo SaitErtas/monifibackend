@@ -79,29 +79,31 @@ internal class UserPaymentVerificationEventHandler : IEventHandler<UserPaymentVe
                         break;
                     }
                 }
-                await Task.Delay(10000);
             }
             else if (accountMovement.Wallet.CryptoNetwork.Id == TRONNETWORK_VALUE)
             {
                 var tronTransfers = await _tronNetworkAccountsDataPort.GetTransfersAsync(accountMovement.Wallet.WalletAddress);
-                var appropriateTransfers = tronTransfers.TokenTransfers.Where(x =>
-                x.ToAddress.ToLower() == TRONNETWORK_ADDRESS.ToLower() &&
-                x.TokenInfo.TokenAbbr == TRON_TOKEN_SYMBOL &&
-                x.Confirmed == true &&
-                AmountCheck(IntToDec(x.Quant, x.TokenInfo.TokenDecimal.ToString()), accountMovement.Amount)).ToList();
-
-                foreach (var appropriateTransfer in appropriateTransfers)
+                if (tronTransfers.TokenTransfers != null)
                 {
-                    //Daha Önce bu hash ile işlme var mı?
-                    //Yoksa AccountMovement'a hash'i set et işlemi başarılı de
-                    var userMoments = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
-                    if (userMoments.Count == 0 || userMoments.Any(x => x.Hash != appropriateTransfer.TransactionId))
+                    var appropriateTransfers = tronTransfers.TokenTransfers.Where(x =>
+                    x.ToAddress.ToLower() == TRONNETWORK_ADDRESS.ToLower() &&
+                    x.TokenInfo.TokenAbbr == TRON_TOKEN_SYMBOL &&
+                    x.Confirmed == true &&
+                    AmountCheck(IntToDec(x.Quant, x.TokenInfo.TokenDecimal.ToString()), accountMovement.Amount)).ToList();
+
+                    foreach (var appropriateTransfer in appropriateTransfers)
                     {
-                        accountMovement.SetTransactionStatus(TransactionStatus.Successful);
-                        accountMovement.SetHash(appropriateTransfer.TransactionId);
-                        accountMovement.SetTransferTime(appropriateTransfer.BlockTs.UnixTimeStampToDateTime());
-                        accountMovement.SetTokenSymbol(appropriateTransfer.TokenInfo.TokenAbbr);
-                        break;
+                        //Daha Önce bu hash ile işlme var mı?
+                        //Yoksa AccountMovement'a hash'i set et işlemi başarılı de
+                        var userMoments = await _accountMovementQueryDataPort.GetUserMovementAsync(accountMovement.Wallet.UserId);
+                        if (userMoments.Count == 0 || userMoments.Any(x => x.Hash != appropriateTransfer.TransactionId))
+                        {
+                            accountMovement.SetTransactionStatus(TransactionStatus.Successful);
+                            accountMovement.SetHash(appropriateTransfer.TransactionId);
+                            accountMovement.SetTransferTime(appropriateTransfer.BlockTs.UnixTimeStampToDateTime());
+                            accountMovement.SetTokenSymbol(appropriateTransfer.TokenInfo.TokenAbbr);
+                            break;
+                        }
                     }
                 }
             }
