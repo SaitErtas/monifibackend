@@ -56,7 +56,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<decimal> GetTotalBonusAsync()
     {
         var totalSale = await _dbContext.AccountMovements
-            .Where(w => w.ActionType == ActionType.Bonus.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Where(w => w.ActionType == ActionType.Bonus.ToInt() && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.Status == BaseStatus.Active.ToInt())
             .SumAsync(s => s.Amount);
         return totalSale;
     }
@@ -64,7 +64,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
     public async Task<decimal> GetTotalSaleAsync()
     {
         var totalSale = await _dbContext.AccountMovements
-            .Where(w => w.ActionType == ActionType.Sale.ToInt() && w.Status != BaseStatus.Deleted.ToInt())
+            .Where(w => w.ActionType == ActionType.Sale.ToInt() && w.TransactionStatus == TransactionStatus.Successful.ToInt() && w.Status == BaseStatus.Active.ToInt())
             .SumAsync(s => s.Amount);
         return totalSale;
     }
@@ -140,7 +140,7 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
         DateTime endDate = DateTime.Now.AddDays(1);
 
         //get database sales from 29 days ago at midnight to the end of today
-        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.ActionType == ActionType.Sale.ToInt() && b.Status != BaseStatus.Deleted.ToInt());
+        var salesForPeriod = _dbContext.AccountMovements.Where(b => b.CreatedAt > startDate.Date && b.CreatedAt <= endDate.Date && b.TransactionStatus == TransactionStatus.Successful.ToInt() && b.ActionType == ActionType.Sale.ToInt() && b.Status == BaseStatus.Active.ToInt());
 
         var allDays = MoreEnumerable.GenerateByIndex(i => startDate.AddDays(i).Date).Take(10);
 
