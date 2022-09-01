@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
-using MonifiBackend.Core.Domain.Localize;
-
-namespace MonifiBackend.Core.Domain.Base;
+﻿namespace MonifiBackend.Core.Domain.Base;
 
 public enum ActionType
 {
@@ -17,17 +14,4 @@ public class ActionTypeStrings
     public const string VOID = "Void";
     public const string BONUS = "Bonus";
 }
-public static class ActionTypeExtensions
-{
-    public static string ToActionType(this ActionType status, IStringLocalizer<Resource> stringLocalizer)
-    {
-        return status switch
-        {
-            ActionType.Sale => stringLocalizer["Sale"],
-            ActionType.Refund => stringLocalizer["Refund"],
-            ActionType.Void => stringLocalizer["Void"],
-            ActionType.Bonus => stringLocalizer["Bonus"],
-            _ => throw new NotImplementedException()
-        };
-    }
-}
+

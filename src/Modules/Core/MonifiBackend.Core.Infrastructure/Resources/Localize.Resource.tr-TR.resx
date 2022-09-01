@@ -152,7 +152,7 @@
     <value>Lider</value>
   </data>
   <data name="LoginNotification" xml:space="preserve">
-    <value>{0} tarihinde uygulamaya giriş yapıldı.</value>
+    <value>{0} tarihinde uygulamaya giriş yapıldı. IP: {1}</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Üye</value>
@@ -222,6 +222,15 @@
   </data>
   <data name="TransactionCheck" xml:space="preserve">
     <value>Satın aldığınız paketin ödemesi onay sürecindedir.</value>
+  </data>
+  <data name="TransactionStatusFail" xml:space="preserve">
+    <value>Stake işleminiz ödeme tamamlanmadığı için basarız olmuştur.</value>
+  </data>
+  <data name="TransactionStatusPending" xml:space="preserve">
+    <value>Stake işleminiz beklemede lütfen belirtiniz tutarı size verilen cüzdana  gönderimini sağlayınız.</value>
+  </data>
+  <data name="TransactionStatusSuccessful" xml:space="preserve">
+    <value>Stake işleminiz başarılı, Farming sürecine geçildi.</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>Kullanıcı</value>

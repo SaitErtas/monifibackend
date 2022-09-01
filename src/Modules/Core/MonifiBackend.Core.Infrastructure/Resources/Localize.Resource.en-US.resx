@@ -151,7 +151,7 @@
     <value>Leader</value>
   </data>
   <data name="LoginNotification" xml:space="preserve">
-    <value>The application was entered on {0}</value>
+    <value>The application was entered on {0}. IP: {1}</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
@@ -221,6 +221,15 @@
   </data>
   <data name="TransactionCheck" xml:space="preserve">
     <value>The payment for the package you purchased is in the approval process.</value>
+  </data>
+  <data name="TransactionStatusFail" xml:space="preserve">
+    <value>Your stake transaction has been successful because the payment has not been completed.</value>
+  </data>
+  <data name="TransactionStatusPending" xml:space="preserve">
+    <value>Your stake transaction is pending, please specify the amount and send it to the wallet given to you.</value>
+  </data>
+  <data name="TransactionStatusSuccessful" xml:space="preserve">
+    <value>Your stake transaction is successful, Farming process is started.</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>

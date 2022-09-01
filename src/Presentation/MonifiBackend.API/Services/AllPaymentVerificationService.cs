@@ -16,19 +16,19 @@ public class AllPaymentVerificationService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // At minute 0
-        using var timer = new CronTimer("*/5 * * * *");
-        try
+        using var timer = new CronTimer("* * * * *");
+        while (await timer.WaitForNextTickAsync())
         {
-            while (await timer.WaitForNextTickAsync())
+            try
             {
                 _logger.LogInformation($"Worker running at: {DateTime.Now}");
                 var request = new AllPaymentVerificationEvent();
                 await _mediator.Publish(request);
             }
-        }
-        catch (Exception e)
-        {
+            catch (Exception e)
+            {
 
+            }
         }
         await Task.CompletedTask;
     }
