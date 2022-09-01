@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
-using MonifiBackend.Core.Domain.Localize;
-using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
 using MonifiBackend.WalletModule.Domain.Users;
@@ -37,7 +36,7 @@ internal class GetNoBonusPurchasedMovementsQueryHandler : IQueryHandler<GetNoBon
         }
 
         purchasedAccountMovementsSingleQueryResponse = accountMovements.Select(x => new GetNoBonusPurchasedMovementsSingleQueryResponse(x, _stringLocalizer)).ToList();
-       
+
         return new GetNoBonusPurchasedMovementsQueryResponse(purchasedAccountMovementsSingleQueryResponse);
     }
 }
