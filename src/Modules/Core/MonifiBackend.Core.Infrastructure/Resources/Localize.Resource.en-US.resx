@@ -151,7 +151,7 @@
     <value>Leader</value>
   </data>
   <data name="LoginNotification" xml:space="preserve">
-    <value>The application was entered on {0}</value>
+    <value>The application was entered on {0}. IP: {1}</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>

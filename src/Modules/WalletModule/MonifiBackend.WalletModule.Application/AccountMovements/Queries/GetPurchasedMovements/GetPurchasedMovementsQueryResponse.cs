@@ -23,7 +23,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
 {
     public GetPurchasedAccountMovementsSingleQueryResponse(int id, string fullName, bool isReferanceUser, decimal amount, DateTime createdAt, DateTime transferTime, TransactionStatus transactionStatus, ActionType actionType, int walletId, string walletAddress, Network cryptoNetwork, int packageDetailId, string packageDetailName, int packageDetailDuration, int packageDetailCommission, Package package, IStringLocalizer<Resource> stringLocalizer)
     {
-        FullName = fullName;
+        FullName = fullName.CapitalizeFirstAndHideText(2);
         IsReferanceUser = isReferanceUser;
         Id = id;
         Amount = amount;

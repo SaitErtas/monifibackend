@@ -152,7 +152,7 @@
     <value>Lider</value>
   </data>
   <data name="LoginNotification" xml:space="preserve">
-    <value>{0} tarihinde uygulamaya giriş yapıldı.</value>
+    <value>{0} tarihinde uygulamaya giriş yapıldı. IP: {1}</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Üye</value>
