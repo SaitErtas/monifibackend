@@ -5,7 +5,6 @@ using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Infrastructure.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
-using System.Drawing;
 
 namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
 
@@ -31,7 +30,7 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
         Amount = amount;
         CreatedAt = createdAt;
         BlockEndDate = transferTime == default(DateTime) ? null : transferTime.AddMonths(packageDetailDuration);
-        TransactionStatus = transactionStatus.ToTransactionStatus(stringLocalizer);
+        TransactionStatus = transactionStatus.ToString();
         TransactionStatusDescription = transactionStatus.ToTransactionStatusDescription(stringLocalizer);
         ActionType = actionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(walletId, walletAddress, cryptoNetwork);
@@ -40,6 +39,7 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = RemainDay - TotalDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
+        Color = transactionStatus.ToTransactionStatusColor();
     }
     public GetNoBonusPurchasedMovementsSingleQueryResponse(AccountMovement accountMovement, IStringLocalizer<Resource> stringLocalizer)
     {
@@ -48,7 +48,7 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
         BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
-        TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus(stringLocalizer);
+        TransactionStatus = accountMovement.TransactionStatus.ToString();
         TransactionStatusDescription = accountMovement.TransactionStatus.ToTransactionStatusDescription(stringLocalizer);
         ActionType = accountMovement.ActionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
@@ -57,18 +57,7 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
-        Color = GetColor(TransactionStatus);
-    }
-
-    private string GetColor(string transactionStatus)
-    {
-        switch (transactionStatus)
-        {
-            case "Pending": return "info";
-            case "Success": return "success";
-            case "Cancel": return "alert";
-            default: return "success";
-        }
+        Color = accountMovement.TransactionStatus.ToTransactionStatusColor();
     }
 
     public int Id { get; set; }
