@@ -5,6 +5,7 @@ using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Infrastructure.Utility;
 using MonifiBackend.WalletModule.Domain.AccountMovements;
 using MonifiBackend.WalletModule.Domain.Packages;
+using System.Drawing;
 
 namespace MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
 
@@ -56,6 +57,18 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
+        Color = GetColor(TransactionStatus);
+    }
+
+    private string GetColor(string transactionStatus)
+    {
+        switch (transactionStatus)
+        {
+            case "Pending": return "info";
+            case "Success": return "success";
+            case "Cancel": return "alert";
+            default: return "success";
+        }
     }
 
     public int Id { get; set; }
@@ -73,6 +86,8 @@ public class GetNoBonusPurchasedMovementsSingleQueryResponse
     public int TotalDay { get; set; }
     public int PassedDay { get; set; }
     public decimal Earning { get; set; }
+    public string Color { get; set; }
+
 }
 public class GetPurchasedWalletResponse
 {
