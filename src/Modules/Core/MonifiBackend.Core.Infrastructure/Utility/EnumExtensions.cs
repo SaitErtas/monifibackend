@@ -16,6 +16,16 @@ public static class TransactionStatusExtensions
             _ => throw new NotImplementedException()
         };
     }
+    public static string ToTransactionStatusColor(this TransactionStatus status)
+    {
+        return status switch
+        {
+            TransactionStatus.Successful => "success",
+            TransactionStatus.Pending => "info",
+            TransactionStatus.Fail => "alert",
+            _ => throw new NotImplementedException()
+        };
+    }
     public static string ToTransactionStatusDescription(this TransactionStatus status, IStringLocalizer<Resource> stringLocalizer)
     {
         return status switch
