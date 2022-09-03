@@ -22,7 +22,7 @@ public static class TransactionStatusExtensions
         {
             TransactionStatus.Successful => "success",
             TransactionStatus.Pending => "info",
-            TransactionStatus.Fail => "alert",
+            TransactionStatus.Fail => "error",
             _ => throw new NotImplementedException()
         };
     }
