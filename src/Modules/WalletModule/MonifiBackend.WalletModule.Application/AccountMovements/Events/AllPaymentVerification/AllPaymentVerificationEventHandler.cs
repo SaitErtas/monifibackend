@@ -150,8 +150,7 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
     {
         if (expectedAmount > cryptoAmount)
             return false;
-
-        if (((expectedAmount * 10) / 100) >= cryptoAmount)
+        if (((expectedAmount * 10) / 100) <= cryptoAmount)
             return true;
 
         return false;
