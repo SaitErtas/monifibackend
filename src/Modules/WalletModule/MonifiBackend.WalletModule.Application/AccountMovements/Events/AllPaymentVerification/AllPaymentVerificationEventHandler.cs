@@ -136,6 +136,10 @@ internal class AllPaymentVerificationEventHandler : IEventHandler<AllPaymentVeri
                 // Database kayıt işlemlerini gerçekleştir
                 // Notification bildirimlerini ekle
             }
+            if (accountMovement.TransactionStatus != TransactionStatus.Successful && accountMovement.CreatedAt < DateTime.Now.AddDays(-5))
+            {
+                accountMovement.SetTransactionStatus(TransactionStatus.Fail);
+            }
         }
 
         await _accountMovementCommandDataPort.BulkSaveAsync(accountMovements);
