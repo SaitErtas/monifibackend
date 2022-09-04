@@ -1,29 +1,30 @@
-﻿using MediatR;
-using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
+﻿using Microsoft.Extensions.Options;
+using MonifiBackend.Core.Infrastructure.Environments;
 using Sgbj.Cron;
 
 namespace MonifiBackend.API.Services;
 
 public class AllPaymentVerificationService : BackgroundService
 {
-    private readonly ILogger<AllPaymentVerificationService> _logger;
-    private readonly IMediator _mediator;
-    public AllPaymentVerificationService(ILogger<AllPaymentVerificationService> logger, IMediator mediator)
+    private readonly ApplicationSettings _appSettings;
+    private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+    public AllPaymentVerificationService(IOptions<ApplicationSettings> appSettings, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
     {
-        _logger = logger;
-        _mediator = mediator;
+        _hostingEnvironment = hostingEnvironment;
+        _appSettings = appSettings.Value;
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         // At minute 0
-        using var timer = new CronTimer("* * * * *");
+        using var timer = new CronTimer("*/15 * * * *");
         while (await timer.WaitForNextTickAsync())
         {
             try
             {
-                _logger.LogInformation($"Worker running at: {DateTime.Now}");
-                var request = new AllPaymentVerificationEvent();
-                await _mediator.Publish(request);
+                var catUrl = $"{_appSettings.ServiceAddress.BackendAddress}/api/Wallets/all-payment-verification";
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(catUrl);
+                HttpResponseMessage response = await client.GetAsync("");
             }
             catch (Exception e)
             {
