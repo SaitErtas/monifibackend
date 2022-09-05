@@ -30,7 +30,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         Amount = amount;
         CreatedAt = createdAt;
         BlockEndDate = transferTime == default(DateTime) ? null : transferTime.AddMonths(packageDetailDuration);
-        TransactionStatus = transactionStatus.ToTransactionStatus(stringLocalizer);
+        TransactionStatus = transactionStatus.ToString();
         TransactionStatusDescription = transactionStatus.ToTransactionStatusDescription(stringLocalizer);
         ActionType = actionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(walletId, walletAddress, cryptoNetwork);
@@ -59,7 +59,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
         BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
-        TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus(stringLocalizer);
+        TransactionStatus = accountMovement.TransactionStatus.ToString();
         TransactionStatusDescription = accountMovement.TransactionStatus.ToTransactionStatusDescription(stringLocalizer);
         ActionType = accountMovement.ActionType.ToActionType(stringLocalizer);
         Wallet = new GetPurchasedWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
@@ -68,6 +68,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         RemainDay = BlockEndDate == null ? 0 : BlockEndDate.Value.Subtract(DateTime.Now).Days;
         PassedDay = TotalDay - RemainDay;
         Earning = MathExtensions.PercentageCalculation(accountMovement.Amount, accountMovement.PackageDetail.Commission);
+        TransactionStatusColor = accountMovement.TransactionStatus.ToTransactionStatusColor();
 
     }
 
@@ -89,6 +90,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
     public int PassedDay { get; set; }
     public decimal Earning { get; set; }
     public string Color { get; set; }
+    public string TransactionStatusColor { get; set; }
 }
 public class GetPurchasedWalletResponse
 {
