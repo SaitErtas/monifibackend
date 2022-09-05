@@ -23,7 +23,7 @@ public class GetAccountMovementsSingleQueryResponse
         Amount = accountMovement.Amount;
         CreatedAt = accountMovement.CreatedAt;
         BlockEndDate = accountMovement.TransferTime == default(DateTime) ? null : accountMovement.TransferTime.AddMonths(accountMovement.PackageDetail.Duration);
-        TransactionStatus = accountMovement.TransactionStatus.ToTransactionStatus(stringLocalizer);
+        TransactionStatus = accountMovement.TransactionStatus.ToString();
         TransactionStatusDescription = accountMovement.TransactionStatus.ToTransactionStatusDescription(stringLocalizer);
         ActionType = accountMovement.ActionType.ToActionType(stringLocalizer);
         Wallet = new GetMovementsWalletResponse(accountMovement.Wallet.Id, accountMovement.Wallet.WalletAddress, accountMovement.Wallet.CryptoNetwork);
