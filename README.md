@@ -1,4 +1,4 @@
-[![Deploy to Prod](https://github.com/BerkanARIKAN/monifibackend/actions/workflows/MonifiBackendAPI.yml/badge.svg)](https://github.com/BerkanARIKAN/monifibackend/actions/workflows/MonifiBackendAPI.yml)
+Prod [![Deploy to Prod](https://github.com/BerkanARIKAN/monifibackend/actions/workflows/MonifiBackendAPI.yml/badge.svg?branch=main)](https://github.com/BerkanARIKAN/monifibackend/actions/workflows/MonifiBackendAPI.yml)
 # MonifiBackend
 
 Modular Monolith basit bir şablon uygulamasıdır.
