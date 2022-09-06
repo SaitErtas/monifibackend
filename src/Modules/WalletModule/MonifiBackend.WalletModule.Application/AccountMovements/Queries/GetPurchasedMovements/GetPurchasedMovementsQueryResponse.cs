@@ -40,6 +40,7 @@ public class GetPurchasedAccountMovementsSingleQueryResponse
         PassedDay = RemainDay - TotalDay;
         Earning = MathExtensions.PercentageCalculation(amount, packageDetailCommission);
         Color = GetPackageColor(PackageDetail.Package.Name);
+        TransactionStatusColor = transactionStatus.ToTransactionStatusColor();
 
         string GetPackageColor(string name)
                         => name switch
