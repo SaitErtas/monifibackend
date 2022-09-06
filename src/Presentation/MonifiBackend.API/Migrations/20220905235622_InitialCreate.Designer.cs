@@ -12,8 +12,8 @@ using MonifiBackend.Data.Infrastructure.Contexts;
 namespace MonifiBackend.API.Migrations
 {
     [DbContext(typeof(MonifiBackendDbContext))]
-    [Migration("20220809171707_UserAvatar")]
-    partial class UserAvatar
+    [Migration("20220905235622_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,6 +194,10 @@ namespace MonifiBackend.API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
@@ -204,6 +208,9 @@ namespace MonifiBackend.API.Migrations
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -317,6 +324,9 @@ namespace MonifiBackend.API.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("MaintenanceMode")
+                        .HasColumnType("bit");
 
                     b.Property<long>("MaximumDistributedAPY")
                         .HasColumnType("bigint");
