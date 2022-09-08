@@ -7,6 +7,7 @@ using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
+using MonifiBackend.WalletModule.Application.AccountMovements.Events.FakeMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
@@ -128,10 +129,19 @@ public class WalletsController : BaseApiController
         var result = await _mediator.Send(request);
         return Ok(result);
     }
+    [AllowAnonymous]
     [HttpGet("all-payment-verification")]
     public async Task<IActionResult> AllPaymentVerificationAsync()
     {
         var request = new AllPaymentVerificationEvent();
+        await _mediator.Publish(request);
+        return Ok();
+    }
+    [AllowAnonymous]
+    [HttpGet("add-movement")]
+    public async Task<IActionResult> FakeMovementAsync()
+    {
+        var request = new FakeMovementEvent();
         await _mediator.Publish(request);
         return Ok();
     }

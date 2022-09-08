@@ -7,6 +7,7 @@ public interface IUserQueryDataPort
     Task<User> GetUserAsync(int id);
     Task<List<User>> GetMeFirstNetworkAsync(int id);
     Task<List<User>> GetAllNetworkAsync(List<int> ids);
+    Task<User> GetRandomMonifiUser();
 
     Task<decimal> GetTotalSaleAsync(int id);
     Task<decimal> GetTotalBonusAsync(int id);
