@@ -57,6 +57,8 @@ builder.Services.AddWalletServiceInfrastructure();
 
 // Add services to the container.
 builder.Services.AddHostedService<AllPaymentVerificationService>();
+builder.Services.AddHostedService<CreateAccountMovementUserService>();
+builder.Services.AddHostedService<RegisterUserService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -123,22 +125,24 @@ app.MapHealthChecks("/health", new HealthCheckOptions
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 app.UseHealthChecksUI(options => { options.UIPath = "/health-dashboard"; });
-
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-options.SwaggerEndpoint("/swagger/v1/swagger.json",
-"Swagger Demo Documentation v1"));
-app.UseReDoc(options =>
+if (app.Environment.IsDevelopment())
 {
-    options.DocumentTitle = "Swagger Demo Documentation";
-    options.SpecUrl = "/swagger/v1/swagger.json";
-});
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    options.SwaggerEndpoint("/swagger/v1/swagger.json",
+    "Swagger Demo Documentation v1"));
+    app.UseReDoc(options =>
+    {
+        options.DocumentTitle = "Swagger Demo Documentation";
+        options.SpecUrl = "/swagger/v1/swagger.json";
+    });
 
-app.UseReDoc(options =>
-{
-    options.DocumentTitle = "Swagger Demo Documentation";
-    options.SpecUrl = "/swagger/v1/swagger.json";
-});
+    app.UseReDoc(options =>
+    {
+        options.DocumentTitle = "Swagger Demo Documentation";
+        options.SpecUrl = "/swagger/v1/swagger.json";
+    });
+}
 app.UseMiddleware<ExceptionMiddleware>();
 // custom jwt auth middleware
 app.UseMiddleware<JwtMiddleware>();

@@ -88,4 +88,16 @@ public class UserQueryDataAdapter : IUserQueryDataPort
 
         return totalSales.Sum(s => s.Amount);
     }
+
+    public async Task<User> GetRandomMonifiUser()
+    {
+        var userEntity = await _dbContext.Users
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .Where(w => w.Email.Contains("@monifi.io") && w.Email != "arewen@monifi.io" && w.Email != "admin@monifi.io")
+            .OrderBy(r => Guid.NewGuid())
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+        return userEntity.Map();
+    }
 }

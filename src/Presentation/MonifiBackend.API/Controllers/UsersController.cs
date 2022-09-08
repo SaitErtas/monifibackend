@@ -10,6 +10,7 @@ using MonifiBackend.UserModule.Application.Users.Commands.RegistrationCompletion
 using MonifiBackend.UserModule.Application.Users.Commands.UpdateLanguage;
 using MonifiBackend.UserModule.Application.Users.Commands.UpdatePassword;
 using MonifiBackend.UserModule.Application.Users.Commands.UpdateUser;
+using MonifiBackend.UserModule.Application.Users.Events.RegisterFakeUser;
 using MonifiBackend.UserModule.Application.Users.Queries.GetNetworkUsers;
 using MonifiBackend.UserModule.Application.Users.Queries.GetUser;
 using MonifiBackend.UserModule.Domain.Users;
@@ -142,6 +143,15 @@ namespace MonifiBackend.API.Controllers
             var request = new UpdatePasswordCommand(currentUser.Id);
             var result = await _mediator.Send(request);
             return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("register-add-user-event")]
+        public async Task<IActionResult> RegisterFakeUserEventAsync()
+        {
+            var request = new RegisterFakeUserEvent();
+            await _mediator.Publish(request);
+            return Ok();
         }
     }
 }
