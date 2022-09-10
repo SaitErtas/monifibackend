@@ -12,6 +12,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
     public int MinValue { get; private set; }
     public int MaxValue { get; private set; }
     public int ChangePeriodDay { get; private set; }
+    public int Bonus { get; private set; }
     public string Icon { get; private set; }
     private List<PackageDetail> _details = new();
     public IReadOnlyCollection<PackageDetail> Details => _details.AsReadOnly();
@@ -22,20 +23,50 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
     {
         Name = name;
     }
+    public void SetMinValue(int minValue)
+    {
+        MinValue = minValue;
+    }
+    public void SetMaxValue(int maxValue)
+    {
+        MaxValue = maxValue;
+    }
+    public void SetBonus(int bonus)
+    {
+        Bonus = bonus;
+    }
+    public void SetChangePeriodDay(int changePeriodDay)
+    {
+        ChangePeriodDay = changePeriodDay;
+    }
+    public void SetIcon(string icon)
+    {
+        Icon = icon;
+    }
+    public void AddDetail(PackageDetail detail)
+    {
+        _details.Add(detail);
+    }
     public static Package CreateNew(
         string name,
-        int duration,
-        int commission,
+        int minValue,
+        int maxValue,
+        int changePeriodDay,
+        string icon,
+        int bonus,
         BaseStatus status)
     {
         AppRule.NotNullOrEmpty(name, new DomainException(DomainExceptionMessageType.NULL_OR_EMPTY, nameof(name), name));
-        AppRule.NotNegativeOrZero(duration, new DomainException(DomainExceptionMessageType.NEGATIVE_OR_ZERO, nameof(duration), duration));
-        AppRule.NotNegativeOrZero(commission, new DomainException(DomainExceptionMessageType.NEGATIVE_OR_ZERO, nameof(commission), commission));
 
         return new Package()
         {
             Name = name,
-            Status = status
+            ChangePeriodDay = changePeriodDay,
+            Icon = icon,
+            MaxValue = maxValue,
+            MinValue = minValue,
+            Status = status,
+            Bonus = bonus,
         };
     }
     public static Package Map(
@@ -48,6 +79,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
         int maxValue,
         int changePeriodDay,
         string icon,
+        int bonus,
         List<PackageDetail> details)
     {
         return new Package()
@@ -61,6 +93,7 @@ public sealed class Package : BaseActivityDomain<int>, IAggregateRoot
             MaxValue = maxValue,
             ChangePeriodDay = changePeriodDay,
             Icon = icon,
+            Bonus = bonus,
             _details = details
         };
     }

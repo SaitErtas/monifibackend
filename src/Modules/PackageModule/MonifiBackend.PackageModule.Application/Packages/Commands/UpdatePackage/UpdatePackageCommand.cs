@@ -8,20 +8,24 @@ namespace MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackag
 
 public class UpdatePackageCommand : ICommand<UpdatePackageCommandResponse>
 {
-    public UpdatePackageCommand(int id, string name, int duration, int commission)
-    {
-        Id = id;
-        Name = name;
-        Duration = duration;
-        Commission = commission;
-    }
     [JsonIgnore]
     public int Id { get; set; }
-    public string Name { get; private set; }
-    public int Duration { get; private set; }
-    public int Commission { get; private set; }
+    public string Name { get; set; }
+    public int MinValue { get; set; }
+    public int MaxValue { get; set; }
+    public int ChangePeriodDay { get; set; }
+    public string Icon { get; set; }
+    public int Bonus { get; set; }
+    public List<UpdatePackageDetail> Details { get; set; }
 }
 
+public class UpdatePackageDetail
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Duration { get; set; }
+    public int Commission { get; set; }
+}
 internal class UpdatePackageCommandValidator : AbstractValidator<UpdatePackageCommand>
 {
     public UpdatePackageCommandValidator(IStringLocalizer<Resource> stringLocalizer)
@@ -30,9 +34,15 @@ internal class UpdatePackageCommandValidator : AbstractValidator<UpdatePackageCo
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Id))}");
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Name))}");
-        RuleFor(x => x.Duration)
-            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Duration))}");
-        RuleFor(x => x.Commission)
-            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Commission))}");
+        RuleFor(x => x.MinValue)
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.MinValue))}");
+        RuleFor(x => x.MaxValue)
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.MaxValue))}");
+        RuleFor(x => x.ChangePeriodDay)
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.ChangePeriodDay))}");
+        RuleFor(x => x.Icon)
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Icon))}");
+        RuleFor(x => x.Bonus)
+            .NotEmpty().WithMessage(x => $"{string.Format(stringLocalizer["FieldRequired"], nameof(x.Bonus))}");
     }
 }
