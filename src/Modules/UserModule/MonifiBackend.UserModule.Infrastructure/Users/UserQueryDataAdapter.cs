@@ -194,4 +194,16 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return totalSales.Sum(s => MathExtensions.PercentageCalculation(s.Amount, s.Commission));
     }
 
+    public async Task<List<User>> GetAsync()
+    {
+        return await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
+            .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .Select(x => x.Map())
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

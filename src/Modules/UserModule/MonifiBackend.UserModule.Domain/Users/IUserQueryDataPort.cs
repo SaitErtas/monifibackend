@@ -7,6 +7,7 @@ namespace MonifiBackend.UserModule.Domain.Users;
 public interface IUserQueryDataPort : IQueryDataPort
 {
     Task<QueryResult<User>> GetListAsync(QueryObject userQuery);
+    Task<List<User>> GetAsync();
     Task<User> GetAsync(int id);
     Task<User> GetAsync(string email, string password);
     Task<User> GetUserConfirmationCodeAsync(string confirmationCode);
