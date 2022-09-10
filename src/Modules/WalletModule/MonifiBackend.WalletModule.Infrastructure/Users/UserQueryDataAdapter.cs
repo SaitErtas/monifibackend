@@ -100,4 +100,14 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .FirstOrDefaultAsync();
         return userEntity.Map();
     }
+
+    public async Task<User> GetUserEmailAsync(string email)
+    {
+        var userEntity = await _dbContext.Users
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Email == email);
+        return userEntity.Map();
+    }
 }

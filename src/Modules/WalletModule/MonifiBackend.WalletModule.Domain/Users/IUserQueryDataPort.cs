@@ -5,6 +5,7 @@ public interface IUserQueryDataPort
     Task<int> GetUserCountAsync();
     Task<int> GetReferanceCountAsync(int id);
     Task<User> GetUserAsync(int id);
+    Task<User> GetUserEmailAsync(string email);
     Task<List<User>> GetMeFirstNetworkAsync(int id);
     Task<List<User>> GetAllNetworkAsync(List<int> ids);
     Task<User> GetRandomMonifiUser();
