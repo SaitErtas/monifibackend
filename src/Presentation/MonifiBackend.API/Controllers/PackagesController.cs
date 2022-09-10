@@ -31,7 +31,7 @@ public class PackagesController : BaseApiController
     }
 
     [Authorize(Role.Administrator)]
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<IActionResult> CreatePackageAsync([FromBody] CreatePackageCommand request)
     {
         var result = await _mediator.Send(request);
@@ -39,7 +39,7 @@ public class PackagesController : BaseApiController
     }
 
     [Authorize(Role.Administrator)]
-    [HttpPost("update/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePackageAsync([FromRoute] int id, [FromBody] UpdatePackageCommand request)
     {
         request.Id = id;
@@ -47,7 +47,7 @@ public class PackagesController : BaseApiController
         return Ok(result);
     }
     [Authorize(Role.Administrator)]
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePackageAsync([FromRoute] int id)
     {
         var request = new DeletePackageCommand(id);
