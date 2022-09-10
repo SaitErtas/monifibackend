@@ -202,8 +202,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .Include(x => x.Wallet)
             .ThenInclude(x => x.CryptoNetwork)
             .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .Where(w => !w.Email.Contains("@monifi.io"))
             .Select(x => x.Map())
             .AsNoTracking()
             .ToListAsync();
+
     }
 }
