@@ -33,6 +33,8 @@ public class WalletsController : BaseApiController
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
     public async Task<IActionResult> BuyMonifiAsync([FromBody] BuyMonofiCommand request)
     {
+        request.SetIpAddress(Request.HttpContext.Connection.RemoteIpAddress.ToString());
+
         var currentUser = (User)HttpContext.Items["User"];
         request.UserId = currentUser.Id;
         var result = await _mediator.Send(request);

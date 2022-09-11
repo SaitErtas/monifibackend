@@ -210,6 +210,9 @@
   <data name="Sale" xml:space="preserve">
     <value>Sale</value>
   </data>
+  <data name="SellIPAlreadyExist" xml:space="preserve">
+    <value>There is another purchase with this IP Address.</value>
+  </data>
   <data name="StakingStarted" xml:space="preserve">
     <value>{0} Package {1} Staking with time started.</value>
   </data>

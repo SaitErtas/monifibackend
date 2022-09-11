@@ -12,6 +12,12 @@ public class BuyMonofiCommand : ICommand<BuyMonofiCommandResponse>
     public int UserId { get; set; }
     public decimal Amount { get; set; }
     public int PackageDetailId { get; set; }
+    [JsonIgnore]
+    public string IpAddress { get; private set; }
+    public void SetIpAddress(string ipAddress)
+    {
+        IpAddress = ipAddress;
+    }
 }
 internal class BuyMonofiCommandValidator : AbstractValidator<BuyMonofiCommand>
 {

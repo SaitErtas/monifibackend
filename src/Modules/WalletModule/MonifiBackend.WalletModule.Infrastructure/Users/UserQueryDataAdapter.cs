@@ -110,4 +110,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .FirstOrDefaultAsync(x => x.Email == email);
         return userEntity.Map();
     }
+
+    public async Task<bool> GetCheckUserIpAsync(int userId, string ipAddress)
+    {
+        return await _dbContext.UserIPs
+            .AnyAsync(a => a.IpAddress == ipAddress && a.UserId != userId);
+    }
 }
