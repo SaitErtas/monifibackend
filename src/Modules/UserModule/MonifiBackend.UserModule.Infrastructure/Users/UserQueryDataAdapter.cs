@@ -208,4 +208,10 @@ public class UserQueryDataAdapter : IUserQueryDataPort
             .ToListAsync();
 
     }
+
+    public async Task<bool> CheckIPAdressAsync(string ipAddress)
+    {
+        return await _dbContext.UserIPs
+            .AnyAsync(a => a.IpAddress == ipAddress);
+    }
 }

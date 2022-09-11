@@ -148,6 +148,9 @@
   <data name="FieldRequired" xml:space="preserve">
     <value>{0} alanı zorunludur.</value>
   </data>
+  <data name="IPAlreadyExist" xml:space="preserve">
+    <value>Bu IP adresinde mevcut bir kayıt bulunmaktadır.</value>
+  </data>
   <data name="Leader" xml:space="preserve">
     <value>Lider</value>
   </data>

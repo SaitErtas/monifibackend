@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Infrastructure.Localize;
+using System.Text.Json.Serialization;
 
 namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser;
 
@@ -18,6 +19,12 @@ public class RegisterUserCommand : ICommand<RegisterUserCommandResponse>
     public string Password { get; set; }
     public bool Terms { get; set; }
     public string ReferenceCode { get; set; }
+    [JsonIgnore]
+    public string IpAddress { get; private set; }
+    public void SetIpAddress(string ipAddress)
+    {
+        IpAddress = ipAddress;
+    }
 }
 
 internal class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
