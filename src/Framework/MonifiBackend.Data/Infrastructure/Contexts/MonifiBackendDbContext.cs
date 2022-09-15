@@ -27,6 +27,8 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<NotificationEntity>().ToTable("Notifications");
             modelBuilder.Entity<WalletEntity>().ToTable("Wallets");
             modelBuilder.Entity<SettingEntity>().ToTable("Settings");
+            modelBuilder.Entity<VersionEntity>().ToTable("Versions");
+            modelBuilder.Entity<VersionDetailEntity>().ToTable("VersionDetails");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
@@ -40,6 +42,8 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new NotificationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new WalletEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SettingEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new VersionDetailEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -88,5 +92,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         public DbSet<WalletEntity> Wallets { get; set; }
         public DbSet<AccountMovementEntity> AccountMovements { get; set; }
         public DbSet<SettingEntity> Settings { get; set; }
+        public DbSet<VersionEntity> Versions { get; set; }
+        public DbSet<VersionDetailEntity> VersionDetails { get; set; }
     }
 }

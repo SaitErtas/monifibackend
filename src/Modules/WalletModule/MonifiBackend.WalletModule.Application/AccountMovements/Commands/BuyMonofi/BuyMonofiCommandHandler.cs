@@ -42,6 +42,10 @@ internal class BuyMonofiCommandHandler : ICommandHandler<BuyMonofiCommand, BuyMo
         AppRule.False(string.IsNullOrEmpty(user.Wallet.WalletAddress),
             new BusinessValidationException($"{string.Format(_stringLocalizer["FieldRequired"], _stringLocalizer["Wallet"])}", $"{_stringLocalizer["FieldRequired"]} UserId: {request.UserId}"));
 
+        var isIPAdress = await _userQueryDataPort.GetCheckUserIpAsync(request.UserId, request.IpAddress);
+        AppRule.False(isIPAdress, new BusinessValidationException($"{_stringLocalizer["SellIPAlreadyExist"]}", $"{_stringLocalizer["SellIPAlreadyExist"]} IpAddress: {request.IpAddress}"));
+
+
         var setting = await _settingQueryDataPort.GetAsync(DEFAULT_SETTING_VALUE);
         var totalSale = await _accountMovementQueryDataPort.GetTotalSaleAsync();
         var totalBonus = await _accountMovementQueryDataPort.GetTotalBonusAsync();

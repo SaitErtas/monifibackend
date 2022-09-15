@@ -10,6 +10,7 @@ namespace MonifiBackend.Core.Domain.Base
         public void MarkAsActive() => Status = BaseStatus.Active;
         public void MarkAsPassive() => Status = BaseStatus.Passive;
         public void MarkAsDeleted() => Status = BaseStatus.Deleted;
+        public void MarkAsBlocked() => Status = BaseStatus.Blocke;
         public void SetStatus(BaseStatus status) => Status = status;
 
         public bool IsExist()

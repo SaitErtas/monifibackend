@@ -2,10 +2,12 @@
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Notifications;
 using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.UserModule.Domain.Versions;
 using MonifiBackend.UserModule.Domain.Wallets;
 using MonifiBackend.UserModule.Infrastructure.Localizations;
 using MonifiBackend.UserModule.Infrastructure.Notifications;
 using MonifiBackend.UserModule.Infrastructure.Users;
+using MonifiBackend.UserModule.Infrastructure.Versions;
 using MonifiBackend.UserModule.Infrastructure.Wallets;
 
 namespace MonifiBackend.UserModule.Infrastructure
@@ -21,6 +23,7 @@ namespace MonifiBackend.UserModule.Infrastructure
             services.AddScoped<IWalletQueryDataPort, WalletQueryDataAdapter>();
             services.AddScoped<INotificationCommandDataPort, NotificationCommandDataAdapter>();
             services.AddScoped<IJwtUtils, JwtUtils>();
+            services.AddScoped<IVersionQueryDataPort, VersionQueryDataAdapter>();
             #endregion
             return services;
         }

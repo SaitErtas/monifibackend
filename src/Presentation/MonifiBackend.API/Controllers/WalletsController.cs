@@ -6,12 +6,14 @@ using MonifiBackend.UserModule.Application.Wallets.Queries.GetNetworks;
 using MonifiBackend.UserModule.Domain.Users;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.BuyMonofi;
 using MonifiBackend.WalletModule.Application.AccountMovements.Commands.DeleteAccountMovement;
+using MonifiBackend.WalletModule.Application.AccountMovements.Commands.TransferAccept;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.AllPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.FakeMovement;
 using MonifiBackend.WalletModule.Application.AccountMovements.Events.UserPaymentVerification;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetAccountMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonusPurchasedMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
+using MonifiBackend.WalletModule.Application.AccountMovements.Queries.TransferCheck;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.ApyAnalysis;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
@@ -31,6 +33,8 @@ public class WalletsController : BaseApiController
     [Authorize(Role.Administrator, Role.Owner, Role.User)]
     public async Task<IActionResult> BuyMonifiAsync([FromBody] BuyMonofiCommand request)
     {
+        request.SetIpAddress(Request.HttpContext.Connection.RemoteIpAddress.ToString());
+
         var currentUser = (User)HttpContext.Items["User"];
         request.UserId = currentUser.Id;
         var result = await _mediator.Send(request);
@@ -145,4 +149,23 @@ public class WalletsController : BaseApiController
         await _mediator.Publish(request);
         return Ok();
     }
+
+    [HttpGet("transfer-check/{email}")]
+    [Authorize(Role.Administrator)]
+    public async Task<IActionResult> TransferCheckAsync(string email)
+    {
+        var request = new TransferCheckQuery(email);
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+
+    [HttpPost("transfer-accept/{email}")]
+    [Authorize(Role.Administrator)]
+    public async Task<IActionResult> TransferAcceptAsync(string email)
+    {
+        var request = new TransferAcceptCommand(email);
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+
 }

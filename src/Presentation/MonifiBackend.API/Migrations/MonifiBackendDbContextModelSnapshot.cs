@@ -508,6 +508,65 @@ namespace MonifiBackend.API.Migrations
                 b.ToTable("UserPhones", (string)null);
             });
 
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.VersionDetailEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VersionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VersionId");
+
+                    b.ToTable("VersionDetails", (string)null);
+                });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.VersionEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Versions", (string)null);
+                });
+
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.WalletEntity", b =>
             {
                 b.Property<int>("Id")
@@ -628,6 +687,17 @@ namespace MonifiBackend.API.Migrations
                 b.Navigation("User");
             });
 
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.VersionDetailEntity", b =>
+                {
+                    b.HasOne("MonifiBackend.Data.Infrastructure.Entities.VersionEntity", "Version")
+                        .WithMany("VersionDetails")
+                        .HasForeignKey("VersionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Version");
+                });
+
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.WalletEntity", b =>
             {
                 b.HasOne("MonifiBackend.Data.Infrastructure.Entities.NetworkEntity", "CryptoNetwork")
@@ -682,6 +752,11 @@ namespace MonifiBackend.API.Migrations
 
                 b.Navigation("Wallet");
             });
+
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.VersionEntity", b =>
+                {
+                    b.Navigation("VersionDetails");
+                });
 
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.WalletEntity", b =>
             {

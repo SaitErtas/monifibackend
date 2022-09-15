@@ -148,6 +148,9 @@
   <data name="FieldRequired" xml:space="preserve">
     <value>{0} alanı zorunludur.</value>
   </data>
+  <data name="IPAlreadyExist" xml:space="preserve">
+    <value>Bu IP adresinde mevcut bir kayıt bulunmaktadır.</value>
+  </data>
   <data name="Leader" xml:space="preserve">
     <value>Lider</value>
   </data>
@@ -207,6 +210,9 @@
   </data>
   <data name="Sale" xml:space="preserve">
     <value>Satış</value>
+  </data>
+  <data name="SellIPAlreadyExist" xml:space="preserve">
+    <value>Bu IP Adresi ile başka bir satın alma bulunmaktadır.</value>
   </data>
   <data name="StakingStarted" xml:space="preserve">
     <value>{0} Paketi {1} Süre ile Stake başlatıldı.</value>

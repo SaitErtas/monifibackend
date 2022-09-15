@@ -30,24 +30,24 @@ public class PackagesController : BaseApiController
         return Ok(result);
     }
 
-    [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    [HttpPost("create")]
+    [Authorize(Role.Administrator)]
+    [HttpPost]
     public async Task<IActionResult> CreatePackageAsync([FromBody] CreatePackageCommand request)
     {
         var result = await _mediator.Send(request);
         return Ok(result);
     }
 
-    [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    [HttpPost("update/{id}")]
+    [Authorize(Role.Administrator)]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePackageAsync([FromRoute] int id, [FromBody] UpdatePackageCommand request)
     {
         request.Id = id;
         var result = await _mediator.Send(request);
         return Ok(result);
     }
-    [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    [HttpDelete("delete/{id}")]
+    [Authorize(Role.Administrator)]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePackageAsync([FromRoute] int id)
     {
         var request = new DeletePackageCommand(id);

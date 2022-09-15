@@ -49,6 +49,7 @@ public class AuthController : BaseApiController
     [HttpPost("signup")]
     public async Task<IActionResult> SignupAsync([FromBody, SwaggerRequestBody("Signup", Required = true)] RegisterUserCommand request)
     {
+        request.SetIpAddress(Request.HttpContext.Connection.RemoteIpAddress.ToString());
         var result = await _mediator.Send(request);
         return Ok(result);
     }

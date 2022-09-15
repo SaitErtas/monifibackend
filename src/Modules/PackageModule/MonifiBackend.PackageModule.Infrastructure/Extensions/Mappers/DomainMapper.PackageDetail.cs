@@ -19,7 +19,6 @@ public static partial class DomainMapper
             ModifiedAt = domain.ModifiedAt,
             Commission = domain.Commission,
             Duration = domain.Duration,
-            PackageId = domain.Package.Id,
         };
     }
     #endregion

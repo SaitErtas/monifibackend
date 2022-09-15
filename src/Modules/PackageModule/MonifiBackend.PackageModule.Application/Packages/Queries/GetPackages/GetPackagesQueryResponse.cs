@@ -37,8 +37,6 @@ public class GetPackageQueryResponse
     public int MaxValue { get; private set; }
     public string Title { get; private set; }
     public string Subtitle { get; private set; }
-    public int Duration { get; private set; }
-    public int Commission { get; private set; }
     public bool CurrentPlan { get; private set; }
     public bool PopularPlan { get; private set; }
     public int ImgHeight { get; private set; }

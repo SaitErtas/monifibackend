@@ -3,8 +3,8 @@ using Microsoft.Extensions.Localization;
 using MonifiBackend.Core.Application.Abstractions;
 using MonifiBackend.Core.Domain.Base;
 using MonifiBackend.Core.Domain.Exceptions;
-using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.Core.Infrastructure.Localize;
 using MonifiBackend.UserModule.Application.Users.Events.UserRegisterComplited;
 using MonifiBackend.UserModule.Domain.Localizations;
 using MonifiBackend.UserModule.Domain.Users;
@@ -35,10 +35,14 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
         public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var isUserEmail = await _userQueryDataPort.CheckUserEmailAsync(request.Email);
-            AppRule.False(isUserEmail, new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])}", $"User{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])} Email: {request.Email}"));
+            AppRule.False(isUserEmail, new BusinessValidationException($"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])}", $"{string.Format(_stringLocalizer["AlreadyExist"], _stringLocalizer["User"])} Email: {request.Email}"));
 
             var referanceCodeUser = await _userQueryDataPort.GetReferanceCodeUserAsync(request.ReferenceCode);
             AppRule.ExistsAndActive(referanceCodeUser, new BusinessValidationException($"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ReferanceCode"])}", $"{string.Format(_stringLocalizer["NotMach"], _stringLocalizer["ReferanceCode"])} ReferanceCode: {request.ReferenceCode}"));
+
+            var isIPAdress = await _userQueryDataPort.CheckIPAdressAsync(request.IpAddress);
+            AppRule.False(isIPAdress, new BusinessValidationException($"{string.Format(_stringLocalizer["IPAlreadyExist"], _stringLocalizer["User"])}", $"{_stringLocalizer["IPAlreadyExist"]} Email: {request.Email}"));
+
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
@@ -51,6 +55,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
 
             var wallet = Wallet.CreateNew(string.Empty, network);
             var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, language, country, wallet, Role.User, BaseStatus.Passive);
+            user.AddUserIP(request.IpAddress, "Register");
             var userId = await _userCommandDataPort.CreateAsync(user);
             AppRule.NotNegativeOrZero<BusinessValidationException>(userId);
 
