@@ -81,6 +81,21 @@ public class AccountMovementQueryDataAdapter : IAccountMovementQueryDataPort
             .ToListAsync();
         return entity.Select(s => s.Map()).ToList();
     }
+    public async Task<List<AccountMovement>> GetAllRealMovementAsync(TransactionStatus transactionStatus, ActionType actionType)
+    {
+        var entity = await _dbContext.AccountMovements
+            .Where(w => w.TransactionStatus == transactionStatus.ToInt() && w.ActionType == actionType.ToInt() && w.Hash != "Monifi" && w.Status != BaseStatus.Deleted.ToInt())
+            .Include(i => i.PackageDetail)
+            .ThenInclude(i => i.Package)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.CryptoNetwork)
+            .Include(i => i.Wallet)
+            .ThenInclude(i => i.User)
+            .OrderByDescending(o => o.TransferTime)
+            .AsNoTracking()
+            .ToListAsync();
+        return entity.Select(s => s.Map()).ToList();
+    }
 
     public async Task<List<AccountMovement>> GetUserMovementAsync(int userId)
     {

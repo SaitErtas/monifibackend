@@ -67,4 +67,26 @@ public sealed class PackageDetail : BaseActivityDomain<int>, IAggregateRoot
             Commission = commission,
         };
     }
+    public static PackageDetail Map(
+        int id,
+        BaseStatus status,
+        DateTime createdAt,
+        DateTime modifiedAt,
+        string name,
+        int duration,
+        int commission,
+        Package package)
+    {
+        return new PackageDetail()
+        {
+            Id = id,
+            Status = status,
+            CreatedAt = createdAt,
+            ModifiedAt = modifiedAt,
+            Name = name,
+            Duration = duration,
+            Commission = commission,
+            Package = package
+        };
+    }
 }

@@ -43,4 +43,22 @@ public static partial class DomainMapper
             entity.PackageDetails.Select(x => x.Map()).ToList());
     }
     #endregion
+    #region PackageEntity to Package 
+    public static Package MapNotPackageDetail(this PackageEntity entity)
+    {
+        if (entity == null)
+            return Package.Default();
+
+
+        return Package.Map(entity.Id,
+            entity.Status.ToEnum<BaseStatus>(),
+            entity.CreatedAt,
+            entity.ModifiedAt,
+            entity.Name,
+            entity.MinValue,
+            entity.MaxValue,
+            entity.ChangePeriodDay,
+            entity.Bonus);
+    }
+    #endregion
 }

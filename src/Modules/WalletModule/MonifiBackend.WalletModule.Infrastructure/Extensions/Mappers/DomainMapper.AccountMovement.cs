@@ -43,7 +43,7 @@ public static partial class DomainMapper
             entity.Hash,
             entity.TokenSymbol,
             entity.TransferTime,
-            entity.PackageDetail.Map(),
+            entity.PackageDetail.PackageMap(),
             entity.Wallet.Map());
     }
     #endregion

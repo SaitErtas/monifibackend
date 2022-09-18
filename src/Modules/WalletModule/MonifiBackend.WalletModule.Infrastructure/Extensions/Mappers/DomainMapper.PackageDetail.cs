@@ -38,4 +38,20 @@ public static partial class DomainMapper
             entity.Commission);
     }
     #endregion
+    #region PackageEntity to Package 
+    public static PackageDetail PackageMap(this PackageDetailEntity entity)
+    {
+        if (entity == null)
+            return PackageDetail.Default();
+
+        return PackageDetail.Map(entity.Id,
+            entity.Status.ToEnum<BaseStatus>(),
+            entity.CreatedAt,
+            entity.ModifiedAt,
+            entity.Name,
+            entity.Duration,
+            entity.Commission,
+            entity.Package.MapNotPackageDetail());
+    }
+    #endregion
 }
