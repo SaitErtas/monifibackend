@@ -26,6 +26,7 @@ public class GetAccountActivitiQueryResponse
         TokenSymbol = movement.TokenSymbol;
         PackageName = movement.PackageDetail.Package.Name;
         Duration = movement.PackageDetail.Duration;
+        TransferTime = movement.TransferTime;
     }
     public string Username { get; private set; }
     public string FullName { get; private set; }
@@ -39,4 +40,5 @@ public class GetAccountActivitiQueryResponse
     public string TokenSymbol { get; private set; }
     public string PackageName { get; private set; }
     public int Duration { get; private set; }
+    public DateTime TransferTime { get; private set; }
 }
