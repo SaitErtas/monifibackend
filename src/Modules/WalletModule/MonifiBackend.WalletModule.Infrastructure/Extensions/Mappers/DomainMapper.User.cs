@@ -51,4 +51,25 @@ public static partial class DomainMapper
             entity.ModifiedAt);
     }
     #endregion
+    #region UserEntity to User 
+    public static User SingleMap(this UserEntity entity)
+    {
+        if (entity == null)
+            return User.Default();
+
+        return User.Map(entity.Id,
+            entity.Status.ToEnum<BaseStatus>(),
+            entity.Email,
+            entity.Password,
+            entity.Username,
+            entity.Terms,
+            entity.ResetPasswordCode,
+            entity.ReferanceUser,
+            entity.ReferanceCode,
+            entity.ConfirmationCode,
+            entity.FullName,
+            entity.CreatedAt,
+            entity.ModifiedAt);
+    }
+    #endregion
 }

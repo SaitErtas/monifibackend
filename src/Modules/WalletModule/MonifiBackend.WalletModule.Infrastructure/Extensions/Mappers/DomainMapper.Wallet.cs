@@ -38,7 +38,8 @@ public static partial class DomainMapper
             entity.CryptoNetwork.Map(),
             entity.CreatedAt,
             entity.ModifiedAt,
-            entity.UserId);
+            entity.UserId,
+            entity.User.SingleMap());
     }
     #endregion
 }

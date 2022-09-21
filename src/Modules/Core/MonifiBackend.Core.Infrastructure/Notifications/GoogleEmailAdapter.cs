@@ -21,9 +21,6 @@ public class GoogleEmailAdapter : IEmailPort
 
     public void Send(string to, string subject, string html, string from = null)
     {
-        if (!_hostingEnvironment.IsProduction())
-            to = _appSettings.EmailConfigurations.DevelopmentTo;
-        // create message
         var email = new MimeMessage();
         email.From.Add(MailboxAddress.Parse(from ?? _appSettings.EmailConfigurations.From));
         email.To.Add(MailboxAddress.Parse(to));

@@ -6,6 +6,7 @@ namespace MonifiBackend.WalletModule.Domain.AccountMovements;
 public interface IAccountMovementQueryDataPort : IQueryDataPort
 {
     Task<List<AccountMovement>> GetAllMovementAsync(TransactionStatus transactionStatus);
+    Task<List<AccountMovement>> GetAllRealMovementAsync(TransactionStatus transactionStatus, ActionType actionType);
     Task<List<AccountMovement>> GetAllMovementAsync(int userId, TransactionStatus transactionStatus);
     Task<List<AccountMovement>> GetSaleMovementAsync(int userId, TransactionStatus transactionStatus);
     Task<List<AccountMovement>> GetUserMovementAsync(int userId);

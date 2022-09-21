@@ -1,4 +1,5 @@
 ﻿using MonifiBackend.Core.Domain.Base;
+using MonifiBackend.WalletModule.Domain.Users;
 
 namespace MonifiBackend.WalletModule.Domain.AccountMovements;
 
@@ -6,6 +7,7 @@ public sealed class Wallet : BaseActivityDomain<int>
 {
     private Wallet() { }
     public int UserId { get; private set; }
+    public User User { get; private set; }
     public string WalletAddress { get; private set; }
     public Network CryptoNetwork { get; private set; }
 
@@ -42,7 +44,8 @@ public sealed class Wallet : BaseActivityDomain<int>
         Network cryptoNetwork,
         DateTime createdAt,
         DateTime modifiedAt,
-        int userId)
+        int userId,
+        User user)
     {
         return new Wallet()
         {
@@ -52,7 +55,8 @@ public sealed class Wallet : BaseActivityDomain<int>
             CryptoNetwork = cryptoNetwork,
             CreatedAt = createdAt,
             ModifiedAt = modifiedAt,
-            UserId = userId
+            UserId = userId,
+            User = user
         };
     }
 }

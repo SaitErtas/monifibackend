@@ -54,4 +54,36 @@ public sealed class User : ReadOnlyBaseDomain<int>
             FullName = fullName
         };
     }
+    public static User Map(
+        int id,
+        BaseStatus status,
+        string email,
+        string password,
+        string userName,
+        bool terms,
+        string resetPassword,
+        int referanceUser,
+        string referanceCode,
+        string confirmationCode,
+        string fullName,
+        DateTime createdAt,
+        DateTime modifiedAt)
+    {
+        return new User()
+        {
+            Id = id,
+            Status = status,
+            Email = email,
+            Password = password,
+            Terms = terms,
+            CreatedAt = createdAt,
+            ModifiedAt = modifiedAt,
+            ResetPasswordCode = resetPassword,
+            ReferanceUser = referanceUser,
+            ReferanceCode = referanceCode,
+            ConfirmationCode = confirmationCode,
+            Username = userName,
+            FullName = fullName
+        };
+    }
 }

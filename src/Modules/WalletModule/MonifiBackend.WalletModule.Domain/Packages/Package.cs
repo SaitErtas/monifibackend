@@ -39,4 +39,28 @@ public sealed class Package : ReadOnlyBaseDomain<int>
             _details = packageDetail
         };
     }
+    public static Package Map(
+        int id,
+        BaseStatus status,
+        DateTime createdAt,
+        DateTime modifiedAt,
+        string name,
+        int minValue,
+        int maxValue,
+        int changePeriodDay,
+        int bonus)
+    {
+        return new Package()
+        {
+            Id = id,
+            Status = status,
+            CreatedAt = createdAt,
+            ModifiedAt = modifiedAt,
+            Name = name,
+            ChangePeriodDay = changePeriodDay,
+            Bonus = bonus,
+            MaxValue = maxValue,
+            MinValue = minValue
+        };
+    }
 }

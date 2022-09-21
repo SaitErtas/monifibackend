@@ -42,10 +42,12 @@ public class GetPackageQueryResponse
     public int ImgHeight { get; private set; }
     public string ImgSrc { get; private set; }
     public string Icon { get; private set; }
+
     public List<string> PlanBenefits { get; private set; }
     public List<int> YearlyPlan { get; private set; }
     public int MonthlyPrice { get; private set; }
     public List<GetPackageDetailQueryResponse> Details { get; private set; }
+    public string ActionCommand { get; private set; } = "select";
 }
 public class GetPackageDetailQueryResponse
 {

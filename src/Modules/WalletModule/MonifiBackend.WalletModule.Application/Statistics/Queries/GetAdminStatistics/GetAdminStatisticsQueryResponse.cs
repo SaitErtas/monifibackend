@@ -1,10 +1,10 @@
 ﻿using MonifiBackend.WalletModule.Domain.Settings;
 
-namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
+namespace MonifiBackend.WalletModule.Application.Statistics.Queries.GetAdminStatistics;
 
-public class GetStatisticsQueryResponse
+public class GetAdminStatisticsQueryResponse
 {
-    public GetStatisticsQueryResponse(Setting setting, decimal totalSale, decimal totalBonus, int userCount, int referanceCount)
+    public GetAdminStatisticsQueryResponse(Setting setting, decimal totalSale, decimal totalBonus, int userCount)
     {
         MaximumSalesQuantity = setting.MaximumSalesQuantity;
         MaximumDistributedAPY = setting.MaximumDistributedAPY;
@@ -13,10 +13,9 @@ public class GetStatisticsQueryResponse
         MonifiPrice = setting.MonifiPrice;
         TotalSale = totalSale;
         TotalBonus = totalBonus;
-        TotalDistributedMonifi = (totalSale / setting.MonifiPrice) + (totalBonus / setting.MonifiPrice);
+        TotalDistributedMonifi = totalSale + totalBonus;
         UserCount = userCount;
-        ReferanceCount = referanceCount;
-        RemainderMonifi = setting.TotalPreSaleQuantity - TotalDistributedMonifi;
+        RemainderMonifi = setting.TotalPreSaleQuantity - (totalSale + totalBonus);
     }
     public long MaximumSalesQuantity { get; private set; }
     public long MaximumDistributedAPY { get; private set; }
@@ -27,6 +26,5 @@ public class GetStatisticsQueryResponse
     public decimal TotalBonus { get; private set; }
     public decimal TotalDistributedMonifi { get; private set; }
     public int UserCount { get; private set; }
-    public int ReferanceCount { get; private set; }
     public decimal RemainderMonifi { get; private set; }
 }
