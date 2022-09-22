@@ -15,4 +15,5 @@ public class NetworkTransfer
     public string ToAddress { get; private set; }
     public string Hash { get; private set; }
     public string Network { get; private set; }
+    public string ActionCommand { get;} = "select";
 }
