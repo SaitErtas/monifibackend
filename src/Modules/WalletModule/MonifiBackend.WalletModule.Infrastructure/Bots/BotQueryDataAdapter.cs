@@ -1,0 +1,30 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MonifiBackend.Data.Infrastructure.Contexts;
+using MonifiBackend.WalletModule.Domain.Bots;
+using MonifiBackend.WalletModule.Infrastructure.Extensions.Mappers;
+
+namespace MonifiBackend.WalletModule.Infrastructure.Bots;
+
+public class BotQueryDataAdapter : IBotQueryDataPort
+{
+    private readonly IMonifiBackendDbContext _dbContext;
+    public BotQueryDataAdapter(IMonifiBackendDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<List<Bot>> GetAsync()
+    {
+        return await _dbContext.Bots
+            .AsNoTracking()
+            .Select(x => x.Map())
+            .ToListAsync();
+    }
+
+    public async Task<Bot> GetAsync(int id)
+    {
+        return await _dbContext.Bots
+            .Select(x => x.Map())
+            .FirstOrDefaultAsync(w => w.Id == id);
+    }
+}

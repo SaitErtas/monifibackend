@@ -243,6 +243,9 @@
   <data name="UserAlreadySubscribed" xml:space="preserve">
     <value>Already subscribed user.</value>
   </data>
+  <data name="UserBloke" xml:space="preserve">
+    <value>This user has been blocked.</value>
+  </data>
   <data name="UserNotVerified" xml:space="preserve">
     <value>User not verified.</value>
     <comment>Email and Password do not match.</comment>
