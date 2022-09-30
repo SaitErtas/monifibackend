@@ -27,6 +27,8 @@ public class GetAccountActivitiQueryResponse
         PackageName = movement.PackageDetail.Package.Name;
         Duration = movement.PackageDetail.Duration;
         TransferTime = movement.TransferTime;
+        TransferTime = movement.TransferTime;
+        Id = movement.Id;
     }
     public string Username { get; private set; }
     public string FullName { get; private set; }
@@ -41,4 +43,6 @@ public class GetAccountActivitiQueryResponse
     public string PackageName { get; private set; }
     public int Duration { get; private set; }
     public DateTime TransferTime { get; private set; }
+    public int Id { get; private set; }
+    public string ActionCommand { get; private set; } = "select";
 }
