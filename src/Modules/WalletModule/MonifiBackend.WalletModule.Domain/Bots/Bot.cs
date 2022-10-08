@@ -2,28 +2,34 @@
 
 namespace MonifiBackend.WalletModule.Domain.Bots;
 
-public sealed class Bot : ReadOnlyBaseDomain<int>
+public sealed class Bot : BaseActivityDomain<int>
 {
     public int Hour { get; private set; }
     public int Minute { get; private set; }
-    public int Day { get; private set; }
+    public WorkingRange WorkingRange { get; private set; }
+    public int Range { get; private set; }
     public int Amount { get; private set; }
+    public int PackageDetailId { get; private set; }
 
     public static Bot Default() => new();
 
     public static Bot CreateNew(
         int hour,
         int minute,
-        int day,
+        WorkingRange workingRange,
+        int range,
         int amount,
+        int packageDetailId,
         BaseStatus status)
     {
         return new Bot()
         {
             Hour = hour,
             Minute = minute,
-            Day = day,
+            WorkingRange = workingRange,
+            Range = range,
             Amount = amount,
+            PackageDetailId = packageDetailId,
             Status = status,
         };
     }
@@ -35,8 +41,10 @@ public sealed class Bot : ReadOnlyBaseDomain<int>
         DateTime modifiedAt,
         int hour,
         int minute,
-        int day,
-        int amount)
+        WorkingRange workingRange,
+        int range,
+        int amount,
+        int packageDetailId)
     {
         return new Bot()
         {
@@ -46,8 +54,10 @@ public sealed class Bot : ReadOnlyBaseDomain<int>
             ModifiedAt = modifiedAt,
             Hour = hour,
             Minute = minute,
-            Day = day,
+            WorkingRange = workingRange,
+            Range = range,
             Amount = amount,
+            PackageDetailId = packageDetailId,
         };
     }
 }

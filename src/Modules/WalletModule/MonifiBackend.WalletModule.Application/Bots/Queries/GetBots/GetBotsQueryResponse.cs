@@ -17,12 +17,16 @@ public class GetBotResponse
         Id = bot.Id;
         Hour = bot.Hour;
         Minute = bot.Minute;
-        Day = bot.Day;
+        WorkingRange = bot.WorkingRange.ToString();
+        Range = bot.Range;
         Amount = bot.Amount;
+        PackageDetailId = bot.PackageDetailId;
     }
     public int Id { get; private set; }
     public int Hour { get; private set; }
     public int Minute { get; private set; }
-    public int Day { get; private set; }
+    public string WorkingRange { get; private set; }
+    public int Range { get; private set; }
     public int Amount { get; private set; }
+    public int PackageDetailId { get; private set; }
 }

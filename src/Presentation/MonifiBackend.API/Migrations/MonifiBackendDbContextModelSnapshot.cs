@@ -75,6 +75,46 @@ namespace MonifiBackend.API.Migrations
                     b.ToTable("AccountMovements", (string)null);
                 });
 
+            modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.BotEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Hour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Minute")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PackageDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Range")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingRange")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bots", (string)null);
+                });
+
             modelBuilder.Entity("MonifiBackend.Data.Infrastructure.Entities.CountryEntity", b =>
                 {
                     b.Property<int>("Id")

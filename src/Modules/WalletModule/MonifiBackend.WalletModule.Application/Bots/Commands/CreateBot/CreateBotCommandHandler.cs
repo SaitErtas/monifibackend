@@ -15,7 +15,7 @@ internal class CreateBotCommandHandler : ICommandHandler<CreateBotCommand, Creat
     }
     public async Task<CreateBotCommandResponse> Handle(CreateBotCommand request, CancellationToken cancellationToken)
     {
-        var bot = Bot.CreateNew(request.Hour, request.Minute, request.Day, request.Amount, BaseStatus.Active);
+        var bot = Bot.CreateNew(request.Hour, request.Minute, request.WorkingRange.ToEnum<WorkingRange>(), request.Range, request.Amount, request.PackageDetailId, BaseStatus.Active);
         var botId = await _settingCommandDataPort.CreateAsync(bot);
         AppRule.NotNegativeOrZero(botId, new BusinessValidationException(BusinessValidationMessageType.NOT_CREATED, nameof(request.Hour), request.Hour));
 

@@ -15,7 +15,9 @@ internal class DeleteBotCommandHandler : ICommandHandler<DeleteBotCommand, Delet
     public async Task<DeleteBotCommandResponse> Handle(DeleteBotCommand request, CancellationToken cancellationToken)
     {
         var bot = await _settingQueryDataPort.GetAsync(request.Id);
-        bot.Mark
+        bot.MarkAsDeleted();
+        await _settingCommandDataPort.SaveAsync(bot);
+
         return new DeleteBotCommandResponse();
     }
 }

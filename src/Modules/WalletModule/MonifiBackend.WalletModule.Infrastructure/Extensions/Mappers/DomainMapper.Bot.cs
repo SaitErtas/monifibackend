@@ -22,8 +22,10 @@ public static partial class DomainMapper
             Status = domain.Status.ToInt(),
             Hour = domain.Hour,
             Minute = domain.Minute,
-            Day = domain.Day,
+            WorkingRange = domain.WorkingRange.ToInt(),
+            Range = domain.Range,
             Amount = domain.Amount,
+            PackageDetailId = domain.PackageDetailId,
         };
     }
     #endregion
@@ -39,8 +41,10 @@ public static partial class DomainMapper
             entity.ModifiedAt,
             entity.Hour,
             entity.Minute,
-            entity.Day,
-            entity.Amount);
+            entity.WorkingRange.ToEnum<WorkingRange>(),
+            entity.Range,
+            entity.Amount,
+            entity.PackageDetailId);
     }
     #endregion
 }
