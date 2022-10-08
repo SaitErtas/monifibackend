@@ -244,6 +244,9 @@
   <data name="UserAlreadySubscribed" xml:space="preserve">
     <value>Zaten abone olan kullanıcı.</value>
   </data>
+  <data name="UserBloke" xml:space="preserve">
+    <value>Bu kullanıcı engellenmiştir.</value>
+  </data>
   <data name="UserNotVerified" xml:space="preserve">
     <value>Kullanıcı doğrulanamadı.</value>
     <comment>Email and Password do not match.</comment>

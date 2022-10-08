@@ -13,9 +13,9 @@ public class GetAdminStatisticsQueryResponse
         MonifiPrice = setting.MonifiPrice;
         TotalSale = totalSale;
         TotalBonus = totalBonus;
-        TotalDistributedMonifi = totalSale + totalBonus;
+        TotalDistributedMonifi = (totalSale / setting.MonifiPrice) + (totalBonus / setting.MonifiPrice);
         UserCount = userCount;
-        RemainderMonifi = setting.TotalPreSaleQuantity - (totalSale + totalBonus);
+        RemainderMonifi = setting.TotalPreSaleQuantity - TotalDistributedMonifi;
     }
     public long MaximumSalesQuantity { get; private set; }
     public long MaximumDistributedAPY { get; private set; }

@@ -25,6 +25,7 @@ internal class TransferAcceptCommandHandler : ICommandHandler<TransferAcceptComm
         foreach (var movement in movements)
         {
             movement.SetTransactionStatus(TransactionStatus.Successful);
+            movement.SetTransferTime(DateTime.Now);
         }
         await _accountMovementCommandDataPort.BulkSaveAsync(movements);
 
