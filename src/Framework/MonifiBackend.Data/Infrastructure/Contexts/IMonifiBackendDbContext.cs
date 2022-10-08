@@ -19,5 +19,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         DbSet<SettingEntity> Settings { get; set; }
         DbSet<VersionEntity> Versions { get; set; }
         DbSet<VersionDetailEntity> VersionDetails { get; set; }
+        DbSet<BotEntity> Bots { get; set; }
     }
 }
