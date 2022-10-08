@@ -30,6 +30,7 @@ internal class AuthenticateUserQueryHandler : IQueryHandler<AuthenticateUserQuer
     {
         var user = await _userQueryDataPort.GetEmailAsync(request.Email);
         AppRule.Exists(user, new BusinessValidationException(string.Format(_stringLocalizer["NotFound"], request.Email), $"{string.Format(_stringLocalizer["NotFound"], request.Email)} Email: {request.Email}"));
+        AppRule.True(user.Status == Core.Domain.Base.BaseStatus.Blocke, new BusinessValidationException(string.Format(_stringLocalizer["UserBloke"], request.Email), $"{string.Format(_stringLocalizer["UserBloke"], request.Email)} Email: {request.Email}"));
         AppRule.ExistsAndActive(user, new BusinessValidationException(string.Format(_stringLocalizer["NotActivetedUser"], request.Email), $"{string.Format(_stringLocalizer["NotActivetedUser"], request.Email)} Email: {request.Email}"));
 
         //var userPasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);

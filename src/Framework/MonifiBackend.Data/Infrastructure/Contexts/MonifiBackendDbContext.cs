@@ -29,6 +29,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.Entity<SettingEntity>().ToTable("Settings");
             modelBuilder.Entity<VersionEntity>().ToTable("Versions");
             modelBuilder.Entity<VersionDetailEntity>().ToTable("VersionDetails");
+            modelBuilder.Entity<BotEntity>().ToTable("Bots");
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserPhoneEntityConfiguration());
@@ -44,6 +45,7 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
             modelBuilder.ApplyConfiguration(new SettingEntityConfiguration());
             modelBuilder.ApplyConfiguration(new VersionEntityConfiguration());
             modelBuilder.ApplyConfiguration(new VersionDetailEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new BotEntityConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -94,5 +96,6 @@ namespace MonifiBackend.Data.Infrastructure.Contexts
         public DbSet<SettingEntity> Settings { get; set; }
         public DbSet<VersionEntity> Versions { get; set; }
         public DbSet<VersionDetailEntity> VersionDetails { get; set; }
+        public DbSet<BotEntity> Bots { get; set; }
     }
 }
