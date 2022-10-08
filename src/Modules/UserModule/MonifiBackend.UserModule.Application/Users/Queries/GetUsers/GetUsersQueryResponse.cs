@@ -53,4 +53,5 @@ public class GetUserResponse
     public string? LanguageCode { get; set; }
     public string Status { get; set; }
     public string LanguageShortCode { get; set; }
+    public string ActionCommand { get; set; } = "select";
 }
