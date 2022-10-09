@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
+using MonifiBackend.UserModule.Domain.Users;
+using MonifiBackend.WalletModule.Application.Settings.Commands.UpdateSetting;
 using MonifiBackend.WalletModule.Application.Settings.Queries.GetMaintenanceMode;
+using MonifiBackend.WalletModule.Application.Settings.Queries.GetSettings;
 
 namespace MonifiBackend.API.Controllers
 {
@@ -25,6 +28,24 @@ namespace MonifiBackend.API.Controllers
             var result = await _mediator.Send(request);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Authorize(Role.Administrator)]
+        public async Task<IActionResult> GetSettingsAsync()
+        {
+            var request = new GetSettingsQuery();
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Authorize(Role.Administrator)]
+        public async Task<IActionResult> UpdateSettingAsync([FromBody] UpdateSettingCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
 
     }
 }
