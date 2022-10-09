@@ -6,6 +6,7 @@ using MonifiBackend.PackageModule.Application.Packages.Commands.CreatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.DeletePackage;
 using MonifiBackend.PackageModule.Application.Packages.Commands.UpdatePackage;
 using MonifiBackend.PackageModule.Application.Packages.Queries.GetPackages;
+using MonifiBackend.PackageModule.Application.Packages.Queries.GetPackagesDetails;
 using MonifiBackend.UserModule.Domain.Users;
 
 namespace MonifiBackend.API.Controllers;
@@ -21,6 +22,14 @@ public class PackagesController : BaseApiController
         _mediator = mediator;
     }
 
+    [AllowAnonymous]
+    [HttpGet("details")]
+    public async Task<IActionResult> GetPackagesDetailsAsync()
+    {
+        var request = new GetPackagesDetailsQuery();
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetPackagesAsync()
