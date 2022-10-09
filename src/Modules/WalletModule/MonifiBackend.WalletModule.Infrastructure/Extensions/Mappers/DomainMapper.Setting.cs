@@ -24,6 +24,10 @@ public static partial class DomainMapper
             MaximumDistributedAPY = domain.MaximumDistributedAPY,
             MaximumReferenceBonus = domain.MaximumReferenceBonus,
             TotalPreSaleQuantity = domain.TotalPreSaleQuantity,
+            BscScanAddress = domain.BscScanAddress,
+            TronNetworkAddress = domain.TronNetworkAddress,
+            BscScanTokenSymbol = domain.BscScanTokenSymbol,
+            TronNetworkTokenSymbol = domain.TronNetworkTokenSymbol,
         };
     }
     #endregion
@@ -43,7 +47,11 @@ public static partial class DomainMapper
             entity.MaximumReferenceBonus,
             entity.TotalPreSaleQuantity,
             entity.MonifiPrice,
-            entity.MaintenanceMode);
+            entity.MaintenanceMode,
+            entity.BscScanAddress,
+            entity.TronNetworkAddress,
+            entity.BscScanTokenSymbol,
+            entity.TronNetworkTokenSymbol);
     }
     #endregion
 }

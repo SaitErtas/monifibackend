@@ -10,8 +10,17 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
     public long MaximumReferenceBonus { get; private set; }
     public long TotalPreSaleQuantity { get; private set; }
     public decimal MonifiPrice { get; private set; }
+    public string BscScanAddress { get; private set; }
+    public string TronNetworkAddress { get; private set; }
+    public string BscScanTokenSymbol { get; private set; }
+    public string TronNetworkTokenSymbol { get; private set; }
     public bool MaintenanceMode { get; private set; }
 
+    public void SetMonifiPrice(decimal monifiPrice) => MonifiPrice = monifiPrice;
+    public void SetBscScanAddress(string bscScanAddress) => BscScanAddress = bscScanAddress;
+    public void SetTronNetworkAddress(string tronNetworkAddress) => TronNetworkAddress = tronNetworkAddress;
+    public void SetBscScanTokenSymbol(string bscScanTokenSymbol) => BscScanTokenSymbol = bscScanTokenSymbol;
+    public void SetTronNetworkTokenSymbol(string tronNetworkTokenSymbol) => TronNetworkTokenSymbol = tronNetworkTokenSymbol;
     public static Setting Default() => new();
 
     public static Setting Map(
@@ -25,7 +34,11 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
         long maximumReferenceBonus,
         long totalPreSaleQuantity,
         decimal monifiPrice,
-        bool maintenanceMode)
+        bool maintenanceMode,
+        string bscScanAddress,
+        string tronNetworkAddress,
+        string bscScanTokenSymbol,
+        string tronNetworkTokenSymbol)
     {
         return new Setting()
         {
@@ -39,7 +52,11 @@ public sealed class Setting : ReadOnlyBaseDomain<int>
             MaximumReferenceBonus = maximumReferenceBonus,
             TotalPreSaleQuantity = totalPreSaleQuantity,
             MonifiPrice = monifiPrice,
-            MaintenanceMode = maintenanceMode
+            MaintenanceMode = maintenanceMode,
+            BscScanAddress = bscScanAddress,
+            TronNetworkAddress = tronNetworkAddress,
+            BscScanTokenSymbol = bscScanTokenSymbol,
+            TronNetworkTokenSymbol = tronNetworkTokenSymbol
         };
     }
 }

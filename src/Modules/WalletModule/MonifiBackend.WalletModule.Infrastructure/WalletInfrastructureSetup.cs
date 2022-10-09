@@ -23,6 +23,7 @@ public static class WalletInfrastructureSetup
         services.AddScoped<IAccountMovementQueryDataPort, AccountMovementQueryDataAdapter>();
         services.AddScoped<IPackageQueryDataPort, PackageQueryDataAdapter>();
         services.AddScoped<ISettingQueryDataPort, SettingQueryDataAdapter>();
+        services.AddScoped<ISettingCommandDataPort, SettingCommandDataAdapter>();
         services.AddScoped<IUserQueryDataPort, UserQueryDataAdapter>();
         services.AddScoped<INotificationCommandDataPort, NotificationCommandDataAdapter>();
 
