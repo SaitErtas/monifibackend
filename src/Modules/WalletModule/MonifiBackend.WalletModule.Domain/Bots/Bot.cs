@@ -27,7 +27,7 @@ public sealed class Bot : BaseActivityDomain<int>
             Hour = hour,
             Minute = minute,
             WorkingRange = workingRange,
-            Range = range,
+            Range = workingRange == WorkingRange.Daily ? 0 : range,
             Amount = amount,
             PackageDetailId = packageDetailId,
             Status = status,
