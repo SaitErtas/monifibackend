@@ -20,7 +20,7 @@ internal class GetAccountActivitiesQueryHandler : IQueryHandler<GetAccountActivi
     }
     public async Task<GetAccountActivitiesQueryResponse> Handle(GetAccountActivitiesQuery request, CancellationToken cancellationToken)
     {
-        var movements = await _accountMovementQueryDataPort.GetAllRealMovementAsync(TransactionStatus.Successful, ActionType.Sale);
+        var movements = await _accountMovementQueryDataPort.GetAllRealMovementAsync(ActionType.Sale);
         return new GetAccountActivitiesQueryResponse(movements);
     }
 }
