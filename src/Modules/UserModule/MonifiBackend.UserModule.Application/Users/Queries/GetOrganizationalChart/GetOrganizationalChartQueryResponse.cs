@@ -34,7 +34,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCh
 
             foreach (var rowIn in rows)
             {
-                OrganizatioanlChartItem tree = new OrganizatioanlChartItem(rowIn.UserId, rowIn.UserName, rowIn.ParentUserId, rowIn.ParentUserName);
+                OrganizatioanlChartItem tree = new(rowIn.UserId, rowIn.UserName, rowIn.ParentUserId, rowIn.ParentUserName, new(rowIn.UserId));
 
                 //Recursive nature, call its own function within the function
                 BindTree(treeUsers, tree, rowIn.UserId);
@@ -55,7 +55,7 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCh
 
     public class OrganizatioanlChartItem
     {
-        public OrganizatioanlChartItem(int userId, string userName, int parentUserId, string parentUserName)
+        public OrganizatioanlChartItem(int userId, string userName, int parentUserId, string parentUserName, OrganizatioanlChartItemAttribute organizatioanlChartItemAttribute)
         {
 
             UserId = userId;
@@ -63,11 +63,12 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCh
             ParentUserId = parentUserId;
             ParentUserName = parentUserName;
             Name = userName;
+            OrganizatioanlChartItemAttribute = organizatioanlChartItemAttribute;
         }
 
         public void AddChildren(OrganizatioanlChartItem node)
         {
-           
+
             this.Children.Add(node);
         }
 
@@ -76,8 +77,20 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCh
         public string Name { get; set; }
         public int ParentUserId { get; set; }
         public string ParentUserName { get; set; }
+        public OrganizatioanlChartItemAttribute OrganizatioanlChartItemAttribute { get; set; }
         public List<OrganizatioanlChartItem> Children { get; set; }
     }
+
+    public class OrganizatioanlChartItemAttribute
+    {
+        public OrganizatioanlChartItemAttribute(int userId)
+        {
+            UserId = userId;
+        }
+
+        public int UserId { get; set; }
+    }
+
 
     public class TreeUser
     {
