@@ -29,4 +29,6 @@ public class GetBotResponse
     public int Range { get; private set; }
     public int Amount { get; private set; }
     public int PackageDetailId { get; private set; }
+    public string ActionCommand { get; private set; } = "select";
+    
 }
