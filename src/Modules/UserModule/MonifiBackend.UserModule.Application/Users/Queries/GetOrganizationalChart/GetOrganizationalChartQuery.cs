@@ -9,20 +9,28 @@ namespace MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCh
 {
     public class GetOrganizationalChartQuery : IQuery<GetOrganizationalChartQueryResponse>
     {
-        public GetOrganizationalChartQuery(int userId)
+        public GetOrganizationalChartQuery(int userId, string userName, string userEmail)
         {
             UserId = userId;
+            UserName = userName;
+            UserEmail = userEmail;
         }
-        [Required]
-        [SwaggerSchema(Nullable = false)]
+
+        [SwaggerSchema(Nullable = true)]
         public int UserId { get; }
 
+        [SwaggerSchema(Nullable = true)]
+        public string UserName { get; }
+
+        [SwaggerSchema(Nullable = true)]
+        public string UserEmail { get; }
     }
+
     internal class GetOrganizationQueryValidator : AbstractValidator<GetOrganizationalChartQuery>
     {
         public GetOrganizationQueryValidator(IStringLocalizer<Resource> stringLocalizer)
         {
-   
+
 
         }
     }

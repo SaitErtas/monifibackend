@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
-using MonifiBackend.UserModule.Application.Users.Commands.ConfirmUser;
 using MonifiBackend.UserModule.Application.Users.Queries.GetOrganizationalCharts;
 using MonifiBackend.UserModule.Domain.Users;
 
@@ -21,10 +20,9 @@ namespace MonifiBackend.API.Controllers
 
 
         [Authorize(Role.Administrator)]
-        [HttpGet("GetOrganizationalCharts/{userId}")]
-        public async Task<IActionResult> GetOrganizationalCharts(int userId)
+        [HttpPost("GetOrganizationalCharts")]
+        public async Task<IActionResult> GetOrganizationalCharts([FromBody] GetOrganizationalChartQuery request)
         {
-            var request = new GetOrganizationalChartQuery(userId);
             var result = await _mediator.Send(request);
             return Ok(result);
         }
