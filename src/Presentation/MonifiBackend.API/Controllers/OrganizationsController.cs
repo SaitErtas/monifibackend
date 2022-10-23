@@ -19,7 +19,7 @@ namespace MonifiBackend.API.Controllers
         }
 
 
-        [Authorize(Role.Administrator)]
+        [Authorize(Role.Administrator, Role.User)]
         [HttpPost("GetOrganizationalCharts")]
         public async Task<IActionResult> GetOrganizationalCharts([FromBody] GetOrganizationalChartQuery request)
         {
