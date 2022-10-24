@@ -15,6 +15,7 @@ using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetNoBonus
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.GetPurchasedMovements;
 using MonifiBackend.WalletModule.Application.AccountMovements.Queries.TransferCheck;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.ApyAnalysis;
+using MonifiBackend.WalletModule.Application.Statistics.Queries.EarningsPages;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetDaySaleStatistics;
 using MonifiBackend.WalletModule.Application.Statistics.Queries.GetStatistic;
 
@@ -130,6 +131,16 @@ public class WalletsController : BaseApiController
         var currentUser = (User)HttpContext.Items["User"];
 
         var request = new ApyAnalysisQuery(currentUser.Id);
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    [HttpGet("earnings-page")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
+    public async Task<IActionResult> EarningsPagesAsync()
+    {
+        var currentUser = (User)HttpContext.Items["User"];
+
+        var request = new EarningsPagesQuery(currentUser.Id);
         var result = await _mediator.Send(request);
         return Ok(result);
     }
