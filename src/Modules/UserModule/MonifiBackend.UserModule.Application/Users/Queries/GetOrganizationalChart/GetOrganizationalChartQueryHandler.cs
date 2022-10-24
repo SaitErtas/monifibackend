@@ -20,25 +20,27 @@ internal class GetOrganizationalChartQueryHandler : IQueryHandler<GetOrganizatio
     {
         var allUsers = await _userQueryDataPort.GetAsync();
         var users = new List<User>();
+        int parentUserId = 0;
 
         //userId tespit ediliyor.
         if (request.UserId > 0)
         {
-            users = allUsers.Where(p => p.Id == request.UserId || p.ReferanceUser == request.UserId).ToList();
-
+            parentUserId = allUsers.Where(p => p.Id == request.UserId).FirstOrDefault().ReferanceUser;
+            users = allUsers.Where(p => p.Id == request.UserId || p.ReferanceUser == request.UserId || p.Id == parentUserId).ToList();
         }
         else if (!string.IsNullOrEmpty(request.UserEmail))
         {
             int userId = allUsers.Where(p => p.Email == request.UserEmail).FirstOrDefault().Id;
+            parentUserId = allUsers.Where(p => p.Id == request.UserId).FirstOrDefault().ReferanceUser;
 
-            users = allUsers.Where(p => p.Id == userId || p.ReferanceUser == userId).ToList();
+            users = allUsers.Where(p => p.Id == userId || p.ReferanceUser == userId || p.Id == parentUserId).ToList();
 
         }
         else if (request.UserId > 0 || !string.IsNullOrEmpty(request.UserEmail) || !string.IsNullOrEmpty(request.UserName))
         {
             int userId = allUsers.Where(p => p.Username == request.UserName).FirstOrDefault().Id;
-
-            users = allUsers.Where(p => p.Id == userId || p.ReferanceUser == userId).ToList();
+            parentUserId = allUsers.Where(p => p.Id == request.UserId).FirstOrDefault().ReferanceUser;
+            users = allUsers.Where(p => p.Id == userId || p.ReferanceUser == userId || p.Id == parentUserId).ToList();
 
         }
         else users = allUsers;
