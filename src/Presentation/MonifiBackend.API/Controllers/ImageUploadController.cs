@@ -1,5 +1,4 @@
-﻿using CoreHtmlToImage;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MonifiBackend.API.Authorization;
 using MonifiBackend.API.Controllers.Base;
@@ -51,28 +50,28 @@ public class ImageUploadController : BaseApiController
         }
         return Ok(result);
     }
-    [HttpGet("social")]
-    [Authorize(Role.Administrator, Role.Owner, Role.User)]
-    public async Task<IActionResult> HtmlToImage()
-    {
-        string result = "";
-        var filename = $"{Guid.NewGuid()}.jpg";
-        var converter = new HtmlConverter();
-        string filePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Templates\\Kupon.html";
-        StreamReader str = new StreamReader(filePath);
-        string html = str.ReadToEnd();
-        var byteArrayIn = converter.FromHtmlString(html);
-        Stream image = new MemoryStream(byteArrayIn);
-        if (!Directory.Exists(_environment.WebRootPath + "\\Upload"))
-        {
-            Directory.CreateDirectory(_environment.WebRootPath + "\\Upload\\");
-        }
-        using (FileStream filestream = System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + filename))
-        {
-            image.CopyTo(filestream);
-            filestream.Flush();
-            result = $"{_appSettings.ServiceAddress.BackendAddress}/Upload/{filename}";
-        }
-        return Ok(result);
-    }
+    //[HttpGet("social")]
+    //[Authorize(Role.Administrator, Role.Owner, Role.User)]
+    //public async Task<IActionResult> HtmlToImage()
+    //{
+    //    string result = "";
+    //    var filename = $"{Guid.NewGuid()}.jpg";
+    //    var converter = new HtmlConverter();
+    //    string filePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Templates\\Kupon.html";
+    //    StreamReader str = new StreamReader(filePath);
+    //    string html = str.ReadToEnd();
+    //    var byteArrayIn = converter.FromHtmlString(html);
+    //    Stream image = new MemoryStream(byteArrayIn);
+    //    if (!Directory.Exists(_environment.WebRootPath + "\\Upload"))
+    //    {
+    //        Directory.CreateDirectory(_environment.WebRootPath + "\\Upload\\");
+    //    }
+    //    using (FileStream filestream = System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + filename))
+    //    {
+    //        image.CopyTo(filestream);
+    //        filestream.Flush();
+    //        result = $"{_appSettings.ServiceAddress.BackendAddress}/Upload/{filename}";
+    //    }
+    //    return Ok(result);
+    //}
 }
