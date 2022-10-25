@@ -55,11 +55,11 @@ internal class EarningsPagesQueryHandler : IQueryHandler<EarningsPagesQuery, Ear
         StreamReader str = new StreamReader(filePath);
         string html = str.ReadToEnd();
         html = html
-            .Replace("[totalEarning]", $"{totalEarning}")
+            .Replace("[totalEarning]", $"{Math.Round(totalEarning, 2)}")
             .Replace("[lastTime]", $"{lastTime}")
-            .Replace("[percent]", $"{percent}")
+            .Replace("[percent]", $"{Math.Round(percent, 2)}")
             .Replace("[ReferanceCode]", $"{_appSettings.ServiceAddress.FrontendAddress}/register/?refCode={user.ReferanceCode}")
-            .Replace("[MonifiPrice]", $"{setting.MonifiPrice}");
+            .Replace("[MonifiPrice]", $"{Math.Round(setting.MonifiPrice, 3)}");
         var byteArrayIn = converter.FromHtmlString(html);
         Stream image = new MemoryStream(byteArrayIn);
         if (!Directory.Exists(_environment.WebRootPath + "\\Upload"))
