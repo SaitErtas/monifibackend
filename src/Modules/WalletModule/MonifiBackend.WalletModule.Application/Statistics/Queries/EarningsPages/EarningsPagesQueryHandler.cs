@@ -58,7 +58,7 @@ internal class EarningsPagesQueryHandler : IQueryHandler<EarningsPagesQuery, Ear
             .Replace("[totalEarning]", $"{totalEarning}")
             .Replace("[lastTime]", $"{lastTime}")
             .Replace("[percent]", $"{percent}")
-            .Replace("[ReferanceCode]", $"{_appSettings.ServiceAddress.BackendAddress}/register/?refCode={user.ReferanceCode}")
+            .Replace("[ReferanceCode]", $"{_appSettings.ServiceAddress.FrontendAddress}/register/?refCode={user.ReferanceCode}")
             .Replace("[MonifiPrice]", $"{setting.MonifiPrice}");
         var byteArrayIn = converter.FromHtmlString(html);
         Stream image = new MemoryStream(byteArrayIn);
