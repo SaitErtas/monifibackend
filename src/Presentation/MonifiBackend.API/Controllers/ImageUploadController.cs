@@ -51,8 +51,8 @@ public class ImageUploadController : BaseApiController
         }
         return Ok(result);
     }
-    [AllowAnonymous]
-    [HttpGet("abc")]
+    [HttpGet("social")]
+    [Authorize(Role.Administrator, Role.Owner, Role.User)]
     public async Task<IActionResult> HtmlToImage()
     {
         string result = "";
