@@ -1,4 +1,5 @@
-﻿using MonifiBackend.WalletModule.Domain.Bots;
+﻿using MonifiBackend.Core.Domain.Utility;
+using MonifiBackend.WalletModule.Domain.Bots;
 
 namespace MonifiBackend.WalletModule.Application.Bots.Queries.GetBots;
 
@@ -19,6 +20,7 @@ public class GetBotResponse
         Minute = bot.Minute;
         WorkingRange = bot.WorkingRange.ToString();
         Range = bot.Range;
+        RangeDesc = bot.Range.ToEnum<DayOfWeek>().ToString();
         Amount = bot.Amount;
         PackageDetailId = bot.PackageDetailId;
     }
@@ -27,8 +29,9 @@ public class GetBotResponse
     public int Minute { get; private set; }
     public string WorkingRange { get; private set; }
     public int Range { get; private set; }
+    public string RangeDesc { get; private set; }
     public int Amount { get; private set; }
     public int PackageDetailId { get; private set; }
     public string ActionCommand { get; private set; } = "select";
-    
+
 }
