@@ -18,7 +18,8 @@ public class GetBotResponse
         Id = bot.Id;
         Hour = bot.Hour;
         Minute = bot.Minute;
-        WorkingRange = bot.WorkingRange.ToString();
+        WorkingRangeDesc = bot.WorkingRange.ToString();
+        WorkingRange = bot.WorkingRange.ToInt();
         Range = bot.Range;
         RangeDesc = bot.Range.ToEnum<DayOfWeek>().ToString();
         Amount = bot.Amount;
@@ -27,7 +28,8 @@ public class GetBotResponse
     public int Id { get; private set; }
     public int Hour { get; private set; }
     public int Minute { get; private set; }
-    public string WorkingRange { get; private set; }
+    public int WorkingRange { get; private set; }
+    public string WorkingRangeDesc { get; private set; }
     public int Range { get; private set; }
     public string RangeDesc { get; private set; }
     public int Amount { get; private set; }
