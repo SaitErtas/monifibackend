@@ -38,7 +38,8 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 Wallet = domain.Wallet.Map(),
                 Notifications = notifications,
                 UserIps = userIPs,
-                Avatar = domain.Avatar
+                Avatar = domain.Avatar,
+                Fa2Code = domain.Fa2Code
             };
         }
         #endregion
@@ -64,6 +65,7 @@ namespace MonifiBackend.UserModule.Infrastructure.Extensions.Mappers
                 entity.ConfirmationCode,
                 entity.FullName,
                 entity.Avatar,
+                entity.Fa2Code,
                 entity.Language.Map(),
                 entity.Country.Map(),
                 entity.Wallet.Map(),
