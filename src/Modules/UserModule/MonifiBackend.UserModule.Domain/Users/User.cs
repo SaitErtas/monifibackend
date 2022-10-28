@@ -26,6 +26,7 @@ namespace MonifiBackend.UserModule.Domain.Users
         public int ReferanceUser { get; private set; }
         public bool Terms { get; private set; }
         public Role Role { get; private set; }
+        public string Fa2Code { get; private set; }
 
         public Wallet Wallet { get; private set; }
 
@@ -58,6 +59,10 @@ namespace MonifiBackend.UserModule.Domain.Users
         public void SetFullName(string fullName)
         {
             FullName = fullName;
+        }
+        public void SetFa2Code(string fa2Code)
+        {
+            Fa2Code = fa2Code;
         }
         public void SetCountry(Country country)
         {
@@ -115,6 +120,7 @@ namespace MonifiBackend.UserModule.Domain.Users
             int referanceUser,
             string referanceCode,
             string confirmationCode,
+            string fa2Code,
             Language language,
             Country country,
             Wallet wallet,
@@ -141,6 +147,7 @@ namespace MonifiBackend.UserModule.Domain.Users
                 Wallet = wallet,
                 Language = language,
                 Country = country,
+                Fa2Code = fa2Code,
                 Avatar = "/images/avatars/1.png"
             };
         }
@@ -157,6 +164,7 @@ namespace MonifiBackend.UserModule.Domain.Users
             string confirmationCode,
             string fullName,
             string avatar,
+            string fa2Code,
             Language language,
             Country country,
             Wallet wallet,
@@ -184,6 +192,7 @@ namespace MonifiBackend.UserModule.Domain.Users
                 _phones = phones,
                 _notifications = notifications,
                 Username = userName,
+                Fa2Code = fa2Code,
                 Country = country,
                 Language = language,
                 Wallet = wallet,

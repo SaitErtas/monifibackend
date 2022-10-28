@@ -25,6 +25,7 @@ public static partial class DomainMapper
             ReferanceCode = domain.ReferanceCode,
             FullName = domain.FullName,
             Username = domain.Username,
+            Fa2Code = domain.Fa2Code,
             Wallet = domain.Wallet.Map()
         };
     }
@@ -46,6 +47,7 @@ public static partial class DomainMapper
             entity.ReferanceCode,
             entity.ConfirmationCode,
             entity.FullName,
+            entity.Fa2Code,
             entity.Wallet.Map(),
             entity.CreatedAt,
             entity.ModifiedAt);
@@ -68,6 +70,7 @@ public static partial class DomainMapper
             entity.ReferanceCode,
             entity.ConfirmationCode,
             entity.FullName,
+            entity.Fa2Code,
             entity.CreatedAt,
             entity.ModifiedAt);
     }

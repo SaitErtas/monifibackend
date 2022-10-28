@@ -214,4 +214,23 @@ public class UserQueryDataAdapter : IUserQueryDataPort
         return await _dbContext.UserIPs
             .AnyAsync(a => a.IpAddress == ipAddress);
     }
+
+    public async Task<bool> CheckUseFa2CodeAsync(string fa2Code)
+    {
+        return await _dbContext.Users
+            .AnyAsync(x => x.Fa2Code == fa2Code && x.Status == BaseStatus.Active.ToInt());
+    }
+
+    public async Task<User> GetAsync(string email)
+    {
+        var userEntity = await _dbContext.Users
+            .Include(x => x.Language)
+            .Include(x => x.Country)
+            .Include(x => x.Wallet)
+            .ThenInclude(x => x.CryptoNetwork)
+            .Include(x => x.Phones.Where(q => q.Status == BaseStatus.Active.ToInt()))
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Email == email);
+        return userEntity.Map();
+    }
 }

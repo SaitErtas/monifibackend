@@ -432,6 +432,10 @@ namespace MonifiBackend.API.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<string>("Fa2Code")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 

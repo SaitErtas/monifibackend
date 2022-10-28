@@ -37,7 +37,7 @@ internal class RegisterFakeUserEventHandler : IEventHandler<RegisterFakeUserEven
         var network = await _walletQueryDataPort.GetNetworkAsync(DEFAULT_VALUE);
 
         var wallet = Wallet.CreateNew(string.Empty, network);
-        var user = User.CreateNew(email, passwordHash, terms, 1, referanceCode, confirmationCode, language, country, wallet, Role.User, BaseStatus.Active);
+        var user = User.CreateNew(email, passwordHash, terms, 1, referanceCode, confirmationCode, string.Empty, language, country, wallet, Role.User, BaseStatus.Active);
         user.SetUsername(username);
         user.SetFullName(fullName);
         var userId = await _userCommandDataPort.CreateAsync(user);
