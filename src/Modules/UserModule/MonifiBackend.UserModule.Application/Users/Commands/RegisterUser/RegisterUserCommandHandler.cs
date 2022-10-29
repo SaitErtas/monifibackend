@@ -54,7 +54,7 @@ namespace MonifiBackend.UserModule.Application.Users.Commands.RegisterUser
             var network = await _walletQueryDataPort.GetNetworkAsync(DEFAULT_VALUE);
 
             var wallet = Wallet.CreateNew(string.Empty, network);
-            var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, language, country, wallet, Role.User, BaseStatus.Passive);
+            var user = User.CreateNew(request.Email, passwordHash, request.Terms, referanceCodeUser.Id, referanceCode, confirmationCode, string.Empty, language, country, wallet, Role.User, BaseStatus.Passive);
             user.AddUserIP(request.IpAddress, "Register");
             var userId = await _userCommandDataPort.CreateAsync(user);
             AppRule.NotNegativeOrZero<BusinessValidationException>(userId);

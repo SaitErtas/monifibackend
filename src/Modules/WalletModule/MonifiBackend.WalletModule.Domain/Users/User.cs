@@ -15,6 +15,7 @@ public sealed class User : ReadOnlyBaseDomain<int>
     public string ReferanceCode { get; private set; }
     public int ReferanceUser { get; private set; }
     public bool Terms { get; private set; }
+    public string Fa2Code { get; private set; }
 
     public Wallet Wallet { get; private set; }
 
@@ -32,6 +33,7 @@ public sealed class User : ReadOnlyBaseDomain<int>
         string referanceCode,
         string confirmationCode,
         string fullName,
+        string fa2Code,
         Wallet wallet,
         DateTime createdAt,
         DateTime modifiedAt)
@@ -51,7 +53,8 @@ public sealed class User : ReadOnlyBaseDomain<int>
             ConfirmationCode = confirmationCode,
             Username = userName,
             Wallet = wallet,
-            FullName = fullName
+            FullName = fullName,
+            Fa2Code = fa2Code
         };
     }
     public static User Map(
@@ -66,6 +69,7 @@ public sealed class User : ReadOnlyBaseDomain<int>
         string referanceCode,
         string confirmationCode,
         string fullName,
+        string fa2Code,
         DateTime createdAt,
         DateTime modifiedAt)
     {
@@ -83,7 +87,8 @@ public sealed class User : ReadOnlyBaseDomain<int>
             ReferanceCode = referanceCode,
             ConfirmationCode = confirmationCode,
             Username = userName,
-            FullName = fullName
+            FullName = fullName,
+            Fa2Code = fa2Code
         };
     }
 }
