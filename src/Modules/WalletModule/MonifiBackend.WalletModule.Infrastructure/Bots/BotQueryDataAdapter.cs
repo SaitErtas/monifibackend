@@ -33,8 +33,8 @@ public class BotQueryDataAdapter : IBotQueryDataPort
 
     public async Task<Bot> GetAsync(int id)
     {
-        return await _dbContext.Bots
-            .Select(x => x.Map())
+        var bot = await _dbContext.Bots
             .FirstOrDefaultAsync(w => w.Id == id);
+        return bot.Map();
     }
 }

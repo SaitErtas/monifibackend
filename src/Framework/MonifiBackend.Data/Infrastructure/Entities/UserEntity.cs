@@ -18,6 +18,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
         public string ReferanceCode { get; set; }
         public string ConfirmationCode { get; set; }
         public virtual int Role { get; set; }
+        public string Fa2Code { get; set; }
         public int LanguageId { get; set; }
         public virtual LanguageEntity Language { get; set; }
         public int CountryId { get; set; }
@@ -37,6 +38,7 @@ namespace MonifiBackend.Data.Infrastructure.Entities
             builder.Property(x => x.Terms).IsRequired();
             builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.ResetPasswordCode).HasMaxLength(250);
+            builder.Property(x => x.Fa2Code).HasMaxLength(250);
             builder.Property(x => x.ReferanceUser).HasMaxLength(250);
             builder.Property(x => x.ReferanceCode).HasMaxLength(250);
             builder.Property(x => x.ConfirmationCode).HasMaxLength(250);
