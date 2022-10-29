@@ -18,6 +18,7 @@ public class BotQueryDataAdapter : IBotQueryDataPort
     public async Task<List<Bot>> GetAsync()
     {
         return await _dbContext.Bots
+            .Where(x => x.Status == BaseStatus.Active.ToInt())
             .AsNoTracking()
             .Select(x => x.Map())
             .ToListAsync();
